@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+}
+
 html,
 body,
 div,
@@ -85,10 +90,11 @@ textarea {
   margin: 0;
   padding: 0;
   border: 0;
+  font-family: 'Pretendard-Regular';
+  font-weight: 400;
+  font-style: normal;
   font-size: 100%;
   vertical-align: baseline;
-  font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
   box-sizing: border-box;
   -webkit-user-select: none;
