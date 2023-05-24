@@ -20,7 +20,7 @@ const SearchInput = ({ placeholder, searchType, ...rest }) => {
     <InputWrapDiv>
       {searchType === 'after' ? <LeftIcon /> : ''}
       <CommonInput searchType={searchType} placeholder={placeholder} />
-      {searchType === 'after' ? <CancelIcon /> : <SearchIcon />}
+      {searchType === 'after' ? <CancelIcon {...rest} /> : <SearchIcon {...rest} />}
     </InputWrapDiv>
   );
 };
