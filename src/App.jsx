@@ -14,7 +14,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;

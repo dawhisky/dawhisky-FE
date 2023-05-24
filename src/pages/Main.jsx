@@ -1,9 +1,8 @@
 import React from 'react';
+import { Layout } from '../components/element';
 
 const Main = () => {
-  return (
-    <div>Main</div>
-  )
-}
+  return <Layout></Layout>;
+};
 
-export default Main
+export default Main;
