@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import { Navbar } from '../element';
+import Navbar from './Navbar';
 
 const Layout = ({ children }) => {
   return (
@@ -37,5 +37,5 @@ const ContainerDiv = styled.div`
 `;
 
 const WrapMain = styled.main`
-  padding: 0 16px;
+  padding: 65px 16px 0 16px;
 `;
