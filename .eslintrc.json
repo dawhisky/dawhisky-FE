@@ -36,11 +36,16 @@
     // [error] missing in props validation
     "react/prop-types": "off",
     // [error] Curly braces are unnecessary here
-    "react/jsx-curly-brace-presence": [
-      "<enabled>",
-      { "props": "<string>", "children": "<string>", "propElementValues": "<string>" }
-    ],
+    "react/jsx-curly-brace-presence": ["warn", { "props": "always", "children": "always" }],
     // [error] Prop spreading is forbidden
-    "react/jsx-props-no-spreading": "off"
-  }
+    "react/jsx-props-no-spreading": "off",
+    "import/no-unresolved": ["error", { "caseSensitive": false }]
+  },
+  "settings": {
+    "import/resolver": {
+    "node": {
+    "paths": ["src"]
+    }
+    }
+    }
 }

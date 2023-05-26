@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { Layout } from '../../components/element';
+import { Layout } from '../../components';
 
 const Signup = () => {
   const signupForm = [

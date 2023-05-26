@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { Layout } from '../../components/element';
+import { Layout } from '../../components';
 import { StoreBottleManage, StoreInfoManage } from '../../components/innerPage';
 
 const StoreManagePage = () => {

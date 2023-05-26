@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { Layout, Navbar } from '../../components/element';
+import { Layout, Navbar } from '../../components';
 
 const Login = () => {
   const [userRole, setUserRole] = useState('user');

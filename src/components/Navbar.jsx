@@ -46,6 +46,7 @@ const NavButton = styled.button`
   line-height: 15px;
   background-color: transparent;
   color: #6c7072;
+  cursor: pointer;
   :first-child {
     font-size: 26px;
   }
