@@ -6,7 +6,20 @@ import TabMenu from './TabMenu';
 import Image from './Image';
 import DetailHeader from './DetailHeader';
 import DetailInfo from './DetailInfo';
+import DetailList from './DetailList';
 import Navbar from './Navbar';
 import Layout from './Layout';
 
-export { Button, SearchInput, LikeIcon, CategorySelect, TabMenu, Image, DetailHeader, DetailInfo, Navbar, Layout };
+export {
+  Button,
+  SearchInput,
+  LikeIcon,
+  CategorySelect,
+  TabMenu,
+  Image,
+  DetailHeader,
+  DetailInfo,
+  DetailList,
+  Navbar,
+  Layout,
+};

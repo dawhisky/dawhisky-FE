@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { Layout, DetailHeader, DetailInfo, Image, TabMenu } from '../components';
-import WhiskyStockList from './WhiskyStockList';
+import { Layout, DetailHeader, DetailInfo, DetailList, Image, TabMenu } from '../components';
 import WhiskyComment from './WhiskyComment';
 
 const WhiskyDetail = () => {
@@ -17,8 +16,8 @@ const WhiskyDetail = () => {
     아로마: '아로마 or 피니쉬?',
   };
 
-  const [whichTabChosen, setWhichTabChosen] = useState(tabGroup[0].type);
-  const onTabClickHandler = (type) => setWhichTabChosen(type);
+  const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+  const onTabClickHandler = (type) => setTabChosen(type);
 
   return (
     <Layout>
@@ -26,11 +25,11 @@ const WhiskyDetail = () => {
       <ImageDiv>
         <Image width={'360px'} height={'360px'} src={''} alt={''} />
       </ImageDiv>
-      <TabMenu tabgroup={tabGroup} whichtabchosen={whichTabChosen} ontabclickhandler={onTabClickHandler} />
+      <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
       <TabSection>
-        {whichTabChosen === 'detail' && <DetailInfo info={whiskyDetail} />}
-        {whichTabChosen === 'bar' && <WhiskyStockList />}
-        {whichTabChosen === 'comment' && <WhiskyComment />}
+        {tabChosen === 'detail' && <DetailInfo info={whiskyDetail} />}
+        {tabChosen === 'bar' && <DetailList />}
+        {tabChosen === 'comment' && <WhiskyComment />}
       </TabSection>
     </Layout>
   );
