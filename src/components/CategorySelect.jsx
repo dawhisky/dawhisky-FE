@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { BsChevronDown } from 'react-icons/bs';
 import Button from './Button';
 
-const CategorySelect = ({ category, list }) => {
+const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
   const [showUlList, setShowUlList] = useState(false);
 
   const isShowListHandler = () => setShowUlList(!showUlList);
@@ -19,8 +19,16 @@ const CategorySelect = ({ category, list }) => {
           <BackgroundDiv onClick={isShowListHandler} />
           <ListUl>
             <p>{category}</p>
-            {list.map((item) => {
-              return <ListLi>{item}</ListLi>;
+            {list.map((item, idx) => {
+              return (
+                <ListLi
+                  key={item}
+                  active={item === categorychosen ? 'true' : 'false'}
+                  onClick={() => onclickhandler(idx)}
+                >
+                  {item}
+                </ListLi>
+              );
             })}
             <ButtonWrapDiv>
               <Button size={'medium'} location={'both'}>
@@ -98,11 +106,7 @@ const ListLi = styled.li`
   font-size: 16px;
   margin: 16px 20px;
   cursor: pointer;
-  &:hover,
-  &:active,
-  &:focus {
-    font-weight: bold;
-  }
+  font-weight: ${({ active }) => (active === 'true' ? '600' : '400')};
 `;
 
 const ButtonWrapDiv = styled.div`

@@ -3,17 +3,24 @@ import { styled } from 'styled-components';
 
 const WhiskyComment = () => {
   return (
-    <div>
-      <CommentP>Consequat proin ut sit tortor non habitasse sem fusce tincidunt.</CommentP>
-      <CommentP>Faucibus consequat nibh elementum faucibus facilisi.</CommentP>
-      <CommentP>Sed sed ipsum consequat maecenas non bibendum ullamcorper.</CommentP>
-    </div>
+    <CommentDiv>
+      <p>Consequat proin ut sit tortor non habitasse sem fusce tincidunt.</p>
+      <p>Faucibus consequat nibh elementum faucibus facilisi.</p>
+      <p>Sed sed ipsum consequat maecenas non bibendum ullamcorper.</p>
+    </CommentDiv>
   );
 };
 
 export default WhiskyComment;
 
-const CommentP = styled.p`
-  padding: 32px 0;
-  border-bottom: 1px solid #eaeaea;
+const CommentDiv = styled.div`
+  & p {
+    border-bottom: 1px solid #eaeaea;
+  }
+  & > p:first-child {
+    padding-bottom: 30px;
+  }
+  & > p:nth-child(n + 2) {
+    padding: 30px 0;
+  }
 `;

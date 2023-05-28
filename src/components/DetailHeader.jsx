@@ -4,6 +4,7 @@ import { BsChevronLeft } from 'react-icons/bs';
 import LikeIcon from './LikeIcon';
 
 const DetailHeader = ({ korname, engname }) => {
+  // TODO Scroll 감지해서 Background에 color 넣기
   return (
     <Header>
       <LeftIcon />
@@ -21,6 +22,7 @@ export default DetailHeader;
 const Header = styled.header`
   width: 330px;
   height: 60px;
+  margin-top: 10px;
   position: fixed;
   display: flex;
   justify-content: space-between;

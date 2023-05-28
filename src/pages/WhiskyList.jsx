@@ -4,21 +4,28 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { Layout, TabMenu, SearchInput, CategorySelect, LikeIcon, Image } from '../components';
 
 const WhiskyList = () => {
+  // useState에 0번째 값을 default값으로 넣기 위해 최상단에 선언
   const tabGroup = [
     { name: '전체', type: 'all' },
     { name: '나라별', type: 'country' },
     { name: '재료별', type: 'ingredient' },
     { name: '블렌딩별', type: 'blending' },
   ];
+  const countryList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '기타'];
+  const ingredientList = ['전체', '몰트 위스키', '그레인 위스키', '블렌디드 위스키', '기타'];
+  const blendingList = ['전체', '기타'];
 
-  const [whichTabChosen, setWhichTabChosen] = useState(tabGroup[0].type);
-
-  const countryTestList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '기타'];
-  const ingredientTestList = ['전체', '몰트 위스키', '그레인 위스키', '블렌디드 위스키', '기타'];
-  const blendingTestList = ['전체', '기타'];
+  const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+  const [countryChosen, setCountryChosen] = useState(countryList[0]);
+  const [ingredient, setIngredient] = useState(ingredientList[0]);
+  const [blending, setBlending] = useState(blendingList[0]);
 
   // ? setState 처리해서 넘길 때 e.preventDefault를 쓸지 말지?
-  const onTabClickHandler = (type) => setWhichTabChosen(type);
+  const onTabClickHandler = (type) => setTabChosen(type);
+  // TODO. 함수 각각 하나씩 or 하나로 통합한 가능한지 확인해보기
+  const onCountryClickHandler = (idx) => setCountryChosen(countryList[idx]);
+  const onIngredientClickHandler = (idx) => setIngredient(ingredientList[idx]);
+  const onBlendingClickHandler = (idx) => setBlending(blendingList[idx]);
 
   return (
     <Layout>
@@ -29,12 +36,27 @@ const WhiskyList = () => {
         </div>
         <SearchInput searchtype={'before'} placeholder={'위스키를 검색해보세요!'} />
       </Header>
-      <TabMenu tabgroup={tabGroup} whichtabchosen={whichTabChosen} ontabclickhandler={onTabClickHandler} />
+      <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
       {/* TODO 카테고리 정해지면 list 어떻게 공통화 처리할지 고민해보기 */}
       <CategorySection>
-        <CategorySelect category={'지역'} list={countryTestList} />
-        <CategorySelect category={'지역'} list={ingredientTestList} />
-        <CategorySelect category={'지역'} list={blendingTestList} />
+        <CategorySelect
+          category={'지역1'}
+          list={countryList}
+          categorychosen={countryChosen}
+          onclickhandler={onCountryClickHandler}
+        />
+        <CategorySelect
+          category={'지역2'}
+          list={ingredientList}
+          categorychosen={ingredient}
+          onclickhandler={onIngredientClickHandler}
+        />
+        <CategorySelect
+          category={'지역3'}
+          list={blendingList}
+          categorychosen={blending}
+          onclickhandler={onBlendingClickHandler}
+        />
       </CategorySection>
       {/* TODO 작업 완료하면 image 컴포넌트로 빼기 */}
       <WhiskyListSection>
@@ -81,7 +103,7 @@ const LikeListIcon = styled(AiOutlineHeart)`
 `;
 
 const CategorySection = styled.section`
-  margin: 20px 0 40px 0;
+  margin-bottom: 30px;
   display: flex;
   gap: 8px;
 `;

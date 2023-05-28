@@ -8,6 +8,7 @@ const Image = ({ width, height, borderradius, src, alt }) => {
 const SetImages = styled.img`
   ${({ width, height }) => `width: ${width}; height: ${height};`}
   ${({ borderradius }) => `border-radius: ${borderradius};`}
+  object-fit: cover;
 `;
 
 export default Image;
