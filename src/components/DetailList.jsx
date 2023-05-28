@@ -13,9 +13,9 @@ const DetailList = () => {
         <ImageDiv>
           <Image width={'80px'} height={'80px'} src={''} alt={''} />
         </ImageDiv>
-        <h1>{url === '/WhiskyDetail' ? '위스키바 이름' : '위스키 이름'}</h1>
-        <h3>{url === '/WhiskyDetail' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
-        {url === '/WhiskyDetail' ? (
+        <h1>{url === '/WhiskyDetail' || url === '/BarList' ? '위스키바 이름' : '위스키 이름'}</h1>
+        <h3>{url === '/WhiskyDetail' || url === '/BarList' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
+        {url === '/WhiskyDetail' || url === '/BarList' ? (
           <BarInfoDiv>
             <button type="button">잔여 좌석 2</button>
             <h2>60m</h2>
@@ -32,9 +32,9 @@ const DetailList = () => {
         <ImageDiv>
           <Image width={'80px'} height={'80px'} src={''} alt={''} />
         </ImageDiv>
-        <h1>{url === '/WhiskyDetail' ? '위스키바 이름' : '위스키 이름'}</h1>
-        <h3>{url === '/WhiskyDetail' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
-        {url === '/WhiskyDetail' ? (
+        <h1>{url === '/WhiskyDetail' || url === '/BarList' ? '위스키바 이름' : '위스키 이름'}</h1>
+        <h3>{url === '/WhiskyDetail' || url === '/BarList' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
+        {url === '/WhiskyDetail' || url === '/BarList' ? (
           <BarInfoDiv>
             <button type="button">잔여 좌석 2</button>
             <h2>60m</h2>
@@ -42,7 +42,8 @@ const DetailList = () => {
         ) : (
           <WhiskyInfoDiv>
             <h2>45% vol</h2>
-            <button type="button">등록 | 삭제</button>
+            {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
+            <button type="button">등록</button>
           </WhiskyInfoDiv>
         )}
       </StockListDiv>

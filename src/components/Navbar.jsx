@@ -39,6 +39,7 @@ const Nav = styled.nav`
   bottom: 0;
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.1) 0 -3px 4px -1px;
+  z-index: 5;
 `;
 
 const NavButton = styled.button`
