@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { Layout, DetailHeader, Image, TabMenu } from '../components';
+import { Layout, DetailHeader, DetailInfo, Image, TabMenu } from '../components';
 import WhiskyStockList from './WhiskyStockList';
 import WhiskyComment from './WhiskyComment';
 
@@ -10,6 +10,12 @@ const WhiskyDetail = () => {
     { name: '위스키 바', type: 'bar' },
     { name: '코멘트', type: 'comment' },
   ];
+
+  const whiskyDetail = {
+    지역: '어느 나라 | 어느 지역',
+    타입: '무슨 타입',
+    아로마: '아로마 or 피니쉬?',
+  };
 
   const [whichTabChosen, setWhichTabChosen] = useState(tabGroup[0].type);
   const onTabClickHandler = (type) => setWhichTabChosen(type);
@@ -21,9 +27,11 @@ const WhiskyDetail = () => {
         <Image width={'360px'} height={'360px'} src={''} alt={''} />
       </ImageDiv>
       <TabMenu tabgroup={tabGroup} whichtabchosen={whichTabChosen} ontabclickhandler={onTabClickHandler} />
-      {whichTabChosen === 'detail' && '디테일'}
-      {whichTabChosen === 'bar' && <WhiskyStockList />}
-      {whichTabChosen === 'comment' && <WhiskyComment />}
+      <TabSection>
+        {whichTabChosen === 'detail' && <DetailInfo info={whiskyDetail} />}
+        {whichTabChosen === 'bar' && <WhiskyStockList />}
+        {whichTabChosen === 'comment' && <WhiskyComment />}
+      </TabSection>
     </Layout>
   );
 };
@@ -33,4 +41,8 @@ export default WhiskyDetail;
 const ImageDiv = styled.div`
   width: 360px;
   margin-left: -17px;
+`;
+
+const TabSection = styled.section`
+  padding-top: 15px;
 `;
