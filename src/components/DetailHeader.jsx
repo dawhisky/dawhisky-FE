@@ -1,9 +1,12 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import { BsChevronLeft } from 'react-icons/bs';
 import LikeIcon from './LikeIcon';
 
 const DetailHeader = ({ korname, engname }) => {
+  const location = useLocation();
+
   // TODO Scroll 감지해서 Background에 color 넣기
   return (
     <Header>
@@ -12,7 +15,7 @@ const DetailHeader = ({ korname, engname }) => {
         <p>{korname}</p>
         {!!engname && <span>{engname}</span>}
       </NameDiv>
-      <LikeIcon />
+      {location.pathname !== '/LikeList' ? <LikeIcon /> : <NullDiv />}
     </Header>
   );
 };
@@ -49,4 +52,9 @@ const NameDiv = styled.div`
 const LeftIcon = styled(BsChevronLeft)`
   font-size: 20px;
   cursor: pointer;
+`;
+
+const NullDiv = styled.div`
+  width: 20px;
+  height: 20px;
 `;
