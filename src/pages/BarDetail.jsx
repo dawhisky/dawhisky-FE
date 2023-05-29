@@ -4,9 +4,9 @@ import { Layout, DetailHeader, DetailInfo, DetailList, Image, TabMenu } from '..
 
 const BarDetail = () => {
   const tabGroup = [
-    { name: '줄서기', type: 'que' },
-    { name: '보유 위스키', type: 'getWhisky' },
     { name: '상세 정보', type: 'barInfo' },
+    { name: '보유 위스키', type: 'getWhisky' },
+    { name: '줄서기', type: 'que' },
   ];
 
   const barDetail = {
@@ -28,9 +28,9 @@ const BarDetail = () => {
       </ImageDiv>
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
       <TabSection>
-        {tabChosen === 'que' && '줄서기 컴포넌트'}
-        {tabChosen === 'getWhisky' && <DetailList />}
         {tabChosen === 'barInfo' && <DetailInfo info={barDetail} />}
+        {tabChosen === 'getWhisky' && <DetailList />}
+        {tabChosen === 'que' && '줄서기 컴포넌트'}
       </TabSection>
     </Layout>
   );
