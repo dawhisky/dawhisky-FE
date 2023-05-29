@@ -4,28 +4,35 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { Layout, TabMenu, SearchInput, CategorySelect, LikeIcon, Image } from '../components';
 
 const WhiskyList = () => {
-  // useState에 0번째 값을 default값으로 넣기 위해 최상단에 선언
+  // * useState에 0번째 값을 default값으로 넣기 위해 최상단에 선언
+
+  // * 탭 그룹
+  // TODO UI 정렬 위해 5개만 출력하고 나머지 주석 처리, 추후 슬라이드 가능한지 찾아보고 적용
   const tabGroup = [
     { name: '전체', type: 'all' },
-    { name: '나라별', type: 'country' },
-    { name: '재료별', type: 'ingredient' },
-    { name: '블렌딩별', type: 'blending' },
+    { name: '스카치', type: 'scotch' },
+    { name: '아메리칸', type: 'american' },
+    { name: '아이리시', type: 'irish' },
+    { name: '캐나디안', type: 'canadian' },
+    // { name: '재패니스', type: 'japanese' },
+    // { name: '그 외', type: 'etc' },
   ];
-  const countryList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '기타'];
-  const ingredientList = ['전체', '몰트 위스키', '그레인 위스키', '블렌디드 위스키', '기타'];
-  const blendingList = ['전체', '기타'];
+
+  // * 카테고리 세부 정렬 기준
+  const regionList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '그 외'];
+  const blendList = ['전체', '싱글 몰트', '싱글 그레인', '블렌디드 몰트', '블렌디드 그레인', '블렌디드'];
+  const americantList = ['전체', '버번', '라이', '테네시', '그 외'];
 
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
-  const [countryChosen, setCountryChosen] = useState(countryList[0]);
-  const [ingredient, setIngredient] = useState(ingredientList[0]);
-  const [blending, setBlending] = useState(blendingList[0]);
+  const [region, setRegion] = useState(regionList[0]);
+  const [blend, setBlend] = useState(blendList[0]);
+  const [american, setAmerican] = useState(americantList[0]);
 
   // ? setState 처리해서 넘길 때 e.preventDefault를 쓸지 말지?
   const onTabClickHandler = (type) => setTabChosen(type);
-  // TODO. 함수 각각 하나씩 or 하나로 통합한 가능한지 확인해보기
-  const onCountryClickHandler = (idx) => setCountryChosen(countryList[idx]);
-  const onIngredientClickHandler = (idx) => setIngredient(ingredientList[idx]);
-  const onBlendingClickHandler = (idx) => setBlending(blendingList[idx]);
+  const onRegionClickHandler = (idx) => setRegion(regionList[idx]);
+  const onBlendClickHandler = (idx) => setBlend(blendList[idx]);
+  const onAmericanClickHandler = (idx) => setAmerican(americantList[idx]);
 
   return (
     <Layout>
@@ -36,29 +43,45 @@ const WhiskyList = () => {
         </div>
         <SearchInput searchtype={'before'} placeholder={'위스키를 검색해보세요!'} />
       </Header>
+
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
-      {/* TODO 카테고리 정해지면 list 어떻게 공통화 처리할지 고민해보기 */}
-      <CategorySection>
-        <CategorySelect
-          category={'지역1'}
-          list={countryList}
-          categorychosen={countryChosen}
-          onclickhandler={onCountryClickHandler}
-        />
-        <CategorySelect
-          category={'지역2'}
-          list={ingredientList}
-          categorychosen={ingredient}
-          onclickhandler={onIngredientClickHandler}
-        />
-        <CategorySelect
-          category={'지역3'}
-          list={blendingList}
-          categorychosen={blending}
-          onclickhandler={onBlendingClickHandler}
-        />
-      </CategorySection>
-      {/* TODO 작업 완료하면 image 컴포넌트로 빼기 */}
+      {tabChosen === 'scotch' && (
+        <CategorySection>
+          <CategorySelect
+            category={'지역별'}
+            list={regionList}
+            categorychosen={region}
+            onclickhandler={onRegionClickHandler}
+          />
+          <CategorySelect
+            category={'블렌드별'}
+            list={blendList}
+            categorychosen={blend}
+            onclickhandler={onBlendClickHandler}
+          />
+        </CategorySection>
+      )}
+      {tabChosen === 'american' && (
+        <CategorySection>
+          <CategorySelect
+            category={'분류'}
+            list={americantList}
+            categorychosen={american}
+            onclickhandler={onAmericanClickHandler}
+          />
+        </CategorySection>
+      )}
+      {tabChosen === 'japanese' && (
+        <CategorySection>
+          <CategorySelect
+            category={'블렌드별'}
+            list={blendList}
+            categorychosen={blend}
+            onclickhandler={onBlendClickHandler}
+          />
+        </CategorySection>
+      )}
+      {/* TODO 추후 별도 컴포넌트 처리? */}
       <WhiskyListSection>
         <WhiskyDataDiv>
           <Image width={'155px'} height={'155px'} borderradius={'5px'} src={''} alt={''} />
@@ -78,7 +101,6 @@ const WhiskyList = () => {
 
 export default WhiskyList;
 
-// * 헤더
 const Header = styled.header`
   width: 360px;
   margin-left: -16px;
