@@ -13,9 +13,15 @@ const DetailList = () => {
         <ImageDiv>
           <Image width={'80px'} height={'80px'} src={''} alt={''} />
         </ImageDiv>
-        <h1>{url === '/WhiskyDetail' || url === '/BarList' ? '위스키바 이름' : '위스키 이름'}</h1>
-        <h3>{url === '/WhiskyDetail' || url === '/BarList' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
-        {url === '/WhiskyDetail' || url === '/BarList' ? (
+        <h1>
+          {url === '/WhiskyDetail' || url === '/BarList' || url === '/LikeList' ? '위스키바 이름' : '위스키 이름'}
+        </h1>
+        <h3>
+          {url === '/WhiskyDetail' || url === '/BarList' || url === '/LikeList'
+            ? '서울특별시 강남구 강남대로 7'
+            : 'Whisky name'}
+        </h3>
+        {url === '/WhiskyDetail' || url === '/BarList' || url === '/LikeList' ? (
           <BarInfoDiv>
             <button type="button">잔여 좌석 2</button>
             <h2>60m</h2>
@@ -32,9 +38,15 @@ const DetailList = () => {
         <ImageDiv>
           <Image width={'80px'} height={'80px'} src={''} alt={''} />
         </ImageDiv>
-        <h1>{url === '/WhiskyDetail' || url === '/BarList' ? '위스키바 이름' : '위스키 이름'}</h1>
-        <h3>{url === '/WhiskyDetail' || url === '/BarList' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
-        {url === '/WhiskyDetail' || url === '/BarList' ? (
+        <h1>
+          {url === '/WhiskyDetail' || url === '/BarList' || url === '/LikeList' ? '위스키바 이름' : '위스키 이름'}
+        </h1>
+        <h3>
+          {url === '/WhiskyDetail' || url === '/BarList' || url === '/LikeList'
+            ? '서울특별시 강남구 강남대로 7'
+            : 'Whisky name'}
+        </h3>
+        {url === '/WhiskyDetail' || url === '/BarList' || url === '/LikeList' ? (
           <BarInfoDiv>
             <button type="button">잔여 좌석 2</button>
             <h2>60m</h2>
