@@ -7,6 +7,7 @@ import Image from './Image';
 import DetailHeader from './DetailHeader';
 import DetailInfo from './DetailInfo';
 import DetailList from './DetailList';
+import WhiskyGrid from './WhiskyGrid';
 import Navbar from './Navbar';
 import Layout from './Layout';
 
@@ -20,6 +21,7 @@ export {
   DetailHeader,
   DetailInfo,
   DetailList,
+  WhiskyGrid,
   Navbar,
   Layout,
 };
