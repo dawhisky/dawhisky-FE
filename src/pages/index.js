@@ -1,8 +1,8 @@
 import Error from './statusPage/Error';
 import WhiskyList from './WhiskyList';
 import WhiskyDetail from './WhiskyDetail';
-import BarList from './BarList';
-import BarDetail from './BarDetail';
+import StoreList from './StoreList';
+import StoreDetail from './StoreDetail';
 import Login from './userPage/Login';
 import Signup from './userPage/Signup';
 import StoreManagePage from './storePage/StoreManagePage';
@@ -15,8 +15,8 @@ export {
   Error,
   WhiskyList,
   WhiskyDetail,
-  BarList,
-  BarDetail,
+  StoreList,
+  StoreDetail,
   Login,
   Signup,
   StoreManagePage,

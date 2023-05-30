@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { Layout, DetailHeader, DetailInfo, DetailList, Image, TabMenu } from '../components';
 
-const BarDetail = () => {
+const StoreDetail = () => {
   const tabGroup = [
     { name: '상세 정보', type: 'barInfo' },
     { name: '보유 위스키', type: 'getWhisky' },
@@ -36,7 +36,7 @@ const BarDetail = () => {
   );
 };
 
-export default BarDetail;
+export default StoreDetail;
 
 const ImageDiv = styled.div`
   width: 360px;
