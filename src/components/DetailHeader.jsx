@@ -1,21 +1,25 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BsChevronLeft } from 'react-icons/bs';
 import LikeIcon from './LikeIcon';
 
 const DetailHeader = ({ korname, engname }) => {
+  const navigate = useNavigate();
   const location = useLocation();
+  const url = location.pathname;
+
+  const onBeforeClickHandler = () => navigate(-1);
 
   // TODO Scroll 감지해서 Background에 color 넣기
   return (
     <Header>
-      <LeftIcon />
+      <LeftIcon onClick={onBeforeClickHandler} />
       <NameDiv>
         <p>{korname}</p>
         {!!engname && <span>{engname}</span>}
       </NameDiv>
-      {location.pathname !== '/LikeList' ? <LikeIcon /> : <NullDiv />}
+      {url !== '/LikeList' ? <LikeIcon /> : <NullDiv />}
     </Header>
   );
 };
@@ -31,7 +35,7 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   background-color: transparent;
-  z-index: 0;
+  z-index: 1;
 `;
 
 const NameDiv = styled.div`

@@ -1,15 +1,22 @@
 import React from 'react';
 import { styled } from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Image from './Image';
 
 const DetailList = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const url = location.pathname;
 
+  const onListClickHandler = () => {
+    if (url === `/UserManagePage`) {
+      navigate(`/MyComment`);
+    }
+  };
+
   return (
     <>
-      <StockListDiv>
+      <StockListDiv onClick={onListClickHandler}>
         <ImageDiv>
           <Image width={'80px'} height={'80px'} src={''} alt={''} />
         </ImageDiv>
@@ -67,6 +74,7 @@ export default DetailList;
 
 const StockListDiv = styled.div`
   margin-bottom: 30px;
+  cursor: pointer;
   & h1 {
     font-weight: 600;
     white-space: nowrap;
