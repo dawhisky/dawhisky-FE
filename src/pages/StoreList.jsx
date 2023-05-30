@@ -4,7 +4,7 @@ import { MdOutlineGpsFixed } from 'react-icons/md';
 import { Layout, SearchInput, Button, DetailList } from '../components';
 import KakaoMap from './KakaoMap';
 
-const BarList = () => {
+const StoreList = () => {
   const [nearbyList, setNearbyList] = useState(false);
   const isShowListHandler = () => setNearbyList(!nearbyList);
   return (
@@ -40,7 +40,7 @@ const BarList = () => {
   );
 };
 
-export default BarList;
+export default StoreList;
 
 const ListSection = styled.section`
   position: relative;
