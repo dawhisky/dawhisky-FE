@@ -1,12 +1,23 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LikeIcon from './LikeIcon';
 import Image from './Image';
 
 const WhiskyGrid = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const url = location.pathname;
+
+  const onWhiskyClickHandler = () => {
+    if (url === `/UserManagePage`) {
+      navigate(`/MyComment`);
+    }
+  };
+
   return (
     <WhiskyListSection>
-      <WhiskyDataDiv>
+      <WhiskyDataDiv onClick={onWhiskyClickHandler}>
         <Image width={'155px'} height={'155px'} borderradius={'5px'} src={''} alt={''} />
         <h1>위스키 이름</h1>
         <div>
@@ -37,6 +48,7 @@ const WhiskyDataDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3px;
+  cursor: pointer;
   & div {
     display: flex;
     justify-content: space-between;
