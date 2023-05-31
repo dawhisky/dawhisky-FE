@@ -26,7 +26,7 @@ const locationHandler = (location) => {
     case 'both':
       return '';
     default:
-      return 'top: calc(100vh - 12%); left: 50%; transform: translate(-50%, -50%); z-index: 1;';
+      return 'bottom: 80px; left: 50%; transform: translate(-50%, -50%); z-index: 1;';
   }
 };
 

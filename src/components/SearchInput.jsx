@@ -4,8 +4,8 @@ import { GrSearch } from 'react-icons/gr';
 import { MdCancel } from 'react-icons/md';
 import { BsChevronLeft } from 'react-icons/bs';
 
-const searchTypeHandler = (searchType) => {
-  switch (searchType) {
+const searchTypeHandler = (searchtype) => {
+  switch (searchtype) {
     case 'before':
       return 'width: 330px; padding: 12px 16px 12px 48px;';
     case 'after':
@@ -15,12 +15,12 @@ const searchTypeHandler = (searchType) => {
   }
 };
 
-const SearchInput = ({ placeholder, searchType, ...rest }) => {
+const SearchInput = ({ placeholder, searchtype, ...rest }) => {
   return (
     <InputWrapDiv>
-      {searchType === 'after' ? <LeftIcon /> : ''}
-      <CommonInput searchType={searchType} placeholder={placeholder} />
-      {searchType === 'after' ? <CancelIcon {...rest} /> : <SearchIcon {...rest} />}
+      {searchtype === 'after' ? <LeftIcon /> : ''}
+      <CommonInput searchtype={searchtype} placeholder={placeholder} />
+      {searchtype === 'after' ? <CancelIcon {...rest} /> : <SearchIcon {...rest} />}
     </InputWrapDiv>
   );
 };
@@ -28,13 +28,14 @@ const SearchInput = ({ placeholder, searchType, ...rest }) => {
 export default SearchInput;
 
 const InputWrapDiv = styled.div`
+  margin: 20px 0 10px 0;
   display: flex;
   align-items: center;
   position: relative;
 `;
 
 const CommonInput = styled.input`
-  ${(props) => searchTypeHandler(props.searchType)};
+  ${(props) => searchTypeHandler(props.searchtype)};
   height: 40px;
   position: relative;
   border-radius: 12px;
