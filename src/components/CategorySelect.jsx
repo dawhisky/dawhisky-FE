@@ -3,9 +3,15 @@ import { styled } from 'styled-components';
 import { BsChevronDown } from 'react-icons/bs';
 import Button from './Button';
 
-const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
-  const [showUlList, setShowUlList] = useState(false);
+// ! [props]
+// * category : 카테고리 명
+// * list : 카테고리 명 클릭했을 때 보여줄 세부 리스트 (배열)
+// * categorychosen : 세부 리스트 중 사용자가 어떤 값을 선택했는지 (state)
+// * onclickhandler : 세부 리스트 중 사용자가 선택한 값으로 setState 처리
 
+const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
+  // * 닫기 버튼이나 외부 레이아웃을 선택했을 때 세부 리스트가 닫히도록 설정
+  const [showUlList, setShowUlList] = useState(false);
   const isShowListHandler = () => setShowUlList(!showUlList);
 
   return (

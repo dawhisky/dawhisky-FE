@@ -3,24 +3,31 @@ import { styled } from 'styled-components';
 import { RiHomeLine, RiHomeFill } from 'react-icons/ri';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { MdPersonOutline, MdPerson } from 'react-icons/md';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const location = useLocation();
+  const url = location.pathname;
 
   // * pathname에 따라 아이콘 fill 여부 결정
   return (
     <Nav>
-      <NavButton>
-        {location.pathname === '' ? <RiHomeFill /> : <RiHomeLine />}
+      <NavButton onClick={() => navigate(`/`)}>
+        {url === `/` || url === `/LikeList` || url === `/WhiskyDetail` ? <RiHomeFill /> : <RiHomeLine />}
         <p>위스키</p>
       </NavButton>
-      <NavButton>
-        {location.pathname === '' ? <AiFillHeart /> : <AiOutlineHeart />}
+      <NavButton onClick={() => navigate(`/StoreList`)}>
+        {url === `/StoreList` || url === `/StoreDetail` ? <AiFillHeart /> : <AiOutlineHeart />}
         <p>바</p>
       </NavButton>
-      <NavButton>
-        {location.pathname === '' ? <MdPerson /> : <MdPersonOutline />}
+      {/* TODO 로그인한 유저 상태에 따라 UserManage로 넘길지 StoreManage로 넘길지 분기 처리 필요 */}
+      <NavButton onClick={() => navigate(`/UserManagePage`)}>
+        {url === `/UserManagePage` || url === `/StoreManagePage` || url === `/MyComment` ? (
+          <MdPerson />
+        ) : (
+          <MdPersonOutline />
+        )}
         <p>마이페이지</p>
       </NavButton>
     </Nav>

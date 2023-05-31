@@ -4,6 +4,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { BsChevronLeft } from 'react-icons/bs';
 import LikeIcon from './LikeIcon';
 
+// ! [props]
+// * 상세페이지에서 보이는 뒤로가기, 아이템명, 좋아요 버튼을 모아둔 Header
+// * korname : 화면에서 보일 아이템 명
+// * engname : 화면에서 보일 아이템의 영문명, 없으면 props 아예 안내려도 됨
+
 const DetailHeader = ({ korname, engname }) => {
   const navigate = useNavigate();
   const location = useLocation();

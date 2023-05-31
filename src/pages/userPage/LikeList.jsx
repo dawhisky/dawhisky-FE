@@ -17,7 +17,7 @@ const LikeList = () => {
         <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
       </ListSection>
       {tabChosen === 'whisky' && <WhiskyGrid />}
-      {tabChosen === 'store' && <DetailList />}
+      {tabChosen === 'store' && <DetailList type={'store'} />}
     </Layout>
   );
 };

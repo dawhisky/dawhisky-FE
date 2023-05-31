@@ -28,7 +28,7 @@ const WhiskyDetail = () => {
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
       <TabSection>
         {tabChosen === 'detail' && <DetailInfo info={whiskyDetail} />}
-        {tabChosen === 'bar' && <DetailList />}
+        {tabChosen === 'bar' && <DetailList type={'store'} />}
         {tabChosen === 'comment' && <WhiskyComment />}
       </TabSection>
     </Layout>
