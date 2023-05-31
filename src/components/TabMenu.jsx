@@ -1,6 +1,15 @@
 import React from 'react';
 import { styled } from 'styled-components';
 
+// ! [props]
+// * tabgroup : tab의 name과 type을 명시  ex. tabgroup = [{ name: '전체', type: 'all' }]
+// * tabchosen : 어떤 tab이 선택되었는지 명시하는 state
+//   - const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+//   - tabchosen값에 따라 하단에 보여줄 페이지 분기 처리 가능
+//     ex. {tabChosen === 'bar' && <DetailList />}
+// * ontabclickhandler : click한 값으로 tab 선택값 변경
+//   - const onTabClickHandler = (type) => setTabChosen(type);
+
 const TabMenu = ({ tabgroup, tabchosen, ontabclickhandler }) => {
   return (
     <TabSection>

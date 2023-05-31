@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import LikeIcon from './LikeIcon';
 import Image from './Image';
 
+// TODO 추후 response로 list값 props로 내려받으면 map처리할 수 있도록 작업 예정
+
 const WhiskyGrid = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -12,6 +14,8 @@ const WhiskyGrid = () => {
   const onWhiskyClickHandler = () => {
     if (url === `/UserManagePage`) {
       navigate(`/MyComment`);
+    } else if (url === `/LikeList`) {
+      navigate(`/WhiskyDetail`);
     }
   };
 
