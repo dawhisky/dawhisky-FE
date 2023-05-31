@@ -1,43 +1,45 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { Layout, Navbar } from '../../components';
+import { Layout, Button } from '../../components';
 
 const Login = () => {
   const [userRole, setUserRole] = useState('user');
-  console.log(userRole);
+
+  const navigate = useNavigate();
+
   return (
     <Layout>
-      <LoginPageWrapper userRole={userRole}>
-        <div id="logo-wrapper">
-          <p>다위스키 로고</p>
-        </div>
-        <div id="login-page-center">
-          <div id="personal-login">
-            <button id="personal-trans-button" type="button" onClick={() => setUserRole('user')}>
-              개인회원 로그인
-            </button>
-            <button id="personal-login-button" type="button">
-              카카오톡으로 시작하기
-            </button>
-          </div>
-          <div id="owner-login">
-            <button id="owner-trans-button" type="button" onClick={() => setUserRole('owner')}>
-              사업자회원 로그인
-            </button>
-            <div id="input-area">
-              <input placeholder="Email" type="text" id="email-input" />
-              <input placeholder="Password" type="password" id="password-input" />
+      <LoginPageWrapper userrole={userRole}>
+        <LogoWrapper>
+          <p>{'다위스키 로고'}</p>
+        </LogoWrapper>
+        <LoginPageCenter>
+          <PersonalLogin userrole={userRole}>
+            <div>
+              <Button onClick={() => setUserRole('user')}>{'개인회원 로그인'}</Button>
             </div>
-            <p id="find-idpw">아이디 / 비밀번호 찾기</p>
-            <button id="owner-login-button" type="button">
-              로그인
-            </button>
-          </div>
-        </div>
-        <div id="login-bottom">
-          <span>다위스키 이용이 처음이신가요?</span>&nbsp;&nbsp;
-          <span id="signup-button">회원가입</span>
-        </div>
+            <Button>{'카카오톡으로 시작하기'}</Button>
+          </PersonalLogin>
+          <OwnerLogin userrole={userRole}>
+            <div>
+              <Button onClick={() => setUserRole('owner')}>{'사업자회원 로그인'}</Button>
+            </div>
+            <InputArea>
+              <input placeholder={'Email'} type={'text'} />
+              <input placeholder={'Password'} type={'password'} />
+              <div>
+                <Button>{'아이디 / 비밀번호 찾기'}</Button>
+              </div>
+            </InputArea>
+
+            <Button>{'로그인'}</Button>
+          </OwnerLogin>
+        </LoginPageCenter>
+        <LoginBottom>
+          <span>{'다위스키 이용이 처음이신가요?'}</span>&nbsp;&nbsp;
+          <Button onClick={() => navigate('/Signup')}>{'회원가입'}</Button>
+        </LoginBottom>
       </LoginPageWrapper>
     </Layout>
   );
@@ -49,89 +51,130 @@ const LoginPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  #logo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 143px;
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 148px;
+`;
+
+const LoginPageCenter = styled.div`
+  height: 327px;
+  padding: 0 24px 0 24px;
+`;
+
+const PersonalLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 43px;
+  height: 74px;
+  width: 100%;
+
+  button {
+    transform: none;
   }
-  #login-page-center {
-    height: 327px;
-    padding: 0 24px 0 24px;
 
-    #personal-login {
-      margin-bottom: 43px;
-
-      #personal-trans-button {
-        font-size: 18px;
-        background-color: transparent;
-        color: ${(props) => (props.userRole === 'user' ? 'black' : '#afb1b6')};
-      }
-      #personal-login-button {
-        height: 46px;
-        width: 312px;
-        background-color: #b4b4b4;
-        color: white;
-        border-radius: 8px;
-        margin-top: 10px;
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-      }
-    }
-
-    #owner-login {
-      height: 146px;
-
-      #owner-trans-button {
-        font-size: 18px;
-        background-color: transparent;
-        color: ${(props) => (props.userRole === 'owner' ? 'black' : '#afb1b6')};
-        margin-bottom: 4px;
-      }
-      #input-area {
-        height: 116px;
-        margin-top: 5px;
-        input {
-          height: 46px;
-          width: 312px;
-          border-radius: 8px;
-          margin: 0 auto 8px auto;
-          background-color: #f3f3f3;
-          padding: 16px;
-          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-        }
-      }
-      #find-idpw {
-        display: flex;
-        justify-content: flex-end;
-        font-size: 12px;
-        color: #72777a;
-      }
-      #owner-login-button {
-        height: 46px;
-        width: 312px;
-        border-radius: 8px;
-        color: #72777a;
-        background-color: #f3f3f3;
-        margin-top: 18px;
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-      }
+  & > div:first-child {
+    width: 100%;
+    button {
+      height: 100%;
+      width: 120px;
+      font-size: 18px;
+      background-color: transparent;
+      color: ${(props) => (props.userrole === 'user' ? 'black' : '#afb1b6')};
+      border-radius: 0;
+      margin-top: 0;
+      box-shadow: none;
     }
   }
-  #login-bottom {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 64px;
-    margin-top: 20px;
 
-    span {
-      font-size: 13px;
-    }
+  & button:last-child {
+    height: 46px;
+    width: 312px;
+    background-color: #b4b4b4;
+    color: white;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+`;
 
-    #signup-button {
-      font-size: 16px;
-      color: #0067a3;
+const OwnerLogin = styled.div`
+  height: 146px;
+
+  button {
+    transform: none;
+  }
+  & > div:first-child {
+    width: 100%;
+    button:first-child {
+      width: 130px;
+      font-size: 18px;
+      background-color: transparent;
+      color: ${(props) => (props.userrole === 'owner' ? 'black' : '#afb1b6')};
+      margin-bottom: 4px;
     }
+  }
+
+  & > div:nth-child(3) {
+    button {
+      display: flex;
+      justify-content: flex-end;
+      background-color: transparent;
+      font-size: 14px;
+    }
+  }
+
+  & > div:last-child {
+    button {
+      height: 46px;
+      width: 312px;
+      border-radius: 8px;
+      color: #72777a;
+      background-color: #f3f3f3;
+      margin-top: 18px;
+    }
+  }
+`;
+
+const InputArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 116px;
+  width: 100%;
+  margin-top: 5px;
+  input {
+    height: 46px;
+    width: 312px;
+    border-radius: 8px;
+    margin: 0 auto 8px auto;
+    background-color: #f3f3f3;
+    padding: 16px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+`;
+
+const LoginBottom = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+  margin-top: 20px;
+
+  span {
+    font-size: 13px;
+  }
+
+  button {
+    transform: none;
+    background-color: transparent;
+    width: 70px;
+    font-size: 16px;
+    color: #0067a3;
   }
 `;
 

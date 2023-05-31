@@ -10,6 +10,7 @@ import DetailList from './DetailList';
 import WhiskyGrid from './WhiskyGrid';
 import Navbar from './Navbar';
 import Layout from './Layout';
+import Modal from './Modal';
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   WhiskyGrid,
   Navbar,
   Layout,
+  Modal,
 };
