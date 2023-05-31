@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { Layout } from '../../components';
-import { StoreBottleManage, StoreInfoManage } from '../../components/innerPage';
+import StoreInfoManage from './StoreInfoManage';
+import StoreBottleManage from './StoreBottleManage';
+import StoreBottleRegister from './StoreBottleRegister';
 
 const StoreManagePage = () => {
   const [whichTabChosen, setWhichTabChosen] = useState('store');
+
+  const [isRegisterMode, setIsRegisterMode] = useState(false);
 
   const storeInfo = {
     name: '팀스피릿츠',
@@ -23,29 +27,33 @@ const StoreManagePage = () => {
   return (
     <div>
       <Layout>
-        <StoreManagePageWrapper>
-          <div id="store-name">{storeInfo.name}</div>
-          <div id="store-management-tab">
-            {tabGroup.map((item) => {
-              return (
-                <TopTab
-                  type="button"
-                  key={item.type}
-                  id={item.type}
-                  onClick={(e) => setWhichTabChosen(e.target.id)}
-                  whichtabchosen={whichTabChosen}
-                >
-                  {item.name}
-                </TopTab>
-              );
-            })}
-          </div>
-          {whichTabChosen === 'store' ? (
-            <StoreInfoManage />
-          ) : whichTabChosen === 'bottle' ? (
-            <StoreBottleManage />
-          ) : null}
-        </StoreManagePageWrapper>
+        {isRegisterMode ? (
+          <StoreBottleRegister setIsRegisterMode={setIsRegisterMode} />
+        ) : (
+          <StoreManagePageWrapper>
+            <div>{storeInfo.name}</div>
+            <TopTabGroup>
+              {tabGroup.map((item) => {
+                return (
+                  <TopTab
+                    type={'button'}
+                    key={item.type}
+                    id={item.type}
+                    onClick={(e) => setWhichTabChosen(e.target.id)}
+                    whichtabchosen={whichTabChosen}
+                  >
+                    {item.name}
+                  </TopTab>
+                );
+              })}
+            </TopTabGroup>
+            {whichTabChosen === 'store' ? (
+              <StoreInfoManage />
+            ) : whichTabChosen === 'bottle' ? (
+              <StoreBottleManage setIsRegisterMode={setIsRegisterMode} />
+            ) : null}
+          </StoreManagePageWrapper>
+        )}
       </Layout>
     </div>
   );
@@ -55,32 +63,34 @@ export default StoreManagePage;
 
 const StoreManagePageWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 360px;
 
-  #store-name {
+  & > div:first-child {
     display: flex;
     align-items: flex-end;
     position: fixed;
     height: 40px;
-    width: 360px;
+    width: 340px;
     padding-left: 20px;
-    top: 0;
     font-size: 20px;
     font-weight: 700;
     background-color: white;
   }
-  #store-management-tab {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    position: fixed;
-    top: 40px;
-    height: 50px;
-    width: 360px;
-    border-bottom: 0.5px solid #eaeaea;
-    margin: 0 -16px 0 -16px;
-    background-color: white;
-  }
+`;
+
+const TopTabGroup = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  position: fixed;
+  top: 40px;
+  height: 50px;
+  width: 360px;
+  border-bottom: 0.5px solid #eaeaea;
+  margin: 0 -16px 0 -16px;
+  background-color: white;
 `;
 
 const TopTab = styled.button`
