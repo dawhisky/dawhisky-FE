@@ -3,7 +3,12 @@ import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Image from './Image';
 
-const DetailList = () => {
+// ! [props]
+// * 가로로 긴 리스트로 위스키 또는 위스키바 리스트를 보여주는 컴포넌트
+// * type : 보여주고 싶은 리스트가 위스키바 일 경우 type={'store'}로 설정, 위스키바 리스트 출력
+// *        props를 따로 내려주지 않으면 위스키 리스트를 출력함
+
+const DetailList = ({ type }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const url = location.pathname;
@@ -11,6 +16,10 @@ const DetailList = () => {
   const onListClickHandler = () => {
     if (url === `/UserManagePage`) {
       navigate(`/MyComment`);
+    } else if (url === `/LikeList` || url === `/StoreList` || url === `/WhiskyDetail`) {
+      navigate(`/StoreDetail`);
+    } else if (url === `/StoreDetail`) {
+      navigate(`/WhiskyDetail`);
     }
   };
 
@@ -20,15 +29,9 @@ const DetailList = () => {
         <ImageDiv>
           <Image width={'80px'} height={'80px'} src={''} alt={''} />
         </ImageDiv>
-        <h1>
-          {url === '/WhiskyDetail' || url === '/StoreList' || url === '/LikeList' ? '위스키바 이름' : '위스키 이름'}
-        </h1>
-        <h3>
-          {url === '/WhiskyDetail' || url === '/StoreList' || url === '/LikeList'
-            ? '서울특별시 강남구 강남대로 7'
-            : 'Whisky name'}
-        </h3>
-        {url === '/WhiskyDetail' || url === '/StoreList' || url === '/LikeList' ? (
+        <h1>{type === 'store' ? '위스키바 이름' : '위스키 이름'}</h1>
+        <h3>{type === 'store' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
+        {type === 'store' ? (
           <BarInfoDiv>
             <button type="button">잔여 좌석 2</button>
             <h2>60m</h2>
@@ -41,19 +44,13 @@ const DetailList = () => {
           </WhiskyInfoDiv>
         )}
       </StockListDiv>
-      <StockListDiv>
+      <StockListDiv onClick={onListClickHandler}>
         <ImageDiv>
           <Image width={'80px'} height={'80px'} src={''} alt={''} />
         </ImageDiv>
-        <h1>
-          {url === '/WhiskyDetail' || url === '/StoreList' || url === '/LikeList' ? '위스키바 이름' : '위스키 이름'}
-        </h1>
-        <h3>
-          {url === '/WhiskyDetail' || url === '/StoreList' || url === '/LikeList'
-            ? '서울특별시 강남구 강남대로 7'
-            : 'Whisky name'}
-        </h3>
-        {url === '/WhiskyDetail' || url === '/StoreList' || url === '/LikeList' ? (
+        <h1>{type === 'store' ? '위스키바 이름' : '위스키 이름'}</h1>
+        <h3>{type === 'store' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
+        {type === 'store' ? (
           <BarInfoDiv>
             <button type="button">잔여 좌석 2</button>
             <h2>60m</h2>
@@ -61,7 +58,6 @@ const DetailList = () => {
         ) : (
           <WhiskyInfoDiv>
             <h2>45% vol</h2>
-            {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
             <button type="button">등록</button>
           </WhiskyInfoDiv>
         )}
