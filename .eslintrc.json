@@ -39,13 +39,15 @@
     "react/jsx-curly-brace-presence": ["warn", { "props": "always", "children": "always" }],
     // [error] Prop spreading is forbidden
     "react/jsx-props-no-spreading": "off",
+    // 파일의 경로가 틀렸는지 확인하는 옵션 false
     "import/no-unresolved": ["error", { "caseSensitive": false }]
   },
+  // 절대경로 설정
   "settings": {
     "import/resolver": {
-    "node": {
-    "paths": ["src"]
+      "node": {
+        "paths": ["src"]
+      }
     }
-    }
-    }
+  }
 }
