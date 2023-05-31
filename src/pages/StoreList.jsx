@@ -28,7 +28,7 @@ const StoreList = () => {
           <NearbyListDiv>
             <p>주변 위스키바</p>
             <div>
-              <DetailList />
+              <DetailList type={'store'} />
             </div>
             <div>
               <Button onClick={isShowListHandler}>닫기</Button>

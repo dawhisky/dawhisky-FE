@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { Layout, TabMenu, SearchInput, CategorySelect, WhiskyGrid } from '../components';
 
 const WhiskyList = () => {
   // * useState에 0번째 값을 default값으로 넣기 위해 최상단에 선언
-
   // * 탭 그룹
   // TODO UI 정렬 위해 5개만 출력하고 나머지 주석 처리, 추후 슬라이드 가능한지 찾아보고 적용
   const tabGroup = [
@@ -23,6 +23,8 @@ const WhiskyList = () => {
   const blendList = ['전체', '싱글 몰트', '싱글 그레인', '블렌디드 몰트', '블렌디드 그레인', '블렌디드'];
   const americantList = ['전체', '버번', '라이', '테네시', '그 외'];
 
+  const navigate = useNavigate();
+
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
   const [region, setRegion] = useState(regionList[0]);
   const [blend, setBlend] = useState(blendList[0]);
@@ -34,12 +36,14 @@ const WhiskyList = () => {
   const onBlendClickHandler = (idx) => setBlend(blendList[idx]);
   const onAmericanClickHandler = (idx) => setAmerican(americantList[idx]);
 
+  const onLikeListClickHandler = () => navigate(`/LikeList`);
+
   return (
     <Layout>
       <Header>
         <div>
           <p>다위스키 로고</p>
-          <LikeListIcon />
+          <LikeListIcon onClick={onLikeListClickHandler} />
         </div>
         <SearchInput searchtype={'before'} placeholder={'위스키를 검색해보세요!'} />
       </Header>
@@ -81,7 +85,6 @@ const WhiskyList = () => {
           />
         </CategorySection>
       )}
-
       <WhiskyGrid />
     </Layout>
   );
