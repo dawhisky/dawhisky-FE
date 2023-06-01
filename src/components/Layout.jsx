@@ -37,5 +37,6 @@ const ContainerDiv = styled.div`
 `;
 
 const WrapMain = styled.main`
-  padding: 0px 16px 10px 16px;
+  padding: 0px 16px 30px 16px;
+  margin-bottom: 40px;
 `;
