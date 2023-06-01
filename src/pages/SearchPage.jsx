@@ -3,7 +3,7 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { GrSearch } from 'react-icons/gr';
-import getKeywordList from '../api/whisky';
+import { getKeywordList } from '../api/whisky';
 import { Layout, SearchInput } from '../components';
 import { NoneData } from './statusPage';
 
