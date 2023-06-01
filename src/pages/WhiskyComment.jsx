@@ -1,12 +1,15 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import { NoneData } from './statusPage';
 
-const WhiskyComment = () => {
+// ! [props]
+// * comment : 댓글 리스트 데이터
+
+const WhiskyComment = ({ comment }) => {
   return (
     <CommentDiv>
-      <p>Consequat proin ut sit tortor non habitasse sem fusce tincidunt.</p>
-      <p>Faucibus consequat nibh elementum faucibus facilisi.</p>
-      <p>Sed sed ipsum consequat maecenas non bibendum ullamcorper.</p>
+      {comment && comment.map((item) => <p key={item.review_id}>{item.content}</p>)}
+      {!comment && <NoneData>등록된 코멘트가 없어요</NoneData>}
     </CommentDiv>
   );
 };

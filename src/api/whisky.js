@@ -21,3 +21,33 @@ export const getKeywordList = (keyword) => {
       throw error;
     });
 };
+
+// * 위스키 디테일 조회
+export const getWhiskyDetail = (id) => {
+  return axios
+    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/${id}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
+// * 위스키 보유 스토어 조회
+export const getWhiskyStore = (id) => {
+  return axios
+    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/comment/${id}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
+// * 위스키 코멘트 조회
+export const getWhiskyComment = (id) => {
+  return axios
+    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/comment/${id}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};

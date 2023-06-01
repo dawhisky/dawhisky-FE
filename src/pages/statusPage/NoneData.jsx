@@ -19,7 +19,7 @@ const NoneData = ({ children }) => {
 export default NoneData;
 
 const InformDiv = styled.div`
-  height: calc(100vh - 150px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
