@@ -4,11 +4,15 @@ import { Layout } from '../../components';
 import StoreInfoManage from './StoreInfoManage';
 import StoreBottleManage from './StoreBottleManage';
 import StoreBottleRegister from './StoreBottleRegister';
+import StoreQueSeatManage from './StoreQueSeatManage';
+import StoreSeatEditPage from './StoreSeatEditPage';
 
 const StoreManagePage = () => {
   const [whichTabChosen, setWhichTabChosen] = useState('store');
 
   const [isRegisterMode, setIsRegisterMode] = useState(false);
+
+  const [isSeatEditMode, setIsSeatEditMode] = useState(false);
 
   const storeInfo = {
     name: '팀스피릿츠',
@@ -29,6 +33,8 @@ const StoreManagePage = () => {
       <Layout>
         {isRegisterMode ? (
           <StoreBottleRegister setIsRegisterMode={setIsRegisterMode} />
+        ) : isSeatEditMode ? (
+          <StoreSeatEditPage setIsSeatEditMode={setIsSeatEditMode} />
         ) : (
           <StoreManagePageWrapper>
             <div>{storeInfo.name}</div>
@@ -51,7 +57,9 @@ const StoreManagePage = () => {
               <StoreInfoManage />
             ) : whichTabChosen === 'bottle' ? (
               <StoreBottleManage setIsRegisterMode={setIsRegisterMode} />
-            ) : null}
+            ) : (
+              <StoreQueSeatManage setIsSeatEditMode={setIsSeatEditMode} />
+            )}
           </StoreManagePageWrapper>
         )}
       </Layout>
@@ -72,7 +80,7 @@ const StoreManagePageWrapper = styled.div`
     align-items: flex-end;
     position: fixed;
     height: 40px;
-    width: 340px;
+    width: 360px;
     padding-left: 20px;
     font-size: 20px;
     font-weight: 700;

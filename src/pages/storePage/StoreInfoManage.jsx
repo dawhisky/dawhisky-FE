@@ -67,8 +67,8 @@ export default StoreInfoManage;
 const StoreInfoManageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 90px;
-
+  margin-top: 95px;
+  margin-bottom: 80px;
   button {
     transform: none;
   }
