@@ -22,7 +22,7 @@ const BackgroundDiv = styled.div`
 
 const ContainerDiv = styled.div`
   width: 360px;
-  height: 100vh;
+  height: ${window.innerHeight}px;
   margin: auto;
   position: relative;
   overflow-y: scroll;
@@ -37,5 +37,5 @@ const ContainerDiv = styled.div`
 `;
 
 const WrapMain = styled.main`
-  /* padding: 0px 16px 10px 16px; */
+  padding: 0px 16px 10px 16px;
 `;
