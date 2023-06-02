@@ -34,13 +34,14 @@ const WhiskyGrid = ({ list }) => {
             />
             <h1>{item.whisky_kor}</h1>
             <div>
-              {/* TODO API 수정되면 영어 이름 연결 */}
-              <h3>Whisky name</h3>
+              <h3>{item.whisky_eng}</h3>
               <h2>{item.whisky_abv} vol</h2>
             </div>
-            <IconDiv>
-              <LikeIcon />
-            </IconDiv>
+            {url !== `/` && (
+              <IconDiv>
+                <LikeIcon />
+              </IconDiv>
+            )}
           </WhiskyDataDiv>
         ))}
     </WhiskyListSection>

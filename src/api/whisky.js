@@ -5,7 +5,7 @@ import axios from 'axios';
 // * 위스키 리스트 전체 조회
 export const getWhiskyList = () => {
   return axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky`)
+    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/?page=1&pageSize=10`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;

@@ -17,6 +17,7 @@ const WhiskyDetail = () => {
   const whiskyId = location.pathname.slice(14);
 
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+  const [isWhiskyLike, setIsWhiskyLike] = useState(false);
   const [whiskyDetail, setWhiskyDetail] = useState(null);
   const [whiskyInfo, setWhiskyInfo] = useState(null);
   const [whiskyStore, setWhiskyStore] = useState(null);
@@ -29,12 +30,13 @@ const WhiskyDetail = () => {
     onSuccess: (response) => {
       setWhiskyDetail(response);
       setWhiskyInfo({
-        지역: `${response.whisky_country} | ${response.whisky_region}`,
-        타입: response.whisky_type,
-        숙성연도: response.whisky_age,
-        도수: `${response.whisky_abv} vol`,
-        상세설명: response.whisky_desc,
+        지역: `${response.whiskyInfo.whisky_country} | ${response.whiskyInfo.whisky_region}`,
+        타입: response.whiskyInfo.whisky_type,
+        숙성연도: response.whiskyInfo.whisky_age,
+        도수: `${response.whiskyInfo.whisky_abv} vol`,
+        상세설명: response.whiskyInfo.whisky_desc,
       });
+      setIsWhiskyLike(response.liked);
     },
   });
 
@@ -78,13 +80,17 @@ const WhiskyDetail = () => {
     <Layout>
       {whiskyDetail && (
         <>
-          <DetailHeader korname={whiskyDetail.whisky_kor} engname={whiskyDetail.whisky_eng} />
+          <DetailHeader
+            korname={whiskyDetail.whiskyInfo.whisky_kor}
+            engname={whiskyDetail.whiskyInfo.whisky_eng}
+            whiskylike={isWhiskyLike}
+          />
           <ImageDiv>
             <Image
               width={'360px'}
               height={'360px'}
-              src={whiskyDetail.whisky_photo}
-              alt={`${whiskyDetail.whisky_kor} 사진`}
+              src={whiskyDetail.whiskyInfo.whisky_photo}
+              alt={`${whiskyDetail.whiskyInfo.whisky_kor} 사진`}
             />
           </ImageDiv>
         </>

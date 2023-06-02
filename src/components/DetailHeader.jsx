@@ -9,7 +9,7 @@ import LikeIcon from './LikeIcon';
 // * korname : 화면에서 보일 아이템 명
 // * engname : 화면에서 보일 아이템의 영문명, 없으면 props 아예 안내려도 됨
 
-const DetailHeader = ({ korname, engname }) => {
+const DetailHeader = ({ korname, engname, whiskylike }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const url = location.pathname;
@@ -24,7 +24,7 @@ const DetailHeader = ({ korname, engname }) => {
         <p>{korname}</p>
         {!!engname && <span>{engname}</span>}
       </NameDiv>
-      {url !== '/LikeList' ? <LikeIcon /> : <NullDiv />}
+      {url !== '/LikeList' ? <LikeIcon like={whiskylike} /> : <NullDiv />}
     </Header>
   );
 };
