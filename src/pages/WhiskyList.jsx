@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { getWhiskyList } from '../api/whisky';
 import { Layout, TabMenu, SearchInput, CategorySelect, WhiskyGrid } from '../components';
 
 const WhiskyList = () => {
-  // * useState에 0번째 값을 default값으로 넣기 위해 최상단에 선언
   // * 탭 그룹
   // TODO UI 정렬 위해 5개만 출력하고 나머지 주석 처리, 추후 슬라이드 가능한지 찾아보고 적용
   const tabGroup = [
@@ -18,17 +19,20 @@ const WhiskyList = () => {
     // { name: '그 외', type: 'etc' },
   ];
 
-  // * 카테고리 세부 정렬 기준
+  // * 카테고리 세부 리스트
   const regionList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '그 외'];
   const blendList = ['전체', '싱글 몰트', '싱글 그레인', '블렌디드 몰트', '블렌디드 그레인', '블렌디드'];
   const americantList = ['전체', '버번', '라이', '테네시', '그 외'];
 
-  const navigate = useNavigate();
-
+  // * 카테고리 state
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
   const [region, setRegion] = useState(regionList[0]);
   const [blend, setBlend] = useState(blendList[0]);
   const [american, setAmerican] = useState(americantList[0]);
+
+  const [whiskyList, setWhiskyList] = useState(null);
+
+  const navigate = useNavigate();
 
   // ? setState 처리해서 넘길 때 e.preventDefault를 쓸지 말지?
   const onTabClickHandler = (type) => setTabChosen(type);
@@ -37,6 +41,23 @@ const WhiskyList = () => {
   const onAmericanClickHandler = (idx) => setAmerican(americantList[idx]);
 
   const onLikeListClickHandler = () => navigate(`/LikeList`);
+
+  // * [위스키 리스트] 조회 useMutation
+  const getWhiskyListMutation = useMutation(getWhiskyList, {
+    onSuccess: (response) => {
+      setWhiskyList(response);
+    },
+  });
+
+  // * [위스키 리스트] 조회
+  const getWhiskyListHandler = () => {
+    getWhiskyListMutation.mutate();
+  };
+
+  // * 페이지가 마운트될 때 게시글 리스트를 조회하도록 설정, 추후 카테고리 의존성배열 설정
+  useEffect(() => {
+    getWhiskyListHandler();
+  }, []);
 
   return (
     <Layout>
@@ -85,7 +106,7 @@ const WhiskyList = () => {
           />
         </CategorySection>
       )}
-      <WhiskyGrid />
+      <WhiskyGrid list={whiskyList} />
     </Layout>
   );
 };

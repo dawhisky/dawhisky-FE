@@ -12,6 +12,7 @@ import LikeList from './userPage/LikeList';
 import UserManagePage from './userPage/UserManagePage';
 import MyComment from './userPage/MyComment';
 import SelectWhisky from './userPage/SelectWhisky';
+import SearchPage from './SearchPage';
 
 export {
   Error,
@@ -28,4 +29,5 @@ export {
   UserManagePage,
   MyComment,
   SelectWhisky,
+  SearchPage,
 };

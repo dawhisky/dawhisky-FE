@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { NoneData } from '../pages/statusPage';
 import Image from './Image';
 
 // ! [props]
@@ -8,61 +9,48 @@ import Image from './Image';
 // * type : 보여주고 싶은 리스트가 위스키바 일 경우 type={'store'}로 설정, 위스키바 리스트 출력
 // *        props를 따로 내려주지 않으면 위스키 리스트를 출력함
 
-const DetailList = ({ type }) => {
+const DetailList = ({ type, list }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const url = location.pathname;
+  const url = location.pathname.slice(14);
 
   const onListClickHandler = () => {
-    if (url === `/UserManagePage`) {
+    if (url.includes('/UserManagePage')) {
       navigate(`/MyComment`);
-    } else if (url === `/LikeList` || url === `/StoreList` || url === `/WhiskyDetail`) {
+    } else if (url.includes('/LikeList') || url.includes('/StoreList') || url.includes('/WhiskyDetail')) {
       navigate(`/StoreDetail`);
-    } else if (url === `/StoreDetail`) {
+    } else if (url.includes('/StoreDetail')) {
       navigate(`/WhiskyDetail`);
     }
   };
 
   return (
-    <>
-      <StockListDiv onClick={onListClickHandler}>
-        <ImageDiv>
-          <Image width={'80px'} height={'80px'} src={''} alt={''} />
-        </ImageDiv>
-        <h1>{type === 'store' ? '위스키바 이름' : '위스키 이름'}</h1>
-        <h3>{type === 'store' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
-        {type === 'store' ? (
-          <BarInfoDiv>
-            <button type="button">잔여 좌석 2</button>
-            <h2>60m</h2>
-          </BarInfoDiv>
-        ) : (
-          <WhiskyInfoDiv>
-            <h2>45% vol</h2>
-            {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
-            <button type="button">등록</button>
-          </WhiskyInfoDiv>
-        )}
-      </StockListDiv>
-      <StockListDiv onClick={onListClickHandler}>
-        <ImageDiv>
-          <Image width={'80px'} height={'80px'} src={''} alt={''} />
-        </ImageDiv>
-        <h1>{type === 'store' ? '위스키바 이름' : '위스키 이름'}</h1>
-        <h3>{type === 'store' ? '서울특별시 강남구 강남대로 7' : 'Whisky name'}</h3>
-        {type === 'store' ? (
-          <BarInfoDiv>
-            <button type="button">잔여 좌석 2</button>
-            <h2>60m</h2>
-          </BarInfoDiv>
-        ) : (
-          <WhiskyInfoDiv>
-            <h2>45% vol</h2>
-            <button type="button">등록</button>
-          </WhiskyInfoDiv>
-        )}
-      </StockListDiv>
-    </>
+    <StockListDiv onClick={onListClickHandler}>
+      {list &&
+        list.map((item) => (
+          <>
+            <ImageDiv key={item.store_id}>
+              <Image width={'80px'} height={'80px'} src={item.biz_photo} alt={`${item.store} 사진`} />
+            </ImageDiv>
+            <h1>{type === 'store' ? list.store : list.whisky_kor}</h1>
+            <h3>{type === 'store' ? list.address : list.whisky_eng}</h3>
+            {type === 'store' ? (
+              <BarInfoDiv>
+                <button type="button">잔여 좌석 2</button>
+                <h2>60m</h2>
+              </BarInfoDiv>
+            ) : (
+              <WhiskyInfoDiv>
+                <h2>{list.whisky_abv} vol</h2>
+                {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
+                <button type="button">등록</button>
+              </WhiskyInfoDiv>
+            )}
+          </>
+        ))}
+      {!list && type === 'store' && <NoneData>위스키 바가 없어요</NoneData>}
+      {!list && type !== 'store' && <NoneData>위스키 데이터가 존재하지 않아요</NoneData>}
+    </StockListDiv>
   );
 };
 
