@@ -8,14 +8,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const REST_API_KEY = 'a93e18596b706b608dc95acd3b818f68';
-  const REDIRECT_URI = 'http://jjmdev.site/api/auth/login/user';
-  const KAKAO_AUTH = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
-  const socialLogin = () => {
-    window.location.href = KAKAO_AUTH;
-  };
-
   return (
     <Layout>
       <LoginPageWrapper userrole={userRole}>
@@ -27,7 +19,7 @@ const Login = () => {
             <div>
               <Button onClick={() => setUserRole('user')}>{'개인회원 로그인'}</Button>
             </div>
-            <Button onClick={() => socialLogin()}>{'카카오톡으로 시작하기'}</Button>
+            <Button>{'카카오톡으로 시작하기'}</Button>
           </PersonalLogin>
           <OwnerLogin userrole={userRole}>
             <div>
