@@ -13,6 +13,7 @@ import {
   UserManagePage,
   MyComment,
   SelectWhisky,
+  LoginSample,
 } from './pages/index';
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/UserManagePage" element={<UserManagePage />} />
           <Route path="/MyComment" element={<MyComment />} />
           <Route path="/SelectWhisky" element={<SelectWhisky />} />
+          <Route path="/LoginSample" element={<LoginSample />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

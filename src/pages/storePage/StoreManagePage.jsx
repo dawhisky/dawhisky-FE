@@ -29,41 +29,39 @@ const StoreManagePage = () => {
   ];
 
   return (
-    <div>
-      <Layout>
-        {isRegisterMode ? (
-          <StoreBottleRegister setIsRegisterMode={setIsRegisterMode} />
-        ) : isSeatEditMode ? (
-          <StoreSeatEditPage setIsSeatEditMode={setIsSeatEditMode} />
-        ) : (
-          <StoreManagePageWrapper>
-            <div>{storeInfo.name}</div>
-            <TopTabGroup>
-              {tabGroup.map((item) => {
-                return (
-                  <TopTab
-                    type={'button'}
-                    key={item.type}
-                    id={item.type}
-                    onClick={(e) => setWhichTabChosen(e.target.id)}
-                    whichtabchosen={whichTabChosen}
-                  >
-                    {item.name}
-                  </TopTab>
-                );
-              })}
-            </TopTabGroup>
-            {whichTabChosen === 'store' ? (
-              <StoreInfoManage />
-            ) : whichTabChosen === 'bottle' ? (
-              <StoreBottleManage setIsRegisterMode={setIsRegisterMode} />
-            ) : (
-              <StoreQueSeatManage setIsSeatEditMode={setIsSeatEditMode} />
-            )}
-          </StoreManagePageWrapper>
-        )}
-      </Layout>
-    </div>
+    <Layout>
+      {isRegisterMode ? (
+        <StoreBottleRegister setIsRegisterMode={setIsRegisterMode} />
+      ) : isSeatEditMode ? (
+        <StoreSeatEditPage setIsSeatEditMode={setIsSeatEditMode} />
+      ) : (
+        <StoreManagePageWrapper>
+          <div>{storeInfo.name}</div>
+          <TopTabGroup>
+            {tabGroup.map((item) => {
+              return (
+                <TopTab
+                  type={'button'}
+                  key={item.type}
+                  id={item.type}
+                  onClick={(e) => setWhichTabChosen(e.target.id)}
+                  whichtabchosen={whichTabChosen}
+                >
+                  {item.name}
+                </TopTab>
+              );
+            })}
+          </TopTabGroup>
+          {whichTabChosen === 'store' ? (
+            <StoreInfoManage />
+          ) : whichTabChosen === 'bottle' ? (
+            <StoreBottleManage setIsRegisterMode={setIsRegisterMode} />
+          ) : (
+            <StoreQueSeatManage setIsSeatEditMode={setIsSeatEditMode} />
+          )}
+        </StoreManagePageWrapper>
+      )}
+    </Layout>
   );
 };
 
@@ -73,7 +71,6 @@ const StoreManagePageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 360px;
 
   & > div:first-child {
     display: flex;
