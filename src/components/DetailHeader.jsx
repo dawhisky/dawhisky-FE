@@ -43,18 +43,34 @@ const Header = styled.header`
   z-index: 1;
 `;
 
+// TODO 글씨 길이가 230px을 넘지 않으면 가운데정렬, 넘으면 float: left
 const NameDiv = styled.div`
+  width: 230px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 3px;
   & p {
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 18px;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   & span {
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 

@@ -14,6 +14,7 @@ import {
   MyComment,
   SelectWhisky,
   LoginSample,
+  SearchPage,
 } from './pages/index';
 
 const queryClient = new QueryClient();
@@ -24,7 +25,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<WhiskyList />} />
-          <Route path="/WhiskyDetail" element={<WhiskyDetail />} />
+          <Route path="/WhiskyDetail/:id" element={<WhiskyDetail />} />
           <Route path="/StoreList" element={<StoreList />} />
           <Route path="/StoreDetail" element={<StoreDetail />} />
           <Route path="/Signup" element={<Signup />} />
@@ -35,6 +36,7 @@ const App = () => {
           <Route path="/MyComment" element={<MyComment />} />
           <Route path="/SelectWhisky" element={<SelectWhisky />} />
           <Route path="/LoginSample" element={<LoginSample />} />
+          <Route path="/SearchPage" element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
