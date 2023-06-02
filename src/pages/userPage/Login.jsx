@@ -32,7 +32,6 @@ const Login = () => {
                 <Button>{'아이디 / 비밀번호 찾기'}</Button>
               </div>
             </InputArea>
-
             <Button>{'로그인'}</Button>
           </OwnerLogin>
         </LoginPageCenter>

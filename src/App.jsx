@@ -13,6 +13,7 @@ import {
   UserManagePage,
   MyComment,
   SelectWhisky,
+  LoginSample,
   SearchPage,
 } from './pages/index';
 
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/UserManagePage" element={<UserManagePage />} />
           <Route path="/MyComment" element={<MyComment />} />
           <Route path="/SelectWhisky" element={<SelectWhisky />} />
+          <Route path="/LoginSample" element={<LoginSample />} />
           <Route path="/SearchPage" element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
