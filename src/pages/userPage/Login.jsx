@@ -30,11 +30,10 @@ const Login = () => {
   // useMutation hook 로그인 api 성공시/실패시
   const loginApi = useMutation(login, {
     onSuccess: (response) => {
-      console.log(response);
+      localStorage.setItem('accessToken', response.headers.get('accessToken'));
+      localStorage.setItem('refreshToken', response.headers.get('refreshToken'));
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
 
   // 로그인버튼 핸들러함수
