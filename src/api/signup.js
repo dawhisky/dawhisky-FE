@@ -3,7 +3,7 @@ import axios from 'axios';
 // 회원가입API, method : post, url : /api/auth/signup/store
 const signup = async (storeInfo) => {
   try {
-    const response = await axios.post('http://jjmdev.site/api/auth/signup/store', storeInfo);
+    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/signup/store`, storeInfo);
     return response.data;
   } catch (error) {
     return Promise.reject(error);
@@ -26,7 +26,7 @@ const checkBizNumber = async (bizNumber) => {
 // 이메일 중복여부 검사API, method : post, url : /api/auth/checkEmail
 const checkEmail = async (inputEmail) => {
   try {
-    const response = await axios.post('http://jjmdev.site/api/auth/checkEmail', { email: inputEmail });
+    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/checkEmail`, { email: inputEmail });
 
     return response;
   } catch (error) {
@@ -38,7 +38,7 @@ const checkEmail = async (inputEmail) => {
 
 const sendEmail = async (inputEmail) => {
   try {
-    const response = await axios.post('http://jjmdev.site/api/auth/send', { email: inputEmail });
+    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/send`, { email: inputEmail });
     console.log(response);
     return response;
   } catch (error) {
