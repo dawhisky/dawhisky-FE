@@ -1,12 +1,46 @@
 import React, { useState } from 'react';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Layout, Button } from '../../components';
+import login from '../../api/login';
 
 const Login = () => {
   const [userRole, setUserRole] = useState('user');
 
   const navigate = useNavigate();
+
+  // 소셜로그인 핸들러 함수
+  const socialLogin = () => {
+    window.location.href = process.env.KAKAO_AUTH;
+  };
+
+  // input 입력값 상태관리
+  const [loginInput, setLoginInput] = useState({ email: '', password: '' });
+
+  // input핸들러 함수
+  const inputHandler = (e) => {
+    if (e.target.dataset.type === 'email') {
+      setLoginInput({ email: e.target.value, password: loginInput.password });
+    } else {
+      setLoginInput({ email: loginInput.email, password: e.target.value });
+    }
+  };
+
+  // useMutation hook 로그인 api 성공시/실패시
+  const loginApi = useMutation(login, {
+    onSuccess: (response) => {
+      console.log(response);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // 로그인버튼 핸들러함수
+  const loginButtonHandler = () => {
+    loginApi.mutate(loginInput);
+  };
 
   return (
     <Layout>
@@ -19,21 +53,26 @@ const Login = () => {
             <div>
               <Button onClick={() => setUserRole('user')}>{'개인회원 로그인'}</Button>
             </div>
-            <Button>{'카카오톡으로 시작하기'}</Button>
+            <Button onClick={() => socialLogin()}>{'카카오톡으로 시작하기'}</Button>
           </PersonalLogin>
           <OwnerLogin userrole={userRole}>
             <div>
               <Button onClick={() => setUserRole('owner')}>{'사업자회원 로그인'}</Button>
             </div>
             <InputArea>
-              <input placeholder={'Email'} type={'text'} />
-              <input placeholder={'Password'} type={'password'} />
+              <input onChange={(e) => inputHandler(e)} data-type={'email'} placeholder={'Email'} type={'text'} />
+              <input
+                onChange={(e) => inputHandler(e)}
+                data-type={'password'}
+                placeholder={'Password'}
+                type={'password'}
+              />
               <div>
                 <Button>{'아이디 / 비밀번호 찾기'}</Button>
               </div>
             </InputArea>
 
-            <Button>{'로그인'}</Button>
+            <Button onClick={() => loginButtonHandler()}>{'로그인'}</Button>
           </OwnerLogin>
         </LoginPageCenter>
         <LoginBottom>
