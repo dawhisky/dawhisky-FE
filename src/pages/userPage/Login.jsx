@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
 import { Layout, Button } from '../../components';
 import login from '../../api/login';
