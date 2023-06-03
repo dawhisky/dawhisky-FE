@@ -22,7 +22,7 @@ const Navbar = () => {
         <p>바</p>
       </NavButton>
       {/* TODO 로그인한 유저 상태에 따라 UserManage로 넘길지 StoreManage로 넘길지 분기 처리 필요 */}
-      <NavButton onClick={() => navigate(`/UserManagePage`)}>
+      <NavButton onClick={() => navigate(`/StoreManagePage`)}>
         {url.includes('/UserManagePage') || url.includes('/StoreManagePage') || url.includes('/MyComment') ? (
           <MdPerson />
         ) : (
