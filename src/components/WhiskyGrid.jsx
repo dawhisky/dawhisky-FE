@@ -34,8 +34,8 @@ const WhiskyGrid = ({ list }) => {
             />
             <h1>{item.whisky_kor}</h1>
             <div>
-              <h3>{item.whisky_eng}</h3>
-              <h2>{item.whisky_abv} vol</h2>
+              <h2>{item.whisky_eng}</h2>
+              <h3>{item.whisky_abv} vol</h3>
             </div>
             {url !== `/` && (
               <IconDiv>
@@ -80,18 +80,18 @@ const WhiskyDataDiv = styled.div`
     text-overflow: ellipsis;
   }
   & h2 {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 16px;
-  }
-  & h3 {
     width: 100px;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 16px;
     color: #8f8f8f;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  & h3 {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
   }
 `;
 
