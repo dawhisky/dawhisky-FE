@@ -1,38 +1,51 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
 import { Layout } from '../../components';
-import editTable from '../../api/editTable';
+import { getTableInfo, editTableInfo } from '../../api/table';
 
-const StoreSeatEditPage = ({ setIsSeatEditMode }) => {
+const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen }) => {
   // 인가 정보
   const authorization = localStorage.getItem('authorization');
-  const refreshToken = localStorage.getItem('refreshToken');
-  const token = { authorization, refreshToken };
-  // useNavigate hook 호출
-  const navigate = useNavigate();
+  const unEditedRefreshToken = localStorage.getItem('refreshToken');
+  const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
+  const token = { authorization, refreshtoken };
+
   // 각 테이블 입력값 상태관리
   const [editedSeatData, setEditedSeatData] = useState({ bar_table: [], hall_table: [] });
 
-  // 버튼 클릭에 따라 UI 변동
+  // useQueryClient 호출
+  const queryClient = useQueryClient();
+
+  // 스토어테이블 수정
+  const editTableApi = useMutation(editTableInfo, {
+    onSuccess: (response) => {
+      console.log(response);
+      queryClient.invalidateQueries('getTableInfo', getTableInfo);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // '+','-'버튼 클릭에 따라 상태관리 변경
   const changeSeatNumberHandler = (e) => {
     if (e.target.dataset.type === 'bar') {
-      if (e.target.dataset.button === 'plus') {
+      if (e.target.dataset.button === 'plus' && editedSeatData.bar_table.length < 16) {
         const newEditedSeatData = { ...editedSeatData };
         newEditedSeatData.bar_table.push(0);
         setEditedSeatData(newEditedSeatData);
-      } else if (editedSeatData.bar_table.length > 0) {
+      } else if (e.target.dataset.button === 'minus' && editedSeatData.bar_table.length > 0) {
         const newEditedSeatData = { ...editedSeatData };
         newEditedSeatData.bar_table.shift();
         setEditedSeatData(newEditedSeatData);
       }
     } else if (e.target.dataset.type === 'table') {
-      if (e.target.dataset.button === 'plus') {
+      if (e.target.dataset.button === 'plus' && editedSeatData.hall_table.length < 16) {
         const newEditedSeatData = { ...editedSeatData };
         newEditedSeatData.hall_table.push(0);
         setEditedSeatData(newEditedSeatData);
-      } else if (editedSeatData.hall_table.length > 0) {
+      } else if (e.target.dataset.button === 'minus' && editedSeatData.hall_table.length > 0) {
         const newEditedSeatData = { ...editedSeatData };
         newEditedSeatData.hall_table.shift();
         setEditedSeatData(newEditedSeatData);
@@ -40,23 +53,15 @@ const StoreSeatEditPage = ({ setIsSeatEditMode }) => {
     }
   };
 
-  // 스토어테이블 생성
-  const editTableApi = useMutation(editTable, {
-    onSuccess: (response) => {
-      console.log(response);
-      navigate('/storeManagePage');
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
   const submitTableInfo = () => {
-    const finalEditedSeatData = {
-      bar_table: `${editedSeatData.bar_table}`,
-      hall_table: `${editedSeatData.hall_table}`,
+    const payload = {
+      bar_table: JSON.stringify(editedSeatData.bar_table),
+      hall_table: JSON.stringify(editedSeatData.hall_table),
     };
-    editTableApi.mutate({ token, finalEditedSeatData });
+    editTableApi.mutate({ token, editedSeatData: payload });
+    setWhichTabChosen('seat');
+    setWhichMode('seat');
+    setIsSeatEditMode(false);
   };
 
   return (

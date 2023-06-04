@@ -14,6 +14,8 @@ const StoreManagePage = () => {
 
   const [isSeatEditMode, setIsSeatEditMode] = useState(false);
 
+  const [whichMode, setWhichMode] = useState('que');
+
   const storeInfo = {
     name: '팀스피릿츠',
     address: '서울특별시 강남구 강남대로7',
@@ -33,7 +35,11 @@ const StoreManagePage = () => {
       {isRegisterMode ? (
         <StoreBottleRegister setIsRegisterMode={setIsRegisterMode} />
       ) : isSeatEditMode ? (
-        <StoreSeatEditPage setIsSeatEditMode={setIsSeatEditMode} />
+        <StoreSeatEditPage
+          setWhichTabChosen={setWhichTabChosen}
+          setWhichMode={setWhichMode}
+          setIsSeatEditMode={setIsSeatEditMode}
+        />
       ) : (
         <StoreManagePageWrapper>
           <div>{storeInfo.name}</div>
@@ -57,7 +63,11 @@ const StoreManagePage = () => {
           ) : whichTabChosen === 'bottle' ? (
             <StoreBottleManage setIsRegisterMode={setIsRegisterMode} />
           ) : (
-            <StoreQueSeatManage setIsSeatEditMode={setIsSeatEditMode} />
+            <StoreQueSeatManage
+              whichMode={whichMode}
+              setWhichMode={setWhichMode}
+              setIsSeatEditMode={setIsSeatEditMode}
+            />
           )}
         </StoreManagePageWrapper>
       )}
