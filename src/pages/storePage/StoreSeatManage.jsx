@@ -72,7 +72,6 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
       setHallSeatData(convertedHallSeatInfo);
       setBarSeatData(convertedBarSeatInfo);
       setHallSeatData(convertedHallSeatInfo);
-      // setEntireSeatData({ bar_table: barSeatInfo, hall_table: hallSeatInfo });
     }
   }, [isLoading, isError, data]);
 
@@ -88,24 +87,6 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
       }
     }
   }, [entireSeatData]);
-
-  // const toggleSeatHandler = (e) => {
-  //   if (e.target.dataset.type === 'bar') {
-  //     const editedBarSeatData = [...barSeatData];
-  //     editedBarSeatData[e.target.id - 1].activated = !editedBarSeatData[e.target.id - 1].activated;
-  //     setBarSeatData(editedBarSeatData);
-  //     const finalBarSeatData = [];
-  //     editedBarSeatData.map((item) => (item.activated ? finalBarSeatData.push(1) : finalBarSeatData.push(0)));
-  //     setEntireSeatData({ bar_table: finalBarSeatData, hall_table: entireSeatData.hall_table });
-  //   } else {
-  //     const editedHallSeatData = [...hallSeatData];
-  //     editedHallSeatData[e.target.id - 1].activated = !editedHallSeatData[e.target.id - 1].activated;
-  //     setHallSeatData(editedHallSeatData);
-  //     const finalHallSeatData = [];
-  //     editedHallSeatData.map((item) => (item.activated ? finalHallSeatData.push(1) : finalHallSeatData.push(0)));
-  //     setEntireSeatData({ bar_table: entireSeatData.bar_table, hall_table: finalHallSeatData });
-  //   }
-  // };
 
   const toggleSeatHandler = (e) => {
     if (e.target.dataset.type === 'bar') {
@@ -125,23 +106,16 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
     }
   };
 
-  // const submitSeatHandler = () => {
-  //   const payload = {
-  //     bar_table: JSON.stringify(entireSeatData.bar_table),
-  //     hall_table: JSON.stringify(entireSeatData.hall_table),
-  //   };
-  //   editTableApi.mutate({
-  //     token,
-  //     editedSeatData: payload,
-  //   });
-  // };
-
   const submitSeatHandler = () => {
-    console.log(entireSeatData);
-    editTableApi.mutate({
-      token,
-      entireSeatData,
-    });
+    if (
+      JSON.stringify(data.bar_table) !== JSON.stringify(entireSeatData.bar_table) ||
+      JSON.stringify(data.hall_table) !== JSON.stringify(entireSeatData.hall_table)
+    ) {
+      editTableApi.mutate({
+        token,
+        entireSeatData,
+      });
+    }
   };
 
   return (
