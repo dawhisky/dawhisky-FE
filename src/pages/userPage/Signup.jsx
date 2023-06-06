@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
 import { Layout, Button, Modal } from '../../components';
-import { signup, checkBizNumber, checkEmail, sendEmail } from '../../api/signup';
+import { signup, checkBizNumber, sendEmail } from '../../api/signup';
 
 const Signup = () => {
   // map함수 돌릴 form
