@@ -90,19 +90,19 @@ const Signup = () => {
   });
 
   // useMutation hook 이메일 중복여부 api 통신 성공시/실패시
-  const checkEmailApi = useMutation(checkEmail, {
-    onSuccess: (response) => {
-      alert(response.data.message);
-      sendEmailApi.mutate(storeInfo.email);
-    },
-    onError: (error) => {
-      alert(error.response.data.errorMessage);
-    },
-  });
+  // const checkEmailApi = useMutation(checkEmail, {
+  //   onSuccess: (response) => {
+  //     alert(response.data.message);
+  //     sendEmailApi.mutate(storeInfo.email);
+  //   },
+  //   onError: (error) => {
+  //     alert(error.response.data.errorMessage);
+  //   },
+  // });
 
   // email 중복확인 핸들러 함수
   const checkEmailHandler = () => {
-    checkEmailApi.mutate(storeInfo.email);
+    sendEmailApi.mutate(storeInfo.email);
   };
 
   // 사진데이터 상태관리하고, 모달창 닫기

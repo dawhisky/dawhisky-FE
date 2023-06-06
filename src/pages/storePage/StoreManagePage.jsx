@@ -29,7 +29,7 @@ const StoreManagePage = () => {
   const [storeId, setStoreId] = useState(null);
 
   // 해당 스토어 테이블 정보
-  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token }));
+  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token, id: storeId }));
 
   useEffect(() => {
     if (!isLoading && !isError) {

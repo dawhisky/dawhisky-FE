@@ -24,26 +24,24 @@ const checkBizNumber = async (bizNumber) => {
 };
 
 // 이메일 중복여부 검사API, method : post, url : /api/auth/checkEmail
-const checkEmail = async (inputEmail) => {
-  try {
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/checkEmail`, { email: inputEmail });
-
-    return response;
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
+// const checkEmail = async (inputEmail) => {
+//   try {
+//     const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/checkEmail`, { email: inputEmail });
+//     return response;
+//   } catch (error) {
+//     return Promise.reject(error);
+//   }
+// };
 
 // 이메일 발송API, method : post, url : /api/auth/send
 
 const sendEmail = async (inputEmail) => {
   try {
     const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/auth/send`, { email: inputEmail });
-    console.log(response);
     return response;
   } catch (error) {
     return Promise.reject(error);
   }
 };
 
-export { signup, checkBizNumber, checkEmail, sendEmail };
+export { signup, checkBizNumber, sendEmail };
