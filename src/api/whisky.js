@@ -1,11 +1,9 @@
-import axios from 'axios';
-
-// TODO 추후 로그인 인스턴스 생성되면 해당 파일로 연결
+import api from './interceptor';
 
 // * 위스키 리스트 전체 조회
 export const getWhiskyList = () => {
-  return axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/?page=1&pageSize=10`)
+  return api
+    .get(`/api/whisky/?page=1&pageSize=10`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
@@ -14,8 +12,8 @@ export const getWhiskyList = () => {
 
 // * 위스키 키워드 검색
 export const getKeywordList = (keyword) => {
-  return axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/search/${keyword}`)
+  return api
+    .get(`/api/whisky/search/${keyword}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
@@ -24,8 +22,8 @@ export const getKeywordList = (keyword) => {
 
 // * 위스키 디테일 조회
 export const getWhiskyDetail = (id) => {
-  return axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/${id}`)
+  return api
+    .get(`/api/whisky/${id}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
@@ -34,8 +32,8 @@ export const getWhiskyDetail = (id) => {
 
 // * 위스키 보유 스토어 조회
 export const getWhiskyStore = (id) => {
-  return axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/comment/${id}`)
+  return api
+    .get(`/api/whisky/comment/${id}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
@@ -44,8 +42,8 @@ export const getWhiskyStore = (id) => {
 
 // * 위스키 코멘트 조회
 export const getWhiskyComment = (id) => {
-  return axios
-    .get(`${process.env.REACT_APP_SERVER_URL}/api/whisky/comment/${id}`)
+  return api
+    .get(`/api/whisky/comment/${id}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
