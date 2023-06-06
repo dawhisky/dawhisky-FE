@@ -198,9 +198,6 @@ const Signup = () => {
                     {'갤러리에서 선택'}
                     <input type={'file'} id={'fileInput'} onChange={(e) => prepareUploadImage(e)} />
                   </label>
-                  {/* <button onClick={() => setWhichModalOpen('confirm')} type={'button'}>
-                    {'사진 촬영'}
-                  </button> */}
                   <label htmlFor={'takePicture'}>
                     {'사진 촬영'}
                     <input

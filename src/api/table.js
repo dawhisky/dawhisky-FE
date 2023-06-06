@@ -26,9 +26,9 @@ const createTableInfo = async ({ token, editedSeatData }) => {
 };
 
 // 테이블 수정api, method : put, url : /api/mypage/store/table
-const editTableInfo = async ({ token, entireSeatData }) => {
+const editTableInfo = async ({ token, editedSeatData }) => {
   try {
-    const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/mypage/store/table`, entireSeatData, {
+    const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/mypage/store/table`, editedSeatData, {
       headers: token,
     });
     return response.data;

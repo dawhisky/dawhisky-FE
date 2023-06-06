@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { styled } from 'styled-components';
 import { Layout } from '../../components';
 import StoreInfoManage from './StoreInfoManage';
@@ -6,23 +7,28 @@ import StoreBottleManage from './StoreBottleManage';
 import StoreBottleRegister from './StoreBottleRegister';
 import StoreQueSeatManage from './StoreQueSeatManage';
 import StoreSeatEditPage from './StoreSeatEditPage';
+import { getStoreInfo } from '../../api/storeInfo';
 
 const StoreManagePage = () => {
+  // 어떤 탭이 선택되었는지 여부 상태관리
   const [whichTabChosen, setWhichTabChosen] = useState('store');
-
+  // 주류 등록 모드인지 여부 상태관리
   const [isRegisterMode, setIsRegisterMode] = useState(false);
-
+  // 좌석 수정 모드인지 여부 상태관리
   const [isSeatEditMode, setIsSeatEditMode] = useState(false);
-
+  // 좌석 관리 탭 내에서 '줄서기'인지 '좌석 현황'인지
   const [whichMode, setWhichMode] = useState('que');
+  // 업장 정보 수정 input값 상태관리
+  const [storeInfo, setStoreInfo] = useState({});
 
-  const storeInfo = {
-    name: '팀스피릿츠',
-    address: '서울특별시 강남구 강남대로7',
-    phoneNumber: '010-0000-0000',
-    barHours: '매일 19 : 00 - 03 : 00',
-    notice: '공지사항',
-  };
+  // 해당 스토어 테이블 정보
+  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo(31));
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      setStoreInfo(data);
+    }
+  }, [data]);
 
   const tabGroup = [
     { name: '좌석 관리', type: 'seat' },
@@ -42,7 +48,7 @@ const StoreManagePage = () => {
         />
       ) : (
         <StoreManagePageWrapper>
-          <div>{storeInfo.name}</div>
+          <div>{storeInfo.store}</div>
           <TopTabGroup>
             {tabGroup.map((item) => {
               return (
@@ -59,7 +65,7 @@ const StoreManagePage = () => {
             })}
           </TopTabGroup>
           {whichTabChosen === 'store' ? (
-            <StoreInfoManage />
+            <StoreInfoManage storeInfo={storeInfo} />
           ) : whichTabChosen === 'bottle' ? (
             <StoreBottleManage setIsRegisterMode={setIsRegisterMode} />
           ) : (

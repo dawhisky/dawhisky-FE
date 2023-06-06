@@ -6,13 +6,18 @@ import { Layout, Button } from '../../components';
 import login from '../../api/login';
 
 const Login = () => {
+  // 유저 유형 상태관리
   const [userRole, setUserRole] = useState('user');
 
+  // useNavigate hook 호출
   const navigate = useNavigate();
+
+  // 카카오서비스 url
+  const KAKAO_AUTH = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}&response_type=code`;
 
   // 소셜로그인 핸들러 함수
   const socialLogin = () => {
-    window.location.href = process.env.KAKAO_AUTH;
+    window.location.href = KAKAO_AUTH;
   };
 
   // input 입력값 상태관리
@@ -32,8 +37,9 @@ const Login = () => {
     onSuccess: ({ authorization, refreshToken }) => {
       localStorage.setItem('authorization', authorization);
       localStorage.setItem('refreshToken', refreshToken);
+      navigate('/');
     },
-    onError: (error) => {},
+    onError: () => {},
   });
 
   // 로그인버튼 핸들러함수
