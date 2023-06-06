@@ -25,9 +25,8 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
 
   // 스토어테이블 생성api
   const createTableApi = useMutation(createTableInfo, {
-    onSuccess: (response) => {
+    onSuccess: () => {
       queryClient.invalidateQueries('getTableInfo', getTableInfo);
-      console.log(response);
     },
     onError: (error) => {
       console.log(error);
@@ -49,8 +48,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
 
   // 스토어테이블 수정api
   const editTableApi = useMutation(editTableInfo, {
-    onSuccess: (response) => {
-      console.log(response);
+    onSuccess: () => {
       queryClient.invalidateQueries('getTableInfo', getTableInfo);
     },
     onError: (error) => {
@@ -63,15 +61,18 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
       if (data.bar_table === null && data.hall_table === null) {
         createTableApi.mutate({ token, editedSeatData: { hall_table: '[]', bar_table: '[]' } });
       }
-      setEntireSeatData({ bar_table: data.bar_table, hall_table: data.hall_table });
-      const barSeatInfo = JSON.parse(data.bar_table);
-      const hallSeatInfo = JSON.parse(data.hall_table);
-      const convertedBarSeatInfo = makeSeatInfo(barSeatInfo);
-      const convertedHallSeatInfo = makeSeatInfo(hallSeatInfo);
-      setBarSeatData(convertedBarSeatInfo);
-      setHallSeatData(convertedHallSeatInfo);
-      setBarSeatData(convertedBarSeatInfo);
-      setHallSeatData(convertedHallSeatInfo);
+      // 서버 데이터 반영
+      if (data && data.bar_table && data.hall_table) {
+        setEntireSeatData({ bar_table: data.bar_table, hall_table: data.hall_table });
+        const barSeatInfo = JSON.parse(data.bar_table);
+        const hallSeatInfo = JSON.parse(data.hall_table);
+        const convertedBarSeatInfo = makeSeatInfo(barSeatInfo);
+        const convertedHallSeatInfo = makeSeatInfo(hallSeatInfo);
+        setBarSeatData(convertedBarSeatInfo);
+        setHallSeatData(convertedHallSeatInfo);
+        setBarSeatData(convertedBarSeatInfo);
+        setHallSeatData(convertedHallSeatInfo);
+      }
     }
   }, [isLoading, isError, data]);
 
@@ -88,6 +89,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
     }
   }, [entireSeatData]);
 
+  // 각 테이블버튼 클릭 토글 핸들러함수
   const toggleSeatHandler = (e) => {
     if (e.target.dataset.type === 'bar') {
       const editedBarSeatData = [...barSeatData];
@@ -106,6 +108,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
     }
   };
 
+  // 등록버튼핸들러 함수
   const submitSeatHandler = () => {
     if (
       JSON.stringify(data.bar_table) !== JSON.stringify(entireSeatData.bar_table) ||
@@ -113,7 +116,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
     ) {
       editTableApi.mutate({
         token,
-        entireSeatData,
+        editedSeatData: entireSeatData,
       });
     }
   };
@@ -202,10 +205,10 @@ const StoreSeatManageWrapper = styled.div`
 
       & > div:first-child {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         flex-wrap: wrap;
-        width: 200px;
+        width: 180px;
 
         button {
           display: flex;
@@ -241,10 +244,10 @@ const StoreSeatManageWrapper = styled.div`
 
       div:first-child {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         flex-wrap: wrap;
-        width: 200px;
+        width: 180px;
 
         button {
           height: 25px;

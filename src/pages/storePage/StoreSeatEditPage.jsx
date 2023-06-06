@@ -19,8 +19,7 @@ const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen 
 
   // 스토어테이블 수정
   const editTableApi = useMutation(editTableInfo, {
-    onSuccess: (response) => {
-      console.log(response);
+    onSuccess: () => {
       queryClient.invalidateQueries('getTableInfo', getTableInfo);
     },
     onError: (error) => {
@@ -53,6 +52,7 @@ const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen 
     }
   };
 
+  // 완료버튼 핸들러 함수
   const submitTableInfo = () => {
     const payload = {
       bar_table: JSON.stringify(editedSeatData.bar_table),
