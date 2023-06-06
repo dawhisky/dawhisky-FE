@@ -10,6 +10,11 @@ import StoreSeatEditPage from './StoreSeatEditPage';
 import { getStoreInfo } from '../../api/storeInfo';
 
 const StoreManagePage = () => {
+  // 인가 정보
+  const authorization = localStorage.getItem('authorization');
+  const unEditedRefreshToken = localStorage.getItem('refreshToken');
+  const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
+  const token = { authorization, refreshtoken };
   // 어떤 탭이 선택되었는지 여부 상태관리
   const [whichTabChosen, setWhichTabChosen] = useState('store');
   // 주류 등록 모드인지 여부 상태관리
@@ -20,13 +25,16 @@ const StoreManagePage = () => {
   const [whichMode, setWhichMode] = useState('que');
   // 업장 정보 수정 input값 상태관리
   const [storeInfo, setStoreInfo] = useState({});
+  // storeID 상태관리
+  const [storeId, setStoreId] = useState(null);
 
   // 해당 스토어 테이블 정보
-  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo(31));
+  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token }));
 
   useEffect(() => {
     if (!isLoading && !isError) {
       setStoreInfo(data);
+      setStoreId(data.store_id);
     }
   }, [data]);
 
@@ -45,6 +53,7 @@ const StoreManagePage = () => {
           setWhichTabChosen={setWhichTabChosen}
           setWhichMode={setWhichMode}
           setIsSeatEditMode={setIsSeatEditMode}
+          storeId={storeId}
         />
       ) : (
         <StoreManagePageWrapper>
@@ -73,6 +82,7 @@ const StoreManagePage = () => {
               whichMode={whichMode}
               setWhichMode={setWhichMode}
               setIsSeatEditMode={setIsSeatEditMode}
+              storeId={storeId}
             />
           )}
         </StoreManagePageWrapper>

@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
 import { getTableInfo, createTableInfo, editTableInfo } from '../../api/table';
 
-const StoreSeatManage = ({ setIsSeatEditMode }) => {
+const StoreSeatManage = ({ setIsSeatEditMode, storeId }) => {
   // 인가 정보
   const authorization = localStorage.getItem('authorization');
   const unEditedRefreshToken = localStorage.getItem('refreshToken');
@@ -11,7 +11,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
   const token = { authorization, refreshtoken };
 
   // 해당 스토어 테이블 정보
-  const { isLoading, isError, data } = useQuery('getTableInfo', () => getTableInfo(31));
+  const { isLoading, isError, data } = useQuery('getTableInfo', () => getTableInfo(storeId));
 
   // 바 테이블, 홀 테이블 상태관리
   const [barSeatData, setBarSeatData] = useState([]);
@@ -26,7 +26,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
   // 스토어테이블 생성api
   const createTableApi = useMutation(createTableInfo, {
     onSuccess: () => {
-      queryClient.invalidateQueries('getTableInfo', getTableInfo);
+      queryClient.invalidateQueries('getTableInfo', getTableInfo(storeId));
     },
     onError: (error) => {
       console.log(error);
@@ -49,7 +49,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
   // 스토어테이블 수정api
   const editTableApi = useMutation(editTableInfo, {
     onSuccess: () => {
-      queryClient.invalidateQueries('getTableInfo', getTableInfo);
+      queryClient.invalidateQueries('getTableInfo', getTableInfo(storeId));
     },
     onError: (error) => {
       console.log(error);

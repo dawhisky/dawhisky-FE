@@ -44,7 +44,7 @@ const StoreInfoManage = ({ storeInfo }) => {
   // 스토어정보 수정
   const editInfoApi = useMutation(editStoreInfo, {
     onSuccess: () => {
-      queryClient.invalidateQueries('getStoreInfo', getStoreInfo);
+      queryClient.invalidateQueries('getStoreInfo', getStoreInfo({ token }));
     },
     onError: (error) => {
       console.log(error);
@@ -61,7 +61,6 @@ const StoreInfoManage = ({ storeInfo }) => {
   const getInputChange = (e) => {
     setEditedInputValue({ ...editedInputValue, [e.target.dataset.type]: e.target.value });
   };
-  console.log(editedInputValue);
 
   // 사진데이터 상태관리하고, 모달창 닫기
   const prepareUploadImage = (e) => {
