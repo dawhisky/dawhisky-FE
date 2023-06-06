@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// 스토어정보(점주) 조회api, method : get, url : /api/mypage/store/:store_id
-const getStoreInfo = async ({ token }) => {
+// 스토어정보 조회api, method : get, url : /api/mypage/store/:store_id
+const getStoreInfo = async ({ token, id }) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/mypage/store/`, { headers: token });
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/mypage/store/${id}`, { headers: token });
     return response.data;
   } catch (error) {
     console.log(error);
