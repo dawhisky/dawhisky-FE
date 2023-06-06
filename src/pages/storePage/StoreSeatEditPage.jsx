@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 import { Layout } from '../../components';
 import { getTableInfo, editTableInfo } from '../../api/table';
 
-const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen }) => {
+const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen, storeId }) => {
   // 인가 정보
   const authorization = localStorage.getItem('authorization');
   const unEditedRefreshToken = localStorage.getItem('refreshToken');
@@ -20,7 +20,7 @@ const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen 
   // 스토어테이블 수정
   const editTableApi = useMutation(editTableInfo, {
     onSuccess: () => {
-      queryClient.invalidateQueries('getTableInfo', getTableInfo);
+      queryClient.invalidateQueries('getTableInfo', getTableInfo(storeId));
     },
     onError: (error) => {
       console.log(error);
