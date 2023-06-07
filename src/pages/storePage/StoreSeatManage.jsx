@@ -77,18 +77,18 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
     }
   }, [isLoading, isError, data]);
 
-  // useEffect(() => {
-  //   if (!isLoading && !isError) {
-  //     if (
-  //       JSON.stringify(data.bar_table) !== JSON.stringify(entireSeatData.bar_table) ||
-  //       JSON.stringify(data.hall_table) !== JSON.stringify(entireSeatData.hall_table)
-  //     ) {
-  //       setIsDifferent(true);
-  //     } else {
-  //       setIsDifferent(false);
-  //     }
-  //   }
-  // }, [entireSeatData]);
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      if (
+        JSON.stringify(data.bar_table) !== JSON.stringify(entireSeatData.bar_table) ||
+        JSON.stringify(data.hall_table) !== JSON.stringify(entireSeatData.hall_table)
+      ) {
+        setIsDifferent(true);
+      } else {
+        setIsDifferent(false);
+      }
+    }
+  }, [entireSeatData]);
 
   // 각 테이블버튼 클릭 토글 핸들러함수
   const toggleSeatHandler = (e) => {
