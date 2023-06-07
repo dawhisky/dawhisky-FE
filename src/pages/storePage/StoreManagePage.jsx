@@ -14,6 +14,7 @@ const StoreManagePage = () => {
   const authorization = localStorage.getItem('authorization');
   const unEditedRefreshToken = localStorage.getItem('refreshToken');
   const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
+  const storeId = localStorage.getItem('store_id');
   const token = { authorization, refreshtoken };
   // 어떤 탭이 선택되었는지 여부 상태관리
   const [whichTabChosen, setWhichTabChosen] = useState('store');
@@ -25,8 +26,6 @@ const StoreManagePage = () => {
   const [whichMode, setWhichMode] = useState('que');
   // 업장 정보 수정 input값 상태관리
   const [storeInfo, setStoreInfo] = useState({});
-  // storeID 상태관리
-  const [storeId, setStoreId] = useState(null);
 
   // 해당 스토어 테이블 정보
   const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token, id: storeId }));
@@ -34,7 +33,6 @@ const StoreManagePage = () => {
   useEffect(() => {
     if (!isLoading && !isError) {
       setStoreInfo(data);
-      setStoreId(data.store_id);
     }
   }, [data]);
 
