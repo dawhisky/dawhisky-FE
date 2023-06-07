@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 // 테이블 조회api, method : get, url : /api/mypage/table/:store_id
-const getTableInfo = async (id) => {
+const getTableInfo = async (storeId) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/mypage/table/${id}`);
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/mypage/table/${storeId}`);
     return response.data;
   } catch (error) {
     console.log(error);

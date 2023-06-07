@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import StoreQueManage from './StoreQueManage';
 import StoreSeatManage from './StoreSeatManage';
 
-const StoreQueSeatManage = ({ setIsSeatEditMode, whichMode, setWhichMode, storeId }) => {
+const StoreQueSeatManage = ({ setIsSeatEditMode, whichMode, setWhichMode }) => {
   const queList = [
     { id: 1, name: '김한솔', preference: 'bar', seat: 2 },
     { id: 2, name: '주지민', preference: 'table', seat: 3 },
@@ -26,7 +26,7 @@ const StoreQueSeatManage = ({ setIsSeatEditMode, whichMode, setWhichMode, storeI
       {whichMode === 'que' ? (
         <StoreQueManage queList={queList} />
       ) : (
-        <StoreSeatManage setIsSeatEditMode={setIsSeatEditMode} storeId={storeId} />
+        <StoreSeatManage setIsSeatEditMode={setIsSeatEditMode} />
       )}
     </StoreQueSeatManageWrapper>
   );
