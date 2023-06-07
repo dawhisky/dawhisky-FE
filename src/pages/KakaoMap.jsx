@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { styled } from 'styled-components';
 import { BiChevronRight } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 // window.kakao 객체를 가져옴
 const { kakao } = window;
 
 const KakaoMap = ({ coords, storelist }) => {
   const [markers, setMarkers] = useState([]);
+
+  // * 상세 페이지로 이동
+  const navigate = useNavigate();
+  const onOverlayClickHandler = (storeId) => navigate(`/StoreDetail/${storeId}`);
 
   // * 주소-좌표 변환 객체를 생성
   const geocoder = new kakao.maps.services.Geocoder();
@@ -83,7 +88,7 @@ const KakaoMap = ({ coords, storelist }) => {
                 yAnchor={1}
                 onClick={() => onMarkerClickHandler(marker.id)}
               >
-                <OverlayDiv onClick={() => alert('hi~')}>
+                <OverlayDiv onClick={() => onOverlayClickHandler(marker.id)}>
                   {marker.content}
                   <BiChevronRight />
                 </OverlayDiv>
