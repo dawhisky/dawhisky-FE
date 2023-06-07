@@ -29,22 +29,15 @@ const StoreInfoManage = ({ storeInfo }) => {
   const [imageUrl, setImageUrl] = useState(null);
 
   // 수정할 input값 상태관리
-  const [editedInputValue, setEditedInputValue] = useState({
-    store: storeInfo.store,
-    address: storeInfo.address,
-    phone: storeInfo.phone,
-    notice: storeInfo.notice,
-    runtime: storeInfo.runtime,
-    biz_photo: storeInfo.biz_photo,
-  });
+  const [editedInputValue, setEditedInputValue] = useState(null);
 
   // 업로드 예정 사진 상태관리
-  const [uploadImage, setUploadImage] = useState(storeInfo.biz_photo);
+  const [uploadImage, setUploadImage] = useState(null);
 
   // 스토어정보 수정
   const editInfoApi = useMutation(editStoreInfo, {
     onSuccess: () => {
-      queryClient.invalidateQueries('getStoreInfo', getStoreInfo({ token }));
+      queryClient.invalidateQueries('getStoreInfo', getStoreInfo({ token, id: storeInfo.store_id }));
     },
     onError: (error) => {
       console.log(error);
@@ -55,6 +48,14 @@ const StoreInfoManage = ({ storeInfo }) => {
     if (storeInfo.biz_photo) {
       // 백엔드에서 오는 url이 큰 따옴표와 대괄호를 포함하고 있으므로
       setImageUrl(storeInfo.biz_photo.slice(2, -2));
+      setEditedInputValue({
+        store: storeInfo.store,
+        address: storeInfo.address,
+        phone: storeInfo.phone,
+        notice: storeInfo.notice,
+        runtime: storeInfo.runtime,
+        biz_photo: storeInfo.biz_photo,
+      });
     }
   }, [storeInfo]);
 
@@ -77,7 +78,7 @@ const StoreInfoManage = ({ storeInfo }) => {
   // 작성완료버튼 핸들러 함수
   const submitEditedStoreInfo = () => {
     const formData = new FormData();
-    if (uploadImage !== storeInfo.biz_photo) {
+    if (uploadImage) {
       formData.append('biz_photo', uploadImage);
     }
     formData.append('store', editedInputValue.store);
@@ -87,6 +88,7 @@ const StoreInfoManage = ({ storeInfo }) => {
     formData.append('runtime', editedInputValue.runtime);
 
     editInfoApi.mutate({ token, formData });
+
     setIsModalOpen(false);
   };
 
