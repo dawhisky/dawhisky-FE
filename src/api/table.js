@@ -17,7 +17,6 @@ const createTableInfo = async ({ token, editedSeatData }) => {
     const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/mypage/store/table`, editedSeatData, {
       headers: token,
     });
-
     return response.data;
   } catch (error) {
     console.log(error);
