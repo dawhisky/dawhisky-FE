@@ -12,7 +12,7 @@ import Image from './Image';
 const DetailList = ({ type, list }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const url = location.pathname.slice(14);
+  const url = location.pathname;
 
   const onListClickHandler = (id) => {
     if (url.includes('/UserManagePage')) {
@@ -20,7 +20,7 @@ const DetailList = ({ type, list }) => {
     } else if (url.includes('/LikeList') || url.includes('/StoreList') || url.includes('/WhiskyDetail')) {
       navigate(`/StoreDetail/${id}`);
     } else if (url.includes('/StoreDetail')) {
-      navigate(`/WhiskyDetail`);
+      navigate(`/WhiskyDetail/${id}`);
     }
   };
 
@@ -51,8 +51,8 @@ const DetailList = ({ type, list }) => {
             </TotalInfoDiv>
           </ListDiv>
         ))}
-      {!list && type === 'store' && <NoneData>위스키 바가 없어요</NoneData>}
-      {!list && type !== 'store' && <NoneData>위스키 데이터가 존재하지 않아요</NoneData>}
+      {(!list || list.length === 0) && type === 'store' && <NoneData>위스키 바가 없어요</NoneData>}
+      {(!list || list.length === 0) && type !== 'store' && <NoneData>위스키 데이터가 존재하지 않아요</NoneData>}
     </StockListDiv>
   );
 };

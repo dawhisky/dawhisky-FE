@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 import { MdOutlineGpsFixed } from 'react-icons/md';
 import { Layout, SearchInput, Button, DetailList } from '../components';
 import KakaoMap from './KakaoMap';
-import getStoreList from '../api/store';
+import { getStoreList } from '../api/store';
 
 const StoreList = () => {
   const [coords, setCoords] = useState({ lat: 0, lon: 0 });
