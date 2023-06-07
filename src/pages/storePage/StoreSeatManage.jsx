@@ -3,13 +3,13 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
 import { getTableInfo, createTableInfo, editTableInfo } from '../../api/table';
 
-const StoreSeatManage = ({ setIsSeatEditMode, storeId }) => {
+const StoreSeatManage = ({ setIsSeatEditMode }) => {
   // 인가 정보
   const authorization = localStorage.getItem('authorization');
   const unEditedRefreshToken = localStorage.getItem('refreshToken');
   const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
   const token = { authorization, refreshtoken };
-
+  const storeId = localStorage.getItem('store_id');
   // 해당 스토어 테이블 정보
   const { isLoading, isError, data } = useQuery('getTableInfo', () => getTableInfo(storeId));
 
@@ -58,7 +58,8 @@ const StoreSeatManage = ({ setIsSeatEditMode, storeId }) => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      if (data.bar_table === null && data.hall_table === null) {
+      console.log(data);
+      if (data === null) {
         createTableApi.mutate({ token, editedSeatData: { hall_table: '[]', bar_table: '[]' } });
       }
       // 서버 데이터 반영
@@ -76,18 +77,18 @@ const StoreSeatManage = ({ setIsSeatEditMode, storeId }) => {
     }
   }, [isLoading, isError, data]);
 
-  useEffect(() => {
-    if (!isLoading && !isError) {
-      if (
-        JSON.stringify(data.bar_table) !== JSON.stringify(entireSeatData.bar_table) ||
-        JSON.stringify(data.hall_table) !== JSON.stringify(entireSeatData.hall_table)
-      ) {
-        setIsDifferent(true);
-      } else {
-        setIsDifferent(false);
-      }
-    }
-  }, [entireSeatData]);
+  // useEffect(() => {
+  //   if (!isLoading && !isError) {
+  //     if (
+  //       JSON.stringify(data.bar_table) !== JSON.stringify(entireSeatData.bar_table) ||
+  //       JSON.stringify(data.hall_table) !== JSON.stringify(entireSeatData.hall_table)
+  //     ) {
+  //       setIsDifferent(true);
+  //     } else {
+  //       setIsDifferent(false);
+  //     }
+  //   }
+  // }, [entireSeatData]);
 
   // 각 테이블버튼 클릭 토글 핸들러함수
   const toggleSeatHandler = (e) => {
