@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { RiHomeLine, RiHomeFill } from 'react-icons/ri';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
@@ -19,12 +19,7 @@ const Navbar = () => {
   useEffect(() => {
     const getToken = isLoginCheck();
     if (getToken !== null) {
-      const { user } = getToken;
-      if (user) {
-        setLoginStatus({ login: true, userFlag: 'user' });
-      } else {
-        setLoginStatus({ login: true, userFlag: 'store' });
-      }
+      setLoginStatus({ login: true, userFlag: getToken.userFlag });
     }
   }, []);
 
