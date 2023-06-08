@@ -7,15 +7,9 @@ import UserQuePage from './UserQuePage';
 import { getStoreInfo } from '../api/storeInfo';
 
 const StoreDetail = () => {
-  // 인가 정보
-  const authorization = localStorage.getItem('authorization');
-  const unEditedRefreshToken = localStorage.getItem('refreshToken');
-  const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
-  const token = { authorization, refreshtoken };
-  // useParams hook
   const params = useParams();
   // 해당 스토어 테이블 정보
-  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token, id: 77 }));
+  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ id: 77 }));
   // 해당 스토어 정보 상태관리
   const [barDetail, setBarDetail] = useState({});
 
@@ -23,7 +17,7 @@ const StoreDetail = () => {
     if (!isLoading && !isError) {
       const extractedData = {
         상호명: data.store,
-        주소: data.adress,
+        주소: data.address,
         전화번호: data.phone,
         운영시간: data.runtime,
         공지사항: data.notice,
