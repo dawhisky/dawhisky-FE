@@ -15,11 +15,13 @@ const LikeList = () => {
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
   const onTabClickHandler = (type) => setTabChosen(type);
 
-  // 해당 스토어 테이블 정보
-  const { data } = useQuery('getUserInfo', () => getUserInfo(), {
-    onSuccess: () => {
-      setLikeWhisky(data[0].WhiskyLikes);
-      setLikeStore(data[0].StoreLikes);
+  // * 좋아요 한 내역 조회
+  useQuery('getUserInfo', () => getUserInfo(), {
+    onSuccess: (response) => {
+      if (response) {
+        setLikeWhisky(response[0].whisky_likes);
+        setLikeStore(response[0].store_likes);
+      }
     },
   });
 
