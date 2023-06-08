@@ -10,13 +10,10 @@ import isLoginCheck from '../hook/isLoginCheck';
 
 const StoreDetail = () => {
   const [storeWhiskyList, setStoreWhiskyList] = useState([]);
-  const [loginStatus, setloginStatus] = useState(() => {
-    const checkResult = isLoginCheck();
-    return !!checkResult;
+  const [loginStatus, setLoginStatus] = useState({
+    login: false,
+    userFlag: '',
   });
-
-  // * 로그인 여부 확인 및 token값 확인
-  const token = isLoginCheck();
 
   // * Store ID Url에서 get
   const navigate = useNavigate();
@@ -26,6 +23,9 @@ const StoreDetail = () => {
   // useParams hook
   const params = useParams();
 
+  // ! 임시
+  const token = isLoginCheck();
+
   // * [상세 정보 tab] 해당 스토어 테이블 정보
   const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token, id: storeId }));
 
@@ -34,7 +34,7 @@ const StoreDetail = () => {
 
   // * [보유 위스키 tab] 조회 useMutation
   const getStoreWhiskyMutation = useMutation(getStoreWhiskyList, {
-    onSucess: (response) => {
+    onSuccess: (response) => {
       setStoreWhiskyList(response);
     },
   });
@@ -42,8 +42,19 @@ const StoreDetail = () => {
   // * [보유 위스키 tab] 조회
   const getStoreWhisky = () => getStoreWhiskyMutation.mutate(storeId);
 
-  // * 페이지가 마운트될 때 보유 위스키 조회
+  // * 페이지가 마운트될 때 실행할 작업
   useEffect(() => {
+    // 1. 로그인 여부 및 token값 확인
+    const getToken = isLoginCheck();
+    if (getToken !== null) {
+      const { user } = getToken;
+      if (user) {
+        setLoginStatus({ login: true, userFlag: 'user' });
+      } else {
+        setLoginStatus({ login: true, userFlag: 'store' });
+      }
+    }
+    // 2. 스토어에서 보유한 위스키 조회
     getStoreWhisky();
   }, []);
 
@@ -74,8 +85,12 @@ const StoreDetail = () => {
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
   const onTabClickHandler = (type) => {
     setTabChosen(type);
-    if (type === 'que' && !loginStatus) {
+    if (type === 'que' && !loginStatus.login) {
+      alert(`로그인이 필요한 페이지입니다.`);
       navigate(`/Login`);
+    } else if (type === 'que' && loginStatus.userFlag === 'store') {
+      alert(`사업자 회원은 줄서기 등록이 불가합니다.`);
+      navigate(`/StoreDetail/${storeId}`);
     }
   };
 
@@ -91,7 +106,7 @@ const StoreDetail = () => {
           <TabSection>
             {data && tabChosen === 'barInfo' && <DetailInfo info={barDetail} />}
             {tabChosen === 'getWhisky' && <DetailList list={storeWhiskyList} />}
-            {tabChosen === 'que' && loginStatus && <UserQuePage />}
+            {tabChosen === 'que' && loginStatus.login && loginStatus.userFlag === 'user' && <UserQuePage />}
           </TabSection>
         </>
       )}
