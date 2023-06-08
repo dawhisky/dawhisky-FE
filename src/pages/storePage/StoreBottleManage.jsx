@@ -1,43 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import { useQuery } from 'react-query';
 import { Button } from '../../components';
+import { getStoreWhiskyList } from '../../api/store';
+import { NoneData } from '../statusPage';
 
-const StoreBottleManage = ({ setIsRegisterMode }) => {
-  const data = [
-    { id: 1, nameKor: '위스키 이름1', nameEng: 'Whisky name', abv: 45 },
-    { id: 2, nameKor: '위스키 이름2', nameEng: 'Whisky name', abv: 45 },
-    { id: 3, nameKor: '위스키 이름3', nameEng: 'Whisky name', abv: 45 },
-    { id: 4, nameKor: '위스키 이름4', nameEng: 'Whisky name', abv: 45 },
-    { id: 5, nameKor: '위스키 이름5', nameEng: 'Whisky name', abv: 45 },
-    { id: 6, nameKor: '위스키 이름6', nameEng: 'Whisky name', abv: 45 },
-    { id: 7, nameKor: '위스키 이름7', nameEng: 'Whisky name', abv: 45 },
-    { id: 8, nameKor: '위스키 이름8', nameEng: 'Whisky name', abv: 45 },
-    { id: 9, nameKor: '위스키 이름9', nameEng: 'Whisky name', abv: 45 },
-    { id: 10, nameKor: '위스키 이름10', nameEng: 'Whisky name', abv: 45 },
-    { id: 11, nameKor: '위스키 이름11', nameEng: 'Whisky name', abv: 45 },
-    { id: 12, nameKor: '위스키 이름12', nameEng: 'Whisky name', abv: 45 },
-    { id: 13, nameKor: '위스키 이름13', nameEng: 'Whisky name', abv: 45 },
-    { id: 14, nameKor: '위스키 이름14', nameEng: 'Whisky name', abv: 45 },
-  ];
+const StoreBottleManage = ({ setIsRegisterMode, id }) => {
+  const [whiskyList, setWhiskyList] = useState([]);
+
+  // * 업장에 등록된 주류 내역
+  useQuery('getStoreWhiskyList', () => getStoreWhiskyList(id), {
+    onSuccess: (response) => {
+      if (response && response.length !== 0) {
+        setWhiskyList(response);
+      }
+    },
+  });
+
   return (
     <StoreBottleManageWrapper>
       <div>
-        {data.map((item) => (
-          <IndividualWhisky key={item.id}>
-            <div>
-              <div>{'img'}</div>
+        {whiskyList &&
+          whiskyList.length !== 0 &&
+          whiskyList.map((item) => (
+            <IndividualWhisky key={item.id}>
               <div>
-                <p>{item.nameKor}</p>
-                <p>{item.nameEng}</p>
-                <p>
-                  {item.abv}
-                  {'% vol'}
-                </p>
+                <div>{'img'}</div>
+                <div>
+                  <p>{item.nameKor}</p>
+                  <p>{item.nameEng}</p>
+                  <p>
+                    {item.abv}
+                    {'% vol'}
+                  </p>
+                </div>
               </div>
-            </div>
-            <button type={'button'}>{'삭제'}</button>
-          </IndividualWhisky>
-        ))}
+              <button type={'button'}>{'삭제'}</button>
+            </IndividualWhisky>
+          ))}
+        {(!whiskyList || whiskyList.length === 0) && <NoneData>사업장에 등록된 주류가 없습니다.</NoneData>}
       </div>
       <Button onClick={() => setIsRegisterMode(true)} location={'both'}>
         {'주류 등록'}
@@ -49,22 +50,32 @@ const StoreBottleManage = ({ setIsRegisterMode }) => {
 export default StoreBottleManage;
 
 const StoreBottleManageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
   width: 100%;
   margin-top: 80px;
   padding-left: 20px;
+  display: flex;
+  position: relative;
+  justify-content: center;
 
   & > div:first-child {
     width: 100%;
+    height: 80vh;
+    margin-top: 25px;
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+    }
   }
 
   & > button:last-child {
     height: 40px;
     width: 326px;
-    position: fixed;
-    top: 500px;
+    position: absolute;
+    margin-left: -15px;
+    bottom: 20px;
     border-radius: 20px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   }

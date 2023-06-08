@@ -35,7 +35,6 @@ const StoreManagePage = () => {
       setStoreInfo(data);
     }
   }, [data]);
-  console.log(storeInfo);
   const tabGroup = [
     { name: '좌석 관리', type: 'seat' },
     { name: '업장 관리', type: 'store' },
@@ -74,7 +73,7 @@ const StoreManagePage = () => {
           {whichTabChosen === 'store' ? (
             <StoreInfoManage storeInfo={storeInfo} />
           ) : whichTabChosen === 'bottle' ? (
-            <StoreBottleManage setIsRegisterMode={setIsRegisterMode} />
+            data && <StoreBottleManage setIsRegisterMode={setIsRegisterMode} id={data.store_id} />
           ) : (
             <StoreQueSeatManage
               whichMode={whichMode}

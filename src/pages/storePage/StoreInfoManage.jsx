@@ -46,8 +46,7 @@ const StoreInfoManage = ({ storeInfo }) => {
 
   useEffect(() => {
     if (storeInfo.biz_photo) {
-      // 백엔드에서 오는 url이 큰 따옴표와 대괄호를 포함하고 있으므로
-      setImageUrl(storeInfo.biz_photo.slice(2, -2));
+      setImageUrl(storeInfo.biz_photo);
       setEditedInputValue({
         store: storeInfo.store,
         address: storeInfo.address,
