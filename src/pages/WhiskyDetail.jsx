@@ -41,9 +41,7 @@ const WhiskyDetail = () => {
   });
 
   // * [위스키 디테일] 조회
-  const getWhiskyDetailHandler = () => {
-    getWhiskyDetailMutation.mutate(whiskyId);
-  };
+  const getWhiskyDetailHandler = () => getWhiskyDetailMutation.mutate(whiskyId);
 
   // * [위스키 코멘트] 조회 useMutation
   const getWhiskyCommentMutation = useMutation(getWhiskyComment, {
@@ -53,9 +51,7 @@ const WhiskyDetail = () => {
   });
 
   // * [위스키 코멘트] 조회
-  const getWhiskyCommentHandler = () => {
-    getWhiskyCommentMutation.mutate(whiskyId);
-  };
+  const getWhiskyCommentHandler = () => getWhiskyCommentMutation.mutate(whiskyId);
 
   // * [위스키 보유 스토어] 조회 useMutation
   const getWhiskyStoreMutation = useMutation(getWhiskyStore, {
@@ -65,9 +61,7 @@ const WhiskyDetail = () => {
   });
 
   // * [위스키 보유 스토어] 조회
-  const getWhiskyStoreHandler = () => {
-    getWhiskyStoreMutation.mutate(whiskyId);
-  };
+  const getWhiskyStoreHandler = () => getWhiskyStoreMutation.mutate(whiskyId);
 
   // * 페이지가 마운트될 때 위스키 디테일 데이터 조회
   useEffect(() => {
@@ -83,7 +77,8 @@ const WhiskyDetail = () => {
           <DetailHeader
             korname={whiskyDetail.whiskyInfo.whisky_kor}
             engname={whiskyDetail.whiskyInfo.whisky_eng}
-            whiskylike={isWhiskyLike}
+            like={isWhiskyLike}
+            id={whiskyDetail.whiskyInfo.whisky_id}
           />
           <ImageDiv>
             <Image

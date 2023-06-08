@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import LikeIcon from './LikeIcon';
 import Image from './Image';
 
 // ! [props]
@@ -37,11 +36,6 @@ const WhiskyGrid = ({ list }) => {
               <h2>{item.whisky_eng}</h2>
               <h3>{item.whisky_abv} vol</h3>
             </div>
-            {url !== `/` && (
-              <IconDiv>
-                <LikeIcon />
-              </IconDiv>
-            )}
           </WhiskyDataDiv>
         ))}
     </WhiskyListSection>

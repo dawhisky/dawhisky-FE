@@ -1,14 +1,13 @@
-import axios from 'axios';
+import api from './interceptor';
 
 // 유저정보조회api, method : get, url : /api/mypage/user
-const getUserInfo = async ({ token }) => {
-  try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/mypage/user`, { headers: token });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
-  }
+const getUserInfo = () => {
+  return api
+    .get(`/api/mypage/user`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
 };
 
 export default getUserInfo;
