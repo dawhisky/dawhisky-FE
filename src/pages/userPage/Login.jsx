@@ -6,6 +6,10 @@ import { Layout, Button } from '../../components';
 import login from '../../api/login';
 
 const Login = () => {
+  // 소켓 연결 생성
+  const socket = io('http://jjmdev.site', {
+    path: '/api/socket',
+  });
   // 유저 유형 상태관리
   const [userRole, setUserRole] = useState('user');
 
