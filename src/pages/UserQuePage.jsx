@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { io } from 'socket.io-client';
 import { styled } from 'styled-components';
 import { getTableInfo } from '../api/table';
 import { Button } from '../components';
 
 const UserQuePage = () => {
+  // 소켓 연결 생성
+  const socket = io();
   // 해당 스토어 테이블정보 상태관리
-
   const [barTableStatus, setBarTableStatus] = useState([]);
+  const [hallTableStatus, setHallTableStatus] = useState([]);
+  // 잔여 좌석 상태관리
   const [restSeat, setRestSeat] = useState({});
+  // 바 좌석, 홀 좌석 어떤 라디오버튼 클릭됐는지
   const [whichButtonClicked, setWhichButtonClicked] = useState('bar');
+  // 줄서기 희망 인원 상태관리
   const [editedPeopleNumber, seteditedPepleNumber] = useState(0);
+  // 요청사항 상태관리
   const [request, setRequest] = useState('');
+  // 캐러셀 이동 픽셀 상태관리
   const [px, setPx] = useState(0);
 
   // 해당 스토어 테이블 정보
   const { isLoading, isError, data } = useQuery('getTableInfo', () => getTableInfo(77));
+
   useEffect(() => {
     if (data) {
       const barTableInfo = JSON.parse(data.bar_table).map((item, index) => {
@@ -30,9 +39,22 @@ const UserQuePage = () => {
         JSON.parse(data.hall_table).length - JSON.parse(data.hall_table).filter((item) => item === 1).length;
       setRestSeat({ restBarSeat, restHallSeat });
       setBarTableStatus(barTableInfo);
+      setHallTableStatus(hallTableInfo);
     }
   }, [data]);
 
+  useEffect(() => {
+    // 컴포넌트 마운트 시 소켓 연결 설정
+    // 이벤트 리스너 등록 등 필요한 작업 수행
+
+    // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리 작업
+    return () => {
+      socket.disconnect();
+      // 필요한 정리 작업 수행
+    };
+  }, []);
+
+  // 줄서기 인원 핸들러
   const changePeopleNumberHandler = (e) => {
     if (e.target.dataset.button === 'plus') {
       seteditedPepleNumber(editedPeopleNumber + 1);
@@ -41,10 +63,12 @@ const UserQuePage = () => {
     }
   };
 
+  // 요청사항 input onChange핸들러
   const getRequest = (e) => {
     setRequest(e.target.value);
   };
 
+  // 좌우버튼 클릭시 움직일 픽셀 핸들러
   const movCarouselPx = (e) => {
     const number = barTableStatus.length - 4;
     if (e.target.dataset.type === 'left' && px < 0) {
@@ -72,6 +96,8 @@ const UserQuePage = () => {
               <span>{'바 좌석'}</span>
             </div>
             <span>
+              {barTableStatus.length}
+              {'석 중 '}
               {restSeat.restBarSeat}
               {'석 남음'}
             </span>
@@ -99,6 +125,8 @@ const UserQuePage = () => {
               <span>{'홀 좌석'}</span>
             </div>
             <span>
+              {hallTableStatus.length}
+              {'석 중 '}
               {restSeat.restHallSeat}
               {'석 남음'}
             </span>
@@ -164,6 +192,11 @@ const SeatStatusArea = styled.div`
     margin-right: 10px;
   }
   & > div:first-child {
+    & > div:nth-child(2) {
+      & > span {
+        font-size: 13px;
+      }
+    }
     & > div:last-child {
       display: flex;
       justify-content: space-between;
@@ -214,6 +247,9 @@ const SeatStatusArea = styled.div`
     & > div {
       display: flex;
       justify-content: space-between;
+      & > span {
+        font-size: 13px;
+      }
     }
   }
 `;
