@@ -72,13 +72,13 @@ const StoreDetail = () => {
   // * [줄서기 tab] 클릭 시 로그인/회원 구분에 따라 분기 처리
   const onTabClickHandler = (type) => {
     setTabChosen(type);
-    // if (type === 'que' && !loginStatus.login) {
-    //   alert(`로그인이 필요한 페이지입니다.`);
-    //   navigate(`/Login`);
-    // } else if (type === 'que' && loginStatus.userFlag === 'store') {
-    //   alert(`사업자 회원은 줄서기 등록이 불가합니다.`);
-    //   setTabChosen(tabGroup[0].type);
-    // }
+    if (type === 'que' && !loginStatus.login) {
+      alert(`로그인이 필요한 페이지입니다.`);
+      navigate(`/Login`);
+    } else if (type === 'que' && loginStatus.userFlag === 'store') {
+      alert(`사업자 회원은 줄서기 등록이 불가합니다.`);
+      setTabChosen(tabGroup[0].type);
+    }
   };
 
   // * 페이지가 마운트될 때 실행할 작업
@@ -96,22 +96,16 @@ const StoreDetail = () => {
     <Layout>
       {data && (
         <>
-          <DetailHeader korname={barDetail.상호명} />
+          <DetailHeader korname={data.store} id={data.store_id} />
           <ImageDiv>
-            <Image
-              width={'360px'}
-              height={'360px'}
-              src={data?.biz_photo.slice(2, -2)}
-              alt={`${data.store} 대표 이미지`}
-            />
+            <Image width={'360px'} height={'360px'} src={data.biz_photo} alt={`${data.store} 대표 이미지`} />
           </ImageDiv>
           <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
 
           <TabSection>
             {data && tabChosen === 'barInfo' && <DetailInfo info={barDetail} />}
             {tabChosen === 'getWhisky' && <DetailList list={storeWhiskyList} />}
-            {/* {tabChosen === 'que' && loginStatus.login && loginStatus.userFlag === 'user' && <UserQuePage />} */}
-            {tabChosen === 'que' && <UserQuePage />}
+            {tabChosen === 'que' && loginStatus.login && loginStatus.userFlag === 'user' && <UserQuePage />}
           </TabSection>
         </>
       )}
