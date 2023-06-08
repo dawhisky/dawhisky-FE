@@ -1,6 +1,5 @@
 import Button from './Button';
 import SearchInput from './SearchInput';
-import LikeIcon from './LikeIcon';
 import CategorySelect from './CategorySelect';
 import TabMenu from './TabMenu';
 import Image from './Image';
@@ -15,7 +14,6 @@ import Modal from './Modal';
 export {
   Button,
   SearchInput,
-  LikeIcon,
   CategorySelect,
   TabMenu,
   Image,

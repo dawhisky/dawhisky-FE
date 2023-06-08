@@ -12,15 +12,15 @@ const api = axios.create({
 // * request interceptor
 api.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem('authorization');
+    const authorization = localStorage.getItem('authorization');
     const refreshToken = localStorage.getItem('refreshToken');
 
     // * eslint Assignment to property of function parameter 'config' 에러 임시 비활성화 처리
-    if (accessToken && refreshToken) {
+    if (authorization && refreshToken) {
       // eslint-disable-next-line no-param-reassign
-      config.headers.accessToken = `Bearer ${accessToken}`;
+      config.headers.authorization = `${authorization}`;
       // eslint-disable-next-line no-param-reassign
-      config.headers.refreshToken = `Bearer ${refreshToken}`;
+      config.headers.refreshToken = `${refreshToken}`;
     }
     return config;
   },
