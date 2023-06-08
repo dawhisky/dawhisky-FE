@@ -103,13 +103,20 @@ const StoreDetail = () => {
         <>
           <DetailHeader korname={barDetail.상호명} />
           <ImageDiv>
-            <Image width={'360px'} height={'360px'} src={data?.biz_photo} alt={`${data.store} 대표 이미지`} />
+            <Image
+              width={'360px'}
+              height={'360px'}
+              src={data?.biz_photo.slice(2, -2)}
+              alt={`${data.store} 대표 이미지`}
+            />
           </ImageDiv>
           <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
+
           <TabSection>
             {data && tabChosen === 'barInfo' && <DetailInfo info={barDetail} />}
             {tabChosen === 'getWhisky' && <DetailList list={storeWhiskyList} />}
-            {tabChosen === 'que' && loginStatus.login && loginStatus.userFlag === 'user' && <UserQuePage />}
+            {/* {tabChosen === 'que' && loginStatus.login && loginStatus.userFlag === 'user' && <UserQuePage />} */}
+            {tabChosen === 'que' && <UserQuePage />}
           </TabSection>
         </>
       )}
