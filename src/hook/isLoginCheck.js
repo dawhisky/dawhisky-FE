@@ -1,19 +1,19 @@
 const isLoginCheck = () => {
   const authorization = localStorage.getItem('authorization');
-  const refreshtoken = localStorage.getItem('refreshToken');
-  const store = localStorage.getItem('store');
+  const refreshToken = localStorage.getItem('refreshToken');
+  const store = localStorage.getItem('store_id');
   const user = localStorage.getItem('user');
 
-  if (authorization && !refreshtoken) {
-    // refreshtoken 만료 시 재 요청 로직 구성
+  if (authorization && !refreshToken) {
+    // refreshToken 만료 시 재 요청 로직 구성
     return null;
   }
 
-  if (!authorization && !refreshtoken) {
+  if (!authorization && !refreshToken) {
     return null;
   }
 
-  return { authorization, refreshtoken, store, user };
+  return { authorization, refreshToken, store, user };
 };
 
 export default isLoginCheck;
