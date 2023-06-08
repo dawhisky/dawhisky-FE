@@ -9,6 +9,12 @@ import { getStoreInfo } from '../api/storeInfo';
 import isLoginCheck from '../hook/isLoginCheck';
 
 const StoreDetail = () => {
+
+  const params = useParams();
+  // 해당 스토어 테이블 정보
+  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ id: 77 }));
+  // 해당 스토어 정보 상태관리
+
   const [storeWhiskyList, setStoreWhiskyList] = useState([]);
   const [loginStatus, setloginStatus] = useState(() => {
     const checkResult = isLoginCheck();
@@ -30,6 +36,7 @@ const StoreDetail = () => {
   const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token, id: storeId }));
 
   // * [상세 정보 tab] 해당 스토어 정보 상태관리
+
   const [barDetail, setBarDetail] = useState({});
 
   // * [보유 위스키 tab] 조회 useMutation
