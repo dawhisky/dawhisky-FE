@@ -30,10 +30,10 @@ const WhiskyDetail = () => {
     onSuccess: (response) => {
       setWhiskyDetail(response);
       setWhiskyInfo({
-        지역: `${response.whiskyInfo.whisky_country} | ${response.whiskyInfo.whisky_region}`,
-        타입: response.whiskyInfo.whisky_type,
-        숙성연도: response.whiskyInfo.whisky_age,
-        도수: `${response.whiskyInfo.whisky_abv} vol`,
+        지역: `${response.whiskyInfo.whisky_country || '미상'} | ${response.whiskyInfo.whisky_region || '미상'}`,
+        타입: response.whiskyInfo.whisky_type || '미상',
+        숙성연도: response.whiskyInfo.whisky_age || '미상',
+        도수: `${response.whiskyInfo.whisky_abv} vol` || '미상',
         상세설명: response.whiskyInfo.whisky_desc,
       });
       setIsWhiskyLike(response.liked);
