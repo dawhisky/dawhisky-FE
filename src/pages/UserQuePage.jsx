@@ -69,7 +69,7 @@ const UserQuePage = () => {
                 name={'myRadio'}
                 checked
               />
-              <sapn>{'바 좌석'}</sapn>
+              <span>{'바 좌석'}</span>
             </div>
             <span>
               {restSeat.restBarSeat}
@@ -96,7 +96,7 @@ const UserQuePage = () => {
           <div>
             <div>
               <input onClick={() => setWhichButtonClicked('hall')} type={'radio'} id={'option2'} name={'myRadio'} />
-              <sapn>{'홀 좌석'}</sapn>
+              <span>{'홀 좌석'}</span>
             </div>
             <span>
               {restSeat.restHallSeat}
