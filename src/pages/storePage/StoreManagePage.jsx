@@ -35,7 +35,7 @@ const StoreManagePage = () => {
       setStoreInfo(data);
     }
   }, [data]);
-
+  console.log(storeInfo);
   const tabGroup = [
     { name: '좌석 관리', type: 'seat' },
     { name: '업장 관리', type: 'store' },
