@@ -25,12 +25,7 @@ const DetailHeader = ({ korname, engname, whiskylike }) => {
   useEffect(() => {
     const getToken = isLoginCheck();
     if (getToken !== null) {
-      const { user } = getToken;
-      if (user) {
-        setLoginStatus({ login: true, userFlag: 'user' });
-      } else {
-        setLoginStatus({ login: true, userFlag: 'store' });
-      }
+      setLoginStatus({ login: true, userFlag: getToken.userFlag });
     }
   }, []);
 
@@ -48,15 +43,19 @@ const DetailHeader = ({ korname, engname, whiskylike }) => {
 
   return (
     <Header
-      color={url.includes('/WhiskyDetail') ? 'black' : 'white'}
-      flag={url.includes('/WhiskyDetail') ? 'whisky' : 'store'}
+      color={url.includes('/WhiskyDetail') || url.includes('/LikeList') ? 'black' : 'white'}
+      flag={url.includes('/WhiskyDetail') || url.includes('/LikeList') ? 'whisky' : 'store'}
     >
       <LeftIcon onClick={onBeforeClickHandler} />
-      <NameDiv>
+      <NameDiv flag={loginStatus.userFlag === 'store' ? 'store' : 'user'}>
         <p>{korname}</p>
         {!!engname && <span>{engname}</span>}
       </NameDiv>
-      {url !== '/LikeList' ? <LikeIcon like={whiskylike} onClick={onLikeClickHandler} /> : <NullDiv />}
+      {url.includes('/LikeList') || (loginStatus.login && loginStatus.userFlag === 'store') ? (
+        <NullDiv />
+      ) : (
+        <LikeIcon like={whiskylike} onClick={onLikeClickHandler} />
+      )}
     </Header>
   );
 };
@@ -78,7 +77,8 @@ const Header = styled.header`
 `;
 
 const NameDiv = styled.div`
-  width: 230px;
+  width: ${(props) => (props.flag === 'store' ? '270px' : '230px')};
+  padding-left: ${(props) => (props.flag === 'store' ? '20px' : '0px')};
   display: flex;
   flex-direction: column;
   gap: 4px;

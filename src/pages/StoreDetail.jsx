@@ -86,12 +86,7 @@ const StoreDetail = () => {
     // 1. 로그인 여부 및 token값 확인
     const getToken = isLoginCheck();
     if (getToken !== null) {
-      const { user } = getToken;
-      if (user) {
-        setLoginStatus({ login: true, userFlag: 'user' });
-      } else {
-        setLoginStatus({ login: true, userFlag: 'store' });
-      }
+      setLoginStatus({ login: true, userFlag: getToken.userFlag });
     }
     // 2. 스토어에서 보유한 위스키 조회
     getStoreWhisky();
