@@ -80,7 +80,6 @@ const StoreList = () => {
   return (
     <Layout>
       <ListSection>
-        <SearchInput searchtype={'before'} placeholder={'위스키 바를 검색해보세요!'} />
         <KakaoMap coords={coords} storelist={storeList} />
         <Button size={'small'} color={'white'} onClick={isShowListHandler}>
           목록 보기
@@ -119,7 +118,7 @@ const ListSection = styled.section`
     top: 30px;
     z-index: 2;
   }
-  & > button:nth-child(3) {
+  & > button:nth-child(2) {
     position: absolute;
     z-index: 1;
     font-weight: 600;
