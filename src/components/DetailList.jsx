@@ -32,7 +32,12 @@ const DetailList = ({ type, list }) => {
             key={item.store_id || list.whisky_id}
             onClick={() => onListClickHandler(item.store_id ? item.store_id : list.whisky_id)}
           >
-            <Image width={'80px'} height={'80px'} src={''} alt={`${item.store} 사진`} />
+            <Image
+              width={'80px'}
+              height={'80px'}
+              src={type === 'store' ? item.biz_photo : list.whisky_kor}
+              alt={`${type === 'store' ? item.store : list.whisky_kor} 대표 사진`}
+            />
             <TotalInfoDiv>
               <h1>{type === 'store' ? item.store : list.whisky_kor}</h1>
               <h2>{type === 'store' ? item.address : list.whisky_eng}</h2>
