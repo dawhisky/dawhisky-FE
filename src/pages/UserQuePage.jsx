@@ -7,7 +7,10 @@ import { Button } from '../components';
 
 const UserQuePage = () => {
   // 소켓 연결 생성
-  const socket = io();
+  const socket = io('http://jjmdev.site', {
+    path: '/api/socket',
+  });
+
   // 해당 스토어 테이블정보 상태관리
   const [barTableStatus, setBarTableStatus] = useState([]);
   const [hallTableStatus, setHallTableStatus] = useState([]);
@@ -46,6 +49,7 @@ const UserQuePage = () => {
   useEffect(() => {
     // 컴포넌트 마운트 시 소켓 연결 설정
     // 이벤트 리스너 등록 등 필요한 작업 수행
+    // socket.emit('message', '안녕하세요, 지민님');
 
     // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리 작업
     return () => {
