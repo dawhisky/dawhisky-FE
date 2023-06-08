@@ -77,7 +77,7 @@ const StoreDetail = () => {
       navigate(`/Login`);
     } else if (type === 'que' && loginStatus.userFlag === 'store') {
       alert(`사업자 회원은 줄서기 등록이 불가합니다.`);
-      navigate(`/StoreDetail/${storeId}`);
+      setTabChosen(tabGroup[0].type);
     }
   };
 
