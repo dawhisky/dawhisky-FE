@@ -27,7 +27,7 @@ const UserManagePage = () => {
 
   return (
     <Layout>
-      <UserNameP>{data[0].name}</UserNameP>
+      <UserNameP>{data && data[0].name}</UserNameP>
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
       {tabChosen === 'getComment' && <WhiskyGrid list={commentList} />}
       {tabChosen === 'setComment' && <SelectWhisky />}
