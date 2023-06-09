@@ -16,7 +16,7 @@ const DetailList = ({ type, list }) => {
 
   const onListClickHandler = (id) => {
     if (url.includes('/UserManagePage')) {
-      navigate(`/MyComment`);
+      navigate(`/MyComment/${id}`);
     } else if (url.includes('/LikeList') || url.includes('/StoreList') || url.includes('/WhiskyDetail')) {
       navigate(`/StoreDetail/${id}`);
     } else if (url.includes('/StoreDetail')) {
@@ -49,7 +49,7 @@ const DetailList = ({ type, list }) => {
               {url.includes('/LikeList') ? (
                 <StoreInfoDiv>
                   <TextH1>{item.store}</TextH1>
-                  <TextH2>주소</TextH2>
+                  <TextH2>{item.address}</TextH2>
                 </StoreInfoDiv>
               ) : (
                 <TotalInfoDiv>
