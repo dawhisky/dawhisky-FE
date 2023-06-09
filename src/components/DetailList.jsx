@@ -27,35 +27,51 @@ const DetailList = ({ type, list }) => {
   return (
     <StockListDiv>
       {list &&
-        list.map((item) => (
-          <ListDiv
-            key={item.store_id || list.whisky_id}
-            onClick={() => onListClickHandler(item.store_id ? item.store_id : list.whisky_id)}
-          >
-            <Image
-              width={'80px'}
-              height={'80px'}
-              src={type === 'store' ? item.biz_photo : list.whisky_kor}
-              alt={`${type === 'store' ? item.store : list.whisky_kor} 대표 사진`}
-            />
-            <TotalInfoDiv>
-              <h1>{type === 'store' ? item.store : list.whisky_kor}</h1>
-              <h2>{type === 'store' ? item.address : list.whisky_eng}</h2>
-              {type === 'store' ? (
-                <BarInfoDiv>
-                  <button type="button">잔여 좌석 2</button>
-                  <h3>60m</h3>
-                </BarInfoDiv>
+        list.map((item) => {
+          const barTables = item.StoreTables.length !== 0 ? JSON.parse(item.StoreTables[0].bar_table) : [];
+          const filteredBarTables = barTables.filter((e) => e === 0).length;
+          const hallTables = item.StoreTables.length !== 0 ? JSON.parse(item.StoreTables[0].hall_table) : [];
+          const filteredHallTables = hallTables.filter((e) => e === 0).length;
+
+          return (
+            <ListDiv
+              key={item.store_id || list.whisky_id}
+              onClick={() => onListClickHandler(item.store_id ? item.store_id : list.whisky_id)}
+            >
+              <Image
+                width={'80px'}
+                height={'80px'}
+                src={type === 'store' ? item.biz_photo : list.whisky_kor}
+                alt={`${type === 'store' ? item.store : list.whisky_kor} 대표 사진`}
+              />
+              {url.includes('/LikeList') ? (
+                <StoreInfoDiv>
+                  <TextH1>{item.store}</TextH1>
+                  <TextH2>주소</TextH2>
+                </StoreInfoDiv>
               ) : (
-                <WhiskyInfoDiv>
-                  <h2>{list.whisky_abv} vol</h2>
-                  {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
-                  <button type="button">등록</button>
-                </WhiskyInfoDiv>
+                <TotalInfoDiv>
+                  <TextH1>{type === 'store' ? item.store : list.whisky_kor}</TextH1>
+                  <TextH2>{type === 'store' ? item.address : list.whisky_eng}</TextH2>
+                  {type === 'store' ? (
+                    <BarInfoDiv>
+                      <button type="button">
+                        바 {filteredBarTables}석 | 홀 {filteredHallTables}석
+                      </button>
+                      {/* <h3>60m</h3> */}
+                    </BarInfoDiv>
+                  ) : (
+                    <WhiskyInfoDiv>
+                      <h2>{list.whisky_abv} vol</h2>
+                      {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
+                      <button type="button">등록</button>
+                    </WhiskyInfoDiv>
+                  )}
+                </TotalInfoDiv>
               )}
-            </TotalInfoDiv>
-          </ListDiv>
-        ))}
+            </ListDiv>
+          );
+        })}
       {(!list || list.length === 0) && type === 'store' && <NoneData>위스키 바가 없어요</NoneData>}
       {(!list || list.length === 0) && type !== 'store' && <NoneData>위스키 데이터가 존재하지 않아요</NoneData>}
     </StockListDiv>
@@ -76,28 +92,37 @@ const ListDiv = styled.div`
   cursor: pointer;
 `;
 
+const StoreInfoDiv = styled.div`
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 const TotalInfoDiv = styled.div`
   margin-left: 15px;
-  & h1 {
-    width: 225px;
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  & h2 {
-    width: 225px;
-    margin: 5px 0 12px 0;
-    font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #818181;
-  }
   & h3 {
     font-size: 14px;
     font-weight: 600;
   }
+`;
+
+const TextH1 = styled.h1`
+  width: 225px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const TextH2 = styled.h2`
+  width: 225px;
+  margin: 5px 0 12px 0;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #818181;
 `;
 
 const BarInfoDiv = styled.div`
