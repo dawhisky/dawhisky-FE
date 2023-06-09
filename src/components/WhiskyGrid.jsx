@@ -88,9 +88,3 @@ const WhiskyDataDiv = styled.div`
     line-height: 16px;
   }
 `;
-
-const IconDiv = styled.div`
-  position: absolute;
-  top: 8px;
-  right: 10px;
-`;
