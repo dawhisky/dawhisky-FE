@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { styled } from 'styled-components';
 import { Layout, DetailHeader, DetailInfo, DetailList, Image, TabMenu } from '../components';
@@ -14,9 +14,6 @@ const StoreDetail = () => {
     login: false,
     userFlag: '',
   });
-
-  // useParams hook
-  const params = useParams();
 
   // * Store ID Url에서 get
   const navigate = useNavigate();
@@ -96,7 +93,7 @@ const StoreDetail = () => {
     <Layout>
       {data && (
         <>
-          <DetailHeader korname={data.store} id={data.store_id} />
+          <DetailHeader korname={data.store} like={data.slikes === 1} id={data.store_id} />
           <ImageDiv>
             <Image width={'360px'} height={'360px'} src={data.biz_photo} alt={`${data.store} 대표 이미지`} />
           </ImageDiv>

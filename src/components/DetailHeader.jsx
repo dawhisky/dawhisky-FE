@@ -58,8 +58,12 @@ const DetailHeader = ({ korname, engname, like, id }) => {
 
   return (
     <Header
-      color={url.includes('/WhiskyDetail') || url.includes('/LikeList') ? 'black' : 'white'}
-      flag={url.includes('/WhiskyDetail') || url.includes('/LikeList') ? 'whisky' : 'store'}
+      color={
+        url.includes('/WhiskyDetail') || url.includes('/LikeList') || url.includes('/MyComment') ? 'black' : 'white'
+      }
+      flag={
+        url.includes('/WhiskyDetail') || url.includes('/LikeList') || url.includes('/MyComment') ? 'whisky' : 'store'
+      }
     >
       <LeftIcon onClick={onBeforeClickHandler} />
       <NameDiv flag={loginStatus.userFlag === 'store' ? 'store' : 'user'}>
