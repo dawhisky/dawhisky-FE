@@ -7,9 +7,9 @@ import { Button } from '../components';
 
 const UserQuePage = () => {
   // 소켓 연결 생성
-  const socket = io('http://jjmdev.site', {
-    path: '/api/socket',
-  });
+  // const socket = io('http://jjmdev.site', {
+  //   path: '/api/socket',
+  // });
 
   // 해당 스토어 테이블정보 상태관리
   const [barTableStatus, setBarTableStatus] = useState([]);
@@ -46,17 +46,17 @@ const UserQuePage = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    // 컴포넌트 마운트 시 소켓 연결 설정
-    // 이벤트 리스너 등록 등 필요한 작업 수행
-    // socket.emit('message', '안녕하세요, 지민님');
+  // useEffect(() => {
+  //   // 컴포넌트 마운트 시 소켓 연결 설정
+  //   // 이벤트 리스너 등록 등 필요한 작업 수행
+  //   // socket.emit('message', '안녕하세요, 지민님');
 
-    // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리 작업
-    return () => {
-      socket.disconnect();
-      // 필요한 정리 작업 수행
-    };
-  }, []);
+  //   // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리 작업
+  //   return () => {
+  //     socket.disconnect();
+  //     // 필요한 정리 작업 수행
+  //   };
+  // }, []);
 
   // 줄서기 인원 핸들러
   const changePeopleNumberHandler = (e) => {
