@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { useQuery } from 'react-query';
 import { Layout, DetailHeader, TabMenu, WhiskyGrid, DetailList } from '../../components';
-import getUserInfo from '../../api/user';
+import { getUserInfo } from '../../api/user';
 
 const LikeList = () => {
   const tabGroup = [

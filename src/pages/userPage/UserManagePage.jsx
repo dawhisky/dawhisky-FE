@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { useQuery } from 'react-query';
 import { Layout, TabMenu, WhiskyGrid } from '../../components';
 import SelectWhisky from './SelectWhisky';
-import getUserInfo from '../../api/user';
+import { getUserInfo } from '../../api/user';
 
 const UserManagePage = () => {
   const tabGroup = [
