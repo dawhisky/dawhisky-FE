@@ -28,21 +28,23 @@ const DetailList = ({ type, list }) => {
     <StockListDiv>
       {list &&
         list.map((item) => {
-          const barTables = item.StoreTables.length !== 0 ? JSON.parse(item.StoreTables[0].bar_table) : [];
-          const filteredBarTables = barTables.filter((e) => e === 0).length;
-          const hallTables = item.StoreTables.length !== 0 ? JSON.parse(item.StoreTables[0].hall_table) : [];
-          const filteredHallTables = hallTables.filter((e) => e === 0).length;
+          const barTables =
+            item.StoreTables && item.StoreTables.length !== 0 ? JSON.parse(item.StoreTables[0].bar_table) : [];
+          const filteredBarTables = Array.isArray(barTables) ? barTables.filter((e) => e === 0).length : 0;
+          const hallTables =
+            item.StoreTables && item.StoreTables.length !== 0 ? JSON.parse(item.StoreTables[0].hall_table) : [];
+          const filteredHallTables = Array.isArray(hallTables) ? hallTables.filter((e) => e === 0).length : 0;
 
           return (
             <ListDiv
-              key={item.store_id || list.whisky_id}
-              onClick={() => onListClickHandler(item.store_id ? item.store_id : list.whisky_id)}
+              key={item.store_id || item.whisky_id}
+              onClick={() => onListClickHandler(item.store_id ? item.store_id : item.whisky_id)}
             >
               <Image
                 width={'80px'}
                 height={'80px'}
-                src={type === 'store' ? item.biz_photo : list.whisky_kor}
-                alt={`${type === 'store' ? item.store : list.whisky_kor} 대표 사진`}
+                src={type === 'store' ? item.biz_photo : item.whisky_photo}
+                alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
               />
               {url.includes('/LikeList') ? (
                 <StoreInfoDiv>
@@ -51,8 +53,8 @@ const DetailList = ({ type, list }) => {
                 </StoreInfoDiv>
               ) : (
                 <TotalInfoDiv>
-                  <TextH1>{type === 'store' ? item.store : list.whisky_kor}</TextH1>
-                  <TextH2>{type === 'store' ? item.address : list.whisky_eng}</TextH2>
+                  <TextH1>{type === 'store' ? item.store : item.whisky_kor}</TextH1>
+                  <TextH2>{type === 'store' ? item.address : item.whisky_eng}</TextH2>
                   {type === 'store' ? (
                     <BarInfoDiv>
                       <button type="button">
@@ -62,9 +64,11 @@ const DetailList = ({ type, list }) => {
                     </BarInfoDiv>
                   ) : (
                     <WhiskyInfoDiv>
-                      <h2>{list.whisky_abv} vol</h2>
+                      <h2>{item.whisky_abv} vol</h2>
                       {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
-                      <button type="button">등록</button>
+                      <button type="button">
+                        {(url.includes('/UserManagePage') || url.includes('/StoreManagePage')) && '등록'}
+                      </button>
                     </WhiskyInfoDiv>
                   )}
                 </TotalInfoDiv>

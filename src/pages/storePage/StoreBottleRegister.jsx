@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { Layout, CategorySelect } from '../../components';
+import { useQuery } from 'react-query';
+import { Layout, CategorySelect, DetailList } from '../../components';
+import { getWhiskyList } from '../../api/whisky';
 
 const StoreBottleRegister = ({ setIsRegisterMode }) => {
-  const data = [
-    { id: 1, nameKor: '위스키 이름1', nameEng: 'Whisky name', abv: 45 },
-    { id: 2, nameKor: '위스키 이름2', nameEng: 'Whisky name', abv: 45 },
-    { id: 3, nameKor: '위스키 이름3', nameEng: 'Whisky name', abv: 45 },
-    { id: 4, nameKor: '위스키 이름4', nameEng: 'Whisky name', abv: 45 },
-    { id: 5, nameKor: '위스키 이름5', nameEng: 'Whisky name', abv: 45 },
-    { id: 6, nameKor: '위스키 이름6', nameEng: 'Whisky name', abv: 45 },
-    { id: 7, nameKor: '위스키 이름7', nameEng: 'Whisky name', abv: 45 },
-  ];
+  const { data } = useQuery('getWhiskyList', () => getWhiskyList());
 
   const countryFilter = ['스카치', '아이리시', '아메리칸', '재패니스', 'etc'];
 
@@ -42,26 +36,7 @@ const StoreBottleRegister = ({ setIsRegisterMode }) => {
             <CategorySelect category={'재료별'} list={[1, 2, 3, 4, 5]} />
           </div>
         </div>
-        <div>
-          {filteredData.map((item) => {
-            return (
-              <IndividualWhisky key={item.id}>
-                <div>
-                  <div>{'img'}</div>
-                  <div>
-                    <p>{item.nameKor}</p>
-                    <p>{item.nameEng}</p>
-                    <p>
-                      {item.abv}
-                      {'% vol'}
-                    </p>
-                  </div>
-                </div>
-                <button type={'button'}>{'등록'}</button>
-              </IndividualWhisky>
-            );
-          })}
-        </div>
+        {data && <DetailList list={data} />}
       </StoreBottleRegisterWrapper>
     </Layout>
   );
