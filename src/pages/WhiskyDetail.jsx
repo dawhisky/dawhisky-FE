@@ -21,7 +21,7 @@ const WhiskyDetail = () => {
   const [whiskyDetail, setWhiskyDetail] = useState(null);
   const [whiskyInfo, setWhiskyInfo] = useState(null);
   const [whiskyStore, setWhiskyStore] = useState(null);
-  const [whiskyComment, setWhiskyComment] = useState('');
+  const [whiskyComment, setWhiskyComment] = useState([]);
 
   const onTabClickHandler = (type) => setTabChosen(type);
 
@@ -93,8 +93,8 @@ const WhiskyDetail = () => {
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
       <TabSection>
         {tabChosen === 'detail' && whiskyInfo && <DetailInfo info={whiskyInfo} />}
-        {tabChosen === 'bar' && <DetailList type={'store'} list={whiskyStore} />}
-        {tabChosen === 'comment' && <WhiskyComment comment={whiskyComment} />}
+        {tabChosen === 'bar' && whiskyStore && <DetailList type={'store'} list={whiskyStore} />}
+        {tabChosen === 'comment' && whiskyComment && <WhiskyComment comment={whiskyComment} />}
       </TabSection>
     </Layout>
   );

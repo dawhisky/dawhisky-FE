@@ -8,7 +8,7 @@ import { NoneData } from './statusPage';
 const WhiskyComment = ({ comment }) => {
   return (
     <CommentDiv>
-      {comment && comment.map((item) => <p key={item.review_id}>{item.content}</p>)}
+      {comment && [comment].map((item) => <p key={item.review_id}>{item.content}</p>)}
       {!comment && <NoneData>등록된 코멘트가 없어요</NoneData>}
     </CommentDiv>
   );
