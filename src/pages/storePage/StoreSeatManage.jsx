@@ -58,9 +58,8 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log(data);
       if (data === null) {
-        createTableApi.mutate({ token, editedSeatData: { hall_table: '[]', bar_table: '[]' } });
+        createTableApi.mutate({ editedSeatData: { hall_table: '[]', bar_table: '[]' } });
       }
       // 서버 데이터 반영
       if (data && data.bar_table && data.hall_table) {
@@ -115,10 +114,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
       JSON.stringify(data.bar_table) !== JSON.stringify(entireSeatData.bar_table) ||
       JSON.stringify(data.hall_table) !== JSON.stringify(entireSeatData.hall_table)
     ) {
-      editTableApi.mutate({
-        token,
-        editedSeatData: entireSeatData,
-      });
+      editTableApi.mutate({ editedSeatData: entireSeatData });
     }
   };
 

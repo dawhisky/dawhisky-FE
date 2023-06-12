@@ -58,7 +58,7 @@ const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen,
       bar_table: JSON.stringify(editedSeatData.bar_table),
       hall_table: JSON.stringify(editedSeatData.hall_table),
     };
-    editTableApi.mutate({ token, editedSeatData: payload });
+    editTableApi.mutate({ editedSeatData: payload });
     setWhichTabChosen('seat');
     setWhichMode('seat');
     setIsSeatEditMode(false);

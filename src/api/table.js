@@ -1,53 +1,41 @@
-import axios from 'axios';
+import api from './interceptor';
 
 // 테이블 조회api, method : get, url : /api/mypage/table/:store_id
-const getTableInfo = async (storeId) => {
-  try {
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/mypage/table/${storeId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
-  }
+export const getTableInfo = (storeId) => {
+  return api
+    .get(`/api/mypage/table/${storeId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
 };
 
 // 테이블 생성api, method : post, url : /api/mypage/store/table
-const createTableInfo = async ({ token, editedSeatData }) => {
-  try {
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/mypage/store/table`, editedSeatData, {
-      headers: token,
+export const createTableInfo = ({ editedSeatData }) => {
+  return api
+    .post(`/api/mypage/store/table`, editedSeatData)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
     });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
-  }
 };
 
 // 테이블 수정api, method : put, url : /api/mypage/store/table
-const editTableInfo = async ({ token, editedSeatData }) => {
-  try {
-    const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/api/mypage/store/table`, editedSeatData, {
-      headers: token,
+export const editTableInfo = ({ editedSeatData }) => {
+  return api
+    .put(`/api/mypage/store/table`, editedSeatData)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
     });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
-  }
 };
 
 // 테이블 삭제api, method : delete, url : /api/mypage/store/table
-const deleteTableInfo = async ({ token }) => {
-  try {
-    const response = await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/mypage/store/table`, {
-      headers: token,
+export const deleteTableInfo = () => {
+  return api
+    .delete(`/api/mypage/store/table`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
     });
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    return Promise.reject(error);
-  }
 };
-
-export { getTableInfo, createTableInfo, editTableInfo, deleteTableInfo };

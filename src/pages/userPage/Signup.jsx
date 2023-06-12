@@ -82,7 +82,7 @@ const Signup = () => {
   // email 본인인증 메일 발송
   const sendEmailApi = useMutation(sendEmail, {
     onSuccess: (response) => {
-      alert(response.data.message);
+      alert(response.message);
     },
     onError: (error) => {
       alert(error.response.data.errorMessage);
