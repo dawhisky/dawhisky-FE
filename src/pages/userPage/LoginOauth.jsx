@@ -11,7 +11,12 @@ const LoginOauth = () => {
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login/user`, { code: AUTH_CODE })
-      .then((response) => response.data)
+      .then((response) => {
+        localStorage.setItem('authorization', response.data.authorization);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
+        localStorage.setItem('user', response.data.user);
+        navigate('/');
+      })
       .catch((error) => {
         throw error;
       });
