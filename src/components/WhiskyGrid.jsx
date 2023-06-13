@@ -22,12 +22,13 @@ const WhiskyGrid = ({ list }) => {
   return (
     <WhiskyListSection>
       {list &&
+        list.length !== 0 &&
         list.map((item) => (
           <WhiskyDataDiv key={item.whisky_id} onClick={() => onWhiskyClickHandler(item.whisky_id)}>
             <Image
-              width={'155px'}
-              height={'155px'}
-              borderradius={'5px'}
+              width={'9.688rem'}
+              height={'9.688rem'}
+              borderradius={'0.313rem'}
               src={item.whisky_photo}
               alt={`${item.whisky_kor} 사진`}
             />
@@ -51,40 +52,40 @@ const WhiskyListSection = styled.section`
   align-items: center;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: minmax(0, auto);
-  grid-gap: 25px 20px;
+  grid-gap: 1.563rem 1.25rem;
 `;
 
 const WhiskyDataDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 0.188rem;
   cursor: pointer;
   & div {
     display: flex;
     justify-content: space-between;
   }
   & h1 {
-    width: 155px;
-    margin-top: 8px;
-    font-size: 15px;
+    width: 9.688rem;
+    margin-top: 0.5rem;
+    font-size: 0.938rem;
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   & h2 {
-    width: 100px;
-    font-size: 12px;
-    line-height: 16px;
-    color: #8f8f8f;
+    width: 6.25rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: ${({ theme }) => theme.colors.darkGray};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   & h3 {
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 600;
-    line-height: 16px;
+    line-height: 1rem;
   }
 `;
