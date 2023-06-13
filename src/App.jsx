@@ -8,6 +8,7 @@ import {
   StoreDetail,
   Signup,
   Login,
+  LoginOauth,
   StoreManagePage,
   LikeList,
   UserManagePage,
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/StoreDetail/:id" element={<StoreDetail />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Login" element={<Login />} />
+          <Route path="/LoginOauth" element={<LoginOauth />} />
           <Route path="/StoreManagePage" element={<StoreManagePage />} />
           <Route path="/LikeList" element={<LikeList />} />
           <Route path="/UserManagePage" element={<UserManagePage />} />

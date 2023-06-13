@@ -4,6 +4,7 @@ import WhiskyDetail from './WhiskyDetail';
 import StoreList from './StoreList';
 import StoreDetail from './StoreDetail';
 import Login from './userPage/Login';
+import LoginOauth from './userPage/LoginOauth';
 import Signup from './userPage/Signup';
 import StoreManagePage from './storePage/StoreManagePage';
 import StoreBottleManage from './storePage/StoreBottleManage';
@@ -21,6 +22,7 @@ export {
   StoreList,
   StoreDetail,
   Login,
+  LoginOauth,
   Signup,
   StoreManagePage,
   StoreBottleManage,
