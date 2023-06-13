@@ -14,7 +14,7 @@ const LoginOauth = () => {
       .then((response) => {
         localStorage.setItem('authorization', response.data.authorization);
         localStorage.setItem('refreshToken', response.data.refreshToken);
-        localStorage.setItem('store_id', response.data.user);
+        localStorage.setItem('user', response.data.user);
         navigate('/');
       })
       .catch((error) => {
