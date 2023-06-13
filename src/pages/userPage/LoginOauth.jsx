@@ -9,12 +9,12 @@ const LoginOauth = () => {
   const AUTH_CODE = window.location.search.split('=')[1];
 
   useEffect(() => {
-    // axios
-    //   .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login/user`, { code: AUTH_CODE })
-    //   .then((response) => response.data)
-    //   .catch((error) => {
-    //     throw error;
-    //   });
+    axios
+      .post(`${process.env.REACT_APP_SERVER_URL}/api/auth/login/user`, { code: AUTH_CODE })
+      .then((response) => response.data)
+      .catch((error) => {
+        throw error;
+      });
   }, []);
 
   return (
