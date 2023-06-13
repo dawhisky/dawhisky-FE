@@ -16,20 +16,18 @@ const Layout = ({ children }) => {
 export default Layout;
 
 const BackgroundDiv = styled.div`
-  // 배경화면 색상 임시 지정
-  background-color: #f9f5f4;
+  background: ${({ theme }) => theme.colors.lightOrange};
 `;
 
 const ContainerDiv = styled.div`
-  width: 360px;
+  width: 22.5rem;
   height: ${window.innerHeight}px;
   margin: auto;
   position: relative;
   overflow-y: scroll;
-  background-color: #ffffff;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: ${({ theme }) => theme.colors.white};
   &::-webkit-scrollbar {
-    width: 2px;
+    width: 0.125rem;
   }
   &::-webkit-scrollbar-thumb {
     background-color: #ccc;
@@ -37,6 +35,6 @@ const ContainerDiv = styled.div`
 `;
 
 const WrapMain = styled.main`
-  padding: 0px 16px 30px 16px;
-  margin-bottom: 40px;
+  padding: 0 1rem 1.875rem 1rem;
+  margin-bottom: 2.5rem;
 `;

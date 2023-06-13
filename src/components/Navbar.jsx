@@ -1,37 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { styled } from 'styled-components';
-import { RiHomeLine, RiHomeFill } from 'react-icons/ri';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { MdPersonOutline, MdPerson } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
-import isLoginCheck from '../hook/isLoginCheck';
+import userFlagCheck from '../hook/userFlagCheck';
+import Image from './Image';
+import { whiskyColor, whiskyGray, barColor, barGray, mypageColor, mypageGray } from '../assets';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const url = location.pathname;
-  const [loginStatus, setLoginStatus] = useState({
-    login: false,
-    userFlag: '',
-  });
-
-  // * 로그인 여부 및 token값 확인
-  useEffect(() => {
-    const getToken = isLoginCheck();
-    if (getToken !== null) {
-      setLoginStatus({ login: true, userFlag: getToken.userFlag });
-    }
-  }, []);
 
   // * 로그인 구분에 따라 유저/사업자 마이페이지 이동 처리
   const onMagagePageClickHandler = () => {
-    if (!loginStatus.login) {
+    const userFlag = userFlagCheck();
+    if (userFlag === 'user') {
+      navigate(`/UserManagePage`);
+    } else if (userFlag === 'store') {
+      navigate(`/StoreManagePage`);
+    } else {
       alert(`로그인이 필요한 페이지입니다.`);
       navigate(`/Login`);
-    } else if (loginStatus.login && loginStatus.userFlag === 'user') {
-      navigate(`/UserManagePage`);
-    } else {
-      navigate(`/StoreManagePage`);
     }
   };
 
@@ -39,20 +27,79 @@ const Navbar = () => {
   return (
     <Nav>
       <NavButton onClick={() => navigate(`/`)}>
-        {url === `/` || url.includes('/LikeList') || url.includes('/WhiskyDetail') ? <RiHomeFill /> : <RiHomeLine />}
-        <p>위스키</p>
+        {url === `/` || url.includes('/LikeList') || url.includes('/WhiskyDetail') ? (
+          <>
+            <Image
+              width={'1.8rem'}
+              height={'1.8rem'}
+              borderradius={'none'}
+              src={whiskyColor}
+              alt={'네비게이션바 위스키 탭 선택된 이미지'}
+            />
+            <ColoredP>위스키</ColoredP>
+          </>
+        ) : (
+          <>
+            <Image
+              width={'1.8rem'}
+              height={'1.8rem'}
+              borderradius={'none'}
+              src={whiskyGray}
+              alt={'네비게이션바 위스키탭 기본 이미지'}
+            />
+            <GrayP>위스키</GrayP>
+          </>
+        )}
       </NavButton>
       <NavButton onClick={() => navigate(`/StoreList`)}>
-        {url.includes('/StoreList') || url.includes('/StoreDetail') ? <AiFillHeart /> : <AiOutlineHeart />}
-        <p>바</p>
+        {url.includes('/StoreList') || url.includes('/StoreDetail') ? (
+          <>
+            <Image
+              width={'1.8rem'}
+              height={'1.8rem'}
+              borderradius={'none'}
+              src={barColor}
+              alt={'네비게이션바 바 탭 선택된 이미지'}
+            />
+            <ColoredP>바</ColoredP>
+          </>
+        ) : (
+          <>
+            <Image
+              width={'1.8rem'}
+              height={'1.8rem'}
+              borderradius={'none'}
+              src={barGray}
+              alt={'네비게이션바 바 탭 기본 이미지'}
+            />
+            <GrayP>바</GrayP>
+          </>
+        )}
       </NavButton>
       <NavButton onClick={onMagagePageClickHandler}>
         {url.includes('/UserManagePage') || url.includes('/StoreManagePage') || url.includes('/MyComment') ? (
-          <MdPerson />
+          <>
+            <Image
+              width={'1.8rem'}
+              height={'1.8rem'}
+              borderradius={'none'}
+              src={mypageColor}
+              alt={'네비게이션바 마이페이지 탭 선택된 이미지'}
+            />
+            <ColoredP>마이페이지</ColoredP>
+          </>
         ) : (
-          <MdPersonOutline />
+          <>
+            <Image
+              width={'1.8rem'}
+              height={'1.8rem'}
+              borderradius={'none'}
+              src={mypageGray}
+              alt={'네비게이션바 마이페이지 탭 기본 이미지'}
+            />
+            <GrayP>마이페이지</GrayP>
+          </>
         )}
-        <p>마이페이지</p>
       </NavButton>
     </Nav>
   );
@@ -61,28 +108,37 @@ const Navbar = () => {
 export default Navbar;
 
 const Nav = styled.nav`
-  width: 360px;
-  height: 60px;
+  width: 22.5rem;
+  height: 3.75rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
   position: fixed;
   bottom: 0;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.white};
   box-shadow: rgba(0, 0, 0, 0.1) 0 -3px 4px -1px;
   z-index: 5;
 `;
 
 const NavButton = styled.button`
   width: 33%;
-  line-height: 15px;
+  line-height: 0.938rem;
   background-color: transparent;
-  color: #6c7072;
   cursor: pointer;
   :first-child {
-    font-size: 26px;
+    margin-top: 0.188rem;
   }
   :last-child {
-    font-size: 12px;
+    font-size: 0.75rem;
+    margin-top: 0.063rem;
   }
+`;
+
+const ColoredP = styled.p`
+  color: ${({ theme }) => theme.colors.darkBrown};
+  font-weight: 700;
+`;
+
+const GrayP = styled.p`
+  color: ${({ theme }) => theme.colors.darkGray};
 `;

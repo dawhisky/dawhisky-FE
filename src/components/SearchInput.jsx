@@ -29,9 +29,9 @@ export default SearchInput;
 const searchTypeHandler = (searchtype) => {
   switch (searchtype) {
     case 'before':
-      return 'width: 330px; padding: 12px 16px 12px 48px;';
+      return 'width: 20.625rem; padding: 0.75rem 1px 0.75rem 3rem;';
     case 'after':
-      return 'width: 295px; margin-left: 32px; padding: 12px 48px 12px 16px; background-color: #f3f3f3';
+      return 'width: 18.438rem; margin-left: 2rem; padding: 0.75rem 3rem 0.75rem 1rem; background-color: #f3f3f3';
     default:
       return '';
   }
@@ -40,14 +40,14 @@ const searchTypeHandler = (searchtype) => {
 const iconFloatHandler = (float) => {
   switch (float) {
     case 'left':
-      return 'left: 18px;';
+      return 'left: 1.125rem;';
     default:
-      return 'right: 18px; cursor: pointer;';
+      return 'right: 1.125rem; cursor: pointer;';
   }
 };
 
 const InputWrapDiv = styled.div`
-  margin: 20px 0 10px 0;
+  margin: 0.813rem 0;
   display: flex;
   align-items: center;
   position: relative;
@@ -55,24 +55,25 @@ const InputWrapDiv = styled.div`
 
 const CommonInput = styled.input`
   ${(props) => searchTypeHandler(props.searchtype)};
-  height: 40px;
+  height: 2.5rem;
   position: relative;
-  border-radius: 12px;
+  border-radius: 0.75rem;
+  font-size: 0.938rem;
   &:focus {
     outline: none;
   }
 `;
 
 const LeftIcon = styled(BsChevronLeft)`
-  margin-right: 8px;
+  margin-right: 0.5rem;
   position: absolute;
-  font-size: 20px;
+  font-size: 1.25rem;
   cursor: pointer;
 `;
 
 const SearchIcon = styled(GrSearch)`
   ${(props) => iconFloatHandler(props.float)};
   position: absolute;
-  top: 11px;
-  font-size: 20px;
+  top: 0.688rem;
+  font-size: 1.25rem;
 `;
