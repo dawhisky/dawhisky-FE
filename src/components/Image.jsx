@@ -10,16 +10,7 @@ const Image = ({ width, height, borderradius, src, alt }) => {
   const defaultSrc =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBHOW80iQrY2D3N296kfy1IMWOvgLF-zs6DFZLSE7ztNuXXwdHiJJdvhRu24K7ImhxH9Q&usqp=CAU';
 
-  return (
-    <SetImages
-      width={width}
-      height={height}
-      borderradius={borderradius}
-      src={src || defaultSrc}
-      alt={alt}
-      loading="lazy"
-    />
-  );
+  return <SetImages width={width} height={height} borderradius={borderradius} src={src || defaultSrc} alt={alt} />;
 };
 
 const SetImages = styled.img`
