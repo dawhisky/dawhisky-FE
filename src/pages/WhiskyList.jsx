@@ -125,8 +125,10 @@ const WhiskyList = () => {
           />
         </CategorySection>
       )}
-      {(!whiskyList || whiskyList.length === 0) && <NoneData>카테고리에 일치하는 위스키가 없어요</NoneData>}
-      {whiskyList.length !== 0 && <WhiskyGrid list={whiskyList} />}
+      {whiskyList && (!whiskyList || whiskyList.length === 0) && (
+        <NoneData>카테고리에 일치하는 위스키가 없어요</NoneData>
+      )}
+      {whiskyList && whiskyList.length !== 0 && <WhiskyGrid list={whiskyList} />}
     </Layout>
   );
 };
