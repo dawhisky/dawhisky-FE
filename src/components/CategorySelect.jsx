@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
-import { BsChevronDown } from 'react-icons/bs';
+import { BsChevronDown, BsCheck2 } from 'react-icons/bs';
 import Button from './Button';
 
 // ! [props]
@@ -10,7 +10,7 @@ import Button from './Button';
 // * onclickhandler : 세부 리스트 중 사용자가 선택한 값으로 setState 처리
 
 const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
-  // * 닫기 버튼이나 외부 레이아웃을 선택했을 때 세부 리스트가 닫히도록 설정
+  // 닫기 버튼이나 외부 레이아웃을 선택했을 때 세부 리스트가 닫히도록 설정
   const [showUlList, setShowUlList] = useState(false);
   const isShowListHandler = () => setShowUlList(!showUlList);
 
@@ -24,23 +24,21 @@ const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
         <>
           <BackgroundDiv onClick={isShowListHandler} />
           <ListUl>
-            <p>{category}</p>
+            <span>{category}</span>
             {list.map((item, idx) => {
               return (
                 <ListLi
                   key={item}
                   active={item === categorychosen ? 'true' : 'false'}
-                  onClick={() => onclickhandler(idx)}
+                  onClick={() => onclickhandler(idx, item)}
                 >
-                  {item}
+                  <p>{item}</p>
+                  <BsCheck2 />
                 </ListLi>
               );
             })}
             <ButtonWrapDiv>
-              <Button size={'medium'} location={'both'}>
-                완료
-              </Button>
-              <Button size={'medium'} location={'both'} onClick={isShowListHandler}>
+              <Button location={'both'} onClick={isShowListHandler}>
                 닫기
               </Button>
             </ButtonWrapDiv>
@@ -60,41 +58,42 @@ const BackgroundDiv = styled.div`
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 0;
+  z-index: 1;
 `;
 
 const SelectButton = styled.button`
-  padding: 8px 12px;
+  padding: 0.5rem 0.75rem;
   display: flex;
   flex-direction: center;
   justify-content: center;
   align-items: center;
-  gap: 5px;
-  font-size: 13px;
-  background-color: #f3f3f3;
-  border: 0.5px solid #dadada;
-  border-radius: 16px;
+  gap: 0.313rem;
+  font-size: 0.813rem;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.lightBrown};
+  background-color: ${({ theme }) => theme.colors.lightOrange};
+  border: 0.5px solid ${({ theme }) => theme.colors.mediumOrange};
+  border-radius: 1rem;
   cursor: pointer;
 `;
 
 const ListUl = styled.ul`
-  width: 360px;
+  width: 22.5rem;
   position: fixed;
-  bottom: 60px;
+  bottom: 3.75rem;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 12px 12px 0 0;
-  background-color: #fff;
+  border-radius: 0.75rem 0.75rem 0 0;
+  background-color: ${({ theme }) => theme.colors.white};
   z-index: 1;
-  height: ${(props) => `${props.height}px`};
   overflow-y: auto;
   animation: fadeInUp 0.7s;
-  & p {
-    height: 60px;
+  & span {
+    height: 3.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
+    font-weight: 700;
   }
   @keyframes fadeInUp {
     0% {
@@ -109,14 +108,23 @@ const ListUl = styled.ul`
 `;
 
 const ListLi = styled.li`
-  font-size: 16px;
-  margin: 16px 20px;
+  margin: 1rem 1.25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   cursor: pointer;
-  font-weight: ${({ active }) => (active === 'true' ? '600' : '400')};
+  :first-child {
+    font-weight: ${({ active }) => (active === 'true' ? '700' : '400')};
+    width: 18.75rem;
+  }
+  :last-child {
+    font-size: 1.25rem;
+    color: ${({ theme, active }) => (active === 'true' ? theme.colors.orange : 'transparent')};
+  }
 `;
 
 const ButtonWrapDiv = styled.div`
-  height: 80px;
+  height: 70px;
   display: flex;
   justify-content: space-around;
   align-items: center;
