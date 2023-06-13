@@ -6,7 +6,7 @@ import { Layout, DetailHeader, DetailInfo, DetailList, Image, TabMenu } from '..
 import UserQuePage from './UserQuePage';
 import { getStoreWhiskyList } from '../api/store';
 import { getStoreInfo } from '../api/storeInfo';
-import isLoginCheck from '../hook/isLoginCheck';
+import userFlagCheck from '../hook/userFlagCheck';
 
 const StoreDetail = () => {
   const [storeWhiskyList, setStoreWhiskyList] = useState([]);
@@ -29,7 +29,7 @@ const StoreDetail = () => {
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
 
   // ! 임시
-  const token = isLoginCheck();
+  const token = userFlagCheck();
 
   // * [상세 정보 tab] 해당 스토어 테이블 정보
   const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token, id: storeId }));
@@ -81,7 +81,7 @@ const StoreDetail = () => {
   // * 페이지가 마운트될 때 실행할 작업
   useEffect(() => {
     // 1. 로그인 여부 및 token값 확인
-    const getToken = isLoginCheck();
+    const getToken = userFlagCheck();
     if (getToken !== null) {
       setLoginStatus({ login: true, userFlag: getToken.userFlag });
     }

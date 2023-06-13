@@ -22,7 +22,6 @@ export const getUserComment = (id) => {
 
 // * 유저가 작성한 위스키 코멘트 등록
 export const setUserComment = ({ id, content }) => {
-  console.log(content);
   return api
     .post(`/api/review/${id}`, content)
     .then((response) => response.data)

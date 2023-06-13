@@ -4,8 +4,9 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { getWhiskyList, getWhiskyCountryList } from '../api/whisky';
-import { Layout, TabMenu, SearchInput, CategorySelect, WhiskyGrid } from '../components';
-import isLoginCheck from '../hook/isLoginCheck';
+import { Layout, Image, TabMenu, SearchInput, CategorySelect, WhiskyGrid } from '../components';
+import { logo } from '../assets';
+import userFlagCheck from '../hook/userFlagCheck';
 
 const WhiskyList = () => {
   // * 탭 그룹
@@ -22,26 +23,10 @@ const WhiskyList = () => {
 
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
   const [whiskyList, setWhiskyList] = useState(null);
-  const [loginStatus, setLoginStatus] = useState({
-    login: false,
-    userFlag: '',
-  });
 
   const navigate = useNavigate();
 
   const onTabClickHandler = (type) => setTabChosen(type);
-
-  const onLikeListClickHandler = () => {
-    const getToken = isLoginCheck();
-    if (!getToken) {
-      alert(`로그인이 필요한 페이지입니다.`);
-      navigate(`/Login`);
-    } else if (getToken.userFlag === 'user') {
-      navigate(`/LikeList`);
-    } else {
-      alert(`사업자 회원은 좋아요한 목록 내역 열람이 불가합니다.`);
-    }
-  };
 
   // * [위스키 전체 리스트] 전체 tab 조회 useMutation
   const getWhiskyListMutation = useMutation(getWhiskyList, {
@@ -82,30 +67,28 @@ const WhiskyList = () => {
     getWhiskyListHandler();
   }, []);
 
-  // TODO [2차 스코프] 카테고리 세부 리스트 및 state, onTabClickHandler
-  // const regionList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '그 외'];
-  // const blendList = ['전체', '싱글 몰트', '싱글 그레인', '블렌디드 몰트', '블렌디드 그레인', '블렌디드'];
-  // const americantList = ['전체', '버번', '라이', '테네시', '그 외'];
-  // const [region, setRegion] = useState(regionList[0]);
-  // const [blend, setBlend] = useState(blendList[0]);
-  // const [american, setAmerican] = useState(americantList[0]);
-  // const onRegionClickHandler = (idx) => setRegion(regionList[idx]);
-  // const onBlendClickHandler = (idx) => setBlend(blendList[idx]);
-  // const onAmericanClickHandler = (idx) => setAmerican(americantList[idx]);
+  const regionList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '그 외'];
+  const blendList = ['전체', '싱글 몰트', '싱글 그레인', '블렌디드 몰트', '그 외'];
+  const americantList = ['전체', '버번', '라이', '테네시', '그 외'];
+  const [region, setRegion] = useState(regionList[0]);
+  const [blend, setBlend] = useState(blendList[0]);
+  const [american, setAmerican] = useState(americantList[0]);
+  const onRegionClickHandler = (idx) => setRegion(regionList[idx]);
+  const onBlendClickHandler = (idx) => setBlend(blendList[idx]);
+  const onAmericanClickHandler = (idx) => setAmerican(americantList[idx]);
 
   return (
     <Layout>
       <Header>
         <div>
-          <p>DA WHISKY</p>
-          <LikeListIcon onClick={onLikeListClickHandler} />
+          <Image width={'8.125rem'} height={'2.188rem'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
+          <LikeListIcon />
         </div>
         <SearchInput searchtype={'before'} placeholder={'위스키를 검색해보세요!'} />
       </Header>
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
 
-      {/* // TODO [2차 스코프] 카테고리 세부 Select */}
-      {/* {tabChosen === 'scotch' && (
+      {tabChosen === 'scotch' && (
         <CategorySection>
           <CategorySelect
             category={'지역별'}
@@ -140,7 +123,7 @@ const WhiskyList = () => {
             onclickhandler={onBlendClickHandler}
           />
         </CategorySection>
-      )} */}
+      )}
       <WhiskyGrid list={whiskyList} />
     </Layout>
   );
@@ -149,30 +132,28 @@ const WhiskyList = () => {
 export default WhiskyList;
 
 const Header = styled.header`
-  width: 360px;
-  margin-left: -16px;
-  padding: 16px;
+  width: 22.5rem;
+  margin-left: -1rem;
+  padding: 2.188rem 1rem 1rem 1rem;
   display: flex;
   flex-direction: column;
+  background-color: ${({ theme }) => theme.colors.darkBrown};
   & div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
-  & p {
-    font-size: 18px;
-    font-weight: bold;
-  }
 `;
 
 const LikeListIcon = styled(AiOutlineHeart)`
-  font-size: 24px;
+  font-size: 1.5rem;
+  color: white;
   cursor: pointer;
 `;
 
 const CategorySection = styled.section`
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
 `;
