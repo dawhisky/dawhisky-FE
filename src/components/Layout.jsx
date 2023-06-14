@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import { bgFram } from '../assets';
 import Navbar from './Navbar';
 
 const Layout = ({ children }) => {
@@ -16,7 +17,9 @@ const Layout = ({ children }) => {
 export default Layout;
 
 const BackgroundDiv = styled.div`
-  background: ${({ theme }) => theme.colors.lightOrange};
+  background-image: url(${bgFram});
+  background-repeat: 'no-repeat';
+  background-size: 'cover';
 `;
 
 const ContainerDiv = styled.div`
