@@ -11,10 +11,8 @@ const WhiskyList = () => {
   // * 나라별 탭 + 상세 카테고리
   const [categorization, setCategorization] = useState({
     page: '1',
-    // pageSize 임시
-    pageSize: '100',
-    // Scotland 임시
-    country: 'Scotland',
+    pageSize: '10',
+    country: '',
     type: '',
     region: '',
   });
@@ -26,23 +24,31 @@ const WhiskyList = () => {
     { name: '스카치', type: 'Scotland' },
     { name: '아메리칸', type: 'usa' },
     { name: '아이리쉬', type: 'Ireland' },
-    { name: '캐내디언', type: 'canadian' },
-    { name: '재패니스', type: 'japanese' },
+    { name: '캐내디언', type: 'Canadian' },
+    { name: '재패니스', type: 'Japan' },
     { name: '그 외', type: 'etc' },
   ];
-  const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
-  const onTabClickHandler = (type) => {
-    setTabChosen(type);
-    setCategorization((prev) => ({ ...prev, country: type }));
-  };
 
   // * 상세 카테고리
   const typeList = ['전체', '싱글 몰트', '싱글 그레인', '블렌디드 몰트', '블렌디드', '그 외'];
   const regionList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '그 외'];
   const americantList = ['전체', '버번', '라이', '테네시', '그 외'];
+
+  const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
   const [region, setRegion] = useState(regionList[0]);
   const [blend, setBlend] = useState(typeList[0]);
   const [american, setAmerican] = useState(americantList[0]);
+
+  // * [나라별 tab] click 이벤트
+  const onTabClickHandler = (type) => {
+    setTabChosen(type);
+    setCategorization((prev) => ({ ...prev, country: type, type: '', region: '' }));
+    setRegion(regionList[0]);
+    setBlend(typeList[0]);
+    setAmerican(americantList[0]);
+  };
+
+  // * [상세 type] click 이벤트
   const onTypeClickHandler = (idx, item) => {
     setBlend(typeList[idx]);
     if (item === '전체') setCategorization((prev) => ({ ...prev, type: '' }));
@@ -52,6 +58,7 @@ const WhiskyList = () => {
     if (item === '블렌디드') setCategorization((prev) => ({ ...prev, type: 'Blended Whisky' }));
     if (item === '그 외') setCategorization((prev) => ({ ...prev, type: 'etc' }));
   };
+
   const onRegionClickHandler = (idx, item) => {
     setRegion(regionList[idx]);
     if (item === '전체') setCategorization((prev) => ({ ...prev, region: '' }));
@@ -62,6 +69,7 @@ const WhiskyList = () => {
     if (item === '아일라') setCategorization((prev) => ({ ...prev, region: 'Islay' }));
     if (item === '그 외') setCategorization((prev) => ({ ...prev, region: 'etc' }));
   };
+
   const onAmericanClickHandler = (idx, item) => {
     setAmerican(americantList[idx]);
     if (item === '전체') setCategorization((prev) => ({ ...prev, type: '' }));
@@ -115,7 +123,7 @@ const WhiskyList = () => {
           />
         </CategorySection>
       )}
-      {tabChosen === 'japanese' && (
+      {tabChosen === 'Japan' && (
         <CategorySection>
           <CategorySelect
             category={blend === '전체' ? '블렌드별' : blend}
