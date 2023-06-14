@@ -29,6 +29,7 @@ const ContainerDiv = styled.div`
   position: relative;
   overflow-y: scroll;
   background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 18px -7px;
   &::-webkit-scrollbar {
     width: 0.125rem;
   }

@@ -12,15 +12,7 @@ const Navbar = () => {
 
   // * 로그인 구분에 따라 유저/사업자 마이페이지 이동 처리
   const onMagagePageClickHandler = () => {
-    const userFlag = userFlagCheck();
-    if (userFlag === 'user') {
-      navigate(`/UserManagePage`);
-    } else if (userFlag === 'store') {
-      navigate(`/StoreManagePage`);
-    } else {
-      alert(`로그인이 필요한 페이지입니다.`);
-      navigate(`/Login`);
-    }
+    navigate(`/StoreManagePage`);
   };
 
   // * pathname에 따라 아이콘 fill 여부 결정
