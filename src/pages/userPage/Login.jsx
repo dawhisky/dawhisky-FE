@@ -3,7 +3,7 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Layout, Button } from '../../components';
-import login from '../../api/login';
+import { login } from '../../api/login';
 
 const Login = () => {
   // 유저 유형 상태관리
