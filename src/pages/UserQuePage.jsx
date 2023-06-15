@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
+import { useQuery, useQueryClient, useMutation } from 'react-query';
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken } from 'firebase/messaging';
 import { styled } from 'styled-components';
 import { getTableInfo } from '../api/table';
+import { getMyQueue, postMyQueue, editMyQueue, deleteMyQueue } from '../api/queue';
 import { Button } from '../components';
 
 const UserQuePage = () => {
-  // 소켓 연결 생성
-  // const socket = io('http://jjmdev.site', {
-  //   path: '/api/socket',
-  // });
+  // useParams 호출
+  const params = useParams();
+  const storeId = params.id;
+
+  // useQueryClient 호출
+  const queryClient = useQueryClient();
 
   // 해당 스토어 테이블정보 상태관리
   const [barTableStatus, setBarTableStatus] = useState([]);
@@ -17,55 +22,151 @@ const UserQuePage = () => {
   // 잔여 좌석 상태관리
   const [restSeat, setRestSeat] = useState({});
   // 바 좌석, 홀 좌석 어떤 라디오버튼 클릭됐는지
-  const [whichButtonClicked, setWhichButtonClicked] = useState('bar');
+  const [whichButtonClicked, setWhichButtonClicked] = useState('');
   // 줄서기 희망 인원 상태관리
-  const [editedPeopleNumber, seteditedPepleNumber] = useState(0);
+  const [editedPeopleNumber, setEditedPeopleNumber] = useState(0);
   // 요청사항 상태관리
   const [request, setRequest] = useState('');
+  // 디바이스 토큰 상태관리
+  const [deviceToken, setDeviceToken] = useState('');
+  // 해당스토어 내 줄서기 현황
+  const [myQueData, setMyQueData] = useState({});
+  // 유저가 이미 줄서기를 한 상태인지
+  const [queued, setQueued] = useState(false);
   // 캐러셀 이동 픽셀 상태관리
   const [px, setPx] = useState(0);
 
   // 해당 스토어 테이블 정보
-  const { isLoading, isError, data } = useQuery('getTableInfo', () => getTableInfo(77));
+  const {
+    isLoading: isLoadingTable,
+    isError: isErrorTable,
+    data: tableData,
+  } = useQuery('getTableInfo', () => getTableInfo(storeId));
+
+  // 해당 스토어 내 줄서기 정보
+  const {
+    isLoading: isLoadingQue,
+    isError: isErrorQue,
+    data: myQueInfo,
+  } = useQuery('getMyQueue', () => getMyQueue(storeId));
+
+  // 줄서기요청api
+  const postMyQueueApi = useMutation(postMyQueue, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
+      alert('줄서기를 완료하셨습니다.');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // 줄서기수정api
+  const editMyQueueApi = useMutation(editMyQueue, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
+      alert('줄서기 수정을 완료하셨습니다.');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // 줄서기삭제api
+  const deleteMyQueueApi = useMutation(deleteMyQueue, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
+      alert('줄서기 삭제를 완료하셨습니다.');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   useEffect(() => {
-    if (data) {
-      const barTableInfo = JSON.parse(data.bar_table).map((item, index) => {
+    if (tableData) {
+      const barTableInfo = JSON.parse(tableData.bar_table).map((item, index) => {
         return item === 1 ? { id: index + 1, activated: true } : { id: index + 1, activated: false };
       });
-      const hallTableInfo = JSON.parse(data.hall_table).map((item, index) => {
+      const hallTableInfo = JSON.parse(tableData.hall_table).map((item, index) => {
         return item === 1 ? { id: index + 1, activated: true } : { id: index + 1, activated: false };
       });
       const restBarSeat =
-        JSON.parse(data.bar_table).length - JSON.parse(data.bar_table).filter((item) => item === 1).length;
+        JSON.parse(tableData.bar_table).length - JSON.parse(tableData.bar_table).filter((item) => item === 1).length;
       const restHallSeat =
-        JSON.parse(data.hall_table).length - JSON.parse(data.hall_table).filter((item) => item === 1).length;
+        JSON.parse(tableData.hall_table).length - JSON.parse(tableData.hall_table).filter((item) => item === 1).length;
       setRestSeat({ restBarSeat, restHallSeat });
       setBarTableStatus(barTableInfo);
       setHallTableStatus(hallTableInfo);
     }
-  }, [data]);
+  }, [tableData]);
 
-  // useEffect(() => {
-  //   // 컴포넌트 마운트 시 소켓 연결 설정
-  //   // 이벤트 리스너 등록 등 필요한 작업 수행
-  //   // socket.emit('message', '안녕하세요, 지민님');
+  useEffect(() => {
+    if (myQueInfo && Object.keys(myQueInfo).length !== 0) {
+      setQueued(true);
+    } else {
+      setQueued(false);
+    }
+    setMyQueData(myQueInfo);
+  }, [myQueInfo]);
 
-  //   // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리 작업
-  //   return () => {
-  //     socket.disconnect();
-  //     // 필요한 정리 작업 수행
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (myQueData && Object.keys(myQueData).length !== 0) {
+      setWhichButtonClicked(myQueData.want_table);
+      setEditedPeopleNumber(myQueData.head_count);
+      setRequest(myQueData.request);
+    }
+  }, [myQueData]);
+
+  console.log(myQueData);
 
   // 줄서기 인원 핸들러
   const changePeopleNumberHandler = (e) => {
     if (e.target.dataset.button === 'plus') {
-      seteditedPepleNumber(editedPeopleNumber + 1);
+      setEditedPeopleNumber(editedPeopleNumber + 1);
     } else if (e.target.dataset.button === 'minus' && editedPeopleNumber > 0) {
-      seteditedPepleNumber(editedPeopleNumber - 1);
+      setEditedPeopleNumber(editedPeopleNumber - 1);
     }
   };
+
+  // firebase초기화 세팅
+  const firebaseConfig = {
+    apiKey: 'AIzaSyDNjGs_B7jtd-cMVORaQ0Jr7de1XTr5TdE',
+    authDomain: 'da-whisky.firebaseapp.com',
+    projectId: 'da-whisky',
+    storageBucket: 'da-whisky.appspot.com',
+    messagingSenderId: '700714522444',
+    appId: '1:700714522444:web:c4b65426f8225e8e5561e9',
+    measurementId: 'G-G9TQB9FJYT',
+  };
+
+  // firebase 초기화
+  const app = initializeApp(firebaseConfig);
+
+  // firebase인스턴스 생성
+  const messaging = getMessaging(app);
+
+  // 권한 요청
+  useEffect(() => {
+    const requestNotificationPermission = async () => {
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          console.log('알림 허용됨');
+          // Firebase Messaging 등록 토큰을 가져오는 등 추가 작업 수행
+          const token = await getToken(messaging);
+          setDeviceToken(token);
+        } else {
+          console.log('알림 거부됨');
+        }
+      } catch (error) {
+        console.error('알림 권한 요청 중 오류가 발생했습니다 : ', error);
+        throw error;
+      }
+    };
+    // 알림 권한 요청
+    requestNotificationPermission();
+  }, []);
 
   // 요청사항 input onChange핸들러
   const getRequest = (e) => {
@@ -82,7 +183,45 @@ const UserQuePage = () => {
     }
   };
 
-  const submitQueInfo = () => {};
+  // 줄서기 제출 핸들러
+  const submitQueInfo = () => {
+    // 작성된 줄서기 정보
+    const editedQueue = {
+      want_table: whichButtonClicked,
+      head_count: editedPeopleNumber,
+      request,
+      device_token: deviceToken,
+    };
+    console.log(editedQueue.device_token);
+    postMyQueueApi.mutate({ storeId, editedQueue });
+  };
+
+  // 줄서기 수정 핸들러
+  const editQueInfo = () => {
+    const queId = myQueData.que_id;
+    const editedQueue = {
+      want_table: whichButtonClicked,
+      head_count: editedPeopleNumber,
+      request,
+      device_token: deviceToken,
+    };
+    editMyQueueApi.mutate({ queId, editedQueue });
+  };
+
+  // 줄서기 삭제 핸들러
+  const deleteQueInfo = () => {
+    const queId = myQueData.que_id;
+    deleteMyQueueApi.mutate(queId);
+    setWhichButtonClicked('');
+    setEditedPeopleNumber(0);
+    setRequest('');
+  };
+
+  // 라디오 버튼 선택 상태 확인 함수
+  const isRadioButtonChecked = (buttonType) => {
+    return whichButtonClicked === buttonType;
+  };
+
   return (
     <UserQuePageWrapper>
       <SeatStatusArea px={px}>
@@ -92,10 +231,10 @@ const UserQuePage = () => {
             <div>
               <input
                 onClick={() => setWhichButtonClicked('bar')}
+                checked={isRadioButtonChecked('bar')}
                 type={'radio'}
                 id={'option1'}
                 name={'myRadio'}
-                checked
               />
               <span>{'바 좌석'}</span>
             </div>
@@ -125,16 +264,32 @@ const UserQuePage = () => {
         <div>
           <div>
             <div>
-              <input onClick={() => setWhichButtonClicked('hall')} type={'radio'} id={'option2'} name={'myRadio'} />
+              <input
+                onClick={() => setWhichButtonClicked('hall')}
+                checked={isRadioButtonChecked('hall')}
+                type={'radio'}
+                id={'option2'}
+                name={'myRadio'}
+              />
               <span>{'홀 좌석'}</span>
             </div>
             <span>
               {hallTableStatus.length}
-              {'석 중 '}
+              {'테이블 중 '}
               {restSeat.restHallSeat}
-              {'석 남음'}
+              {'테이블 남음'}
             </span>
           </div>
+        </div>
+        <div>
+          <input
+            onClick={() => setWhichButtonClicked('dontcare')}
+            checked={isRadioButtonChecked('dontcare')}
+            type={'radio'}
+            id={'option3'}
+            name={'myRadio'}
+          />
+          <span>{'상관없음'}</span>
         </div>
       </SeatStatusArea>
       <div />
@@ -156,11 +311,22 @@ const UserQuePage = () => {
           <p>{'요청사항'}</p>
           <span>{'선택'}</span>
         </div>
-        <input onChange={(e) => getRequest(e)} placeholder={'요청사항을 입력해주세요'} type={'text'} />
+        <input onChange={(e) => getRequest(e)} value={request} placeholder={'요청사항을 입력해주세요'} type={'text'} />
       </RequestArea>
-      <Button onClick={() => submitQueInfo()} location={'both'}>
-        {'줄 서기'}
-      </Button>
+      {queued ? (
+        <div>
+          <Button data-type={'edit'} onClick={() => editQueInfo()} location={'both'}>
+            {'줄 서기 수정'}
+          </Button>
+          <Button data-type={'delete'} onClick={() => deleteQueInfo()} location={'both'}>
+            {'줄 서기 삭제'}
+          </Button>
+        </div>
+      ) : (
+        <Button data-type={'post'} onClick={() => submitQueInfo()} location={'both'}>
+          {'줄 서기'}
+        </Button>
+      )}
     </UserQuePageWrapper>
   );
 };
@@ -183,10 +349,20 @@ const UserQuePageWrapper = styled.div`
     font-size: 20px;
     font-weight: 800;
   }
-
-  & > button:last-child {
-    margin-top: 18px;
-    background-color: #ff8b00;
+  & > div:last-child {
+    display: flex;
+    width: 100%;
+    button[data-type='post'] {
+      margin-top: 10px;
+      background-color: #ff8b00;
+    }
+    button[data-type='edit'] {
+      margin-top: 10px;
+      background-color: #ff8b00;
+    }
+    button[data-type='delete'] {
+      margin-top: 10px;
+    }
   }
 `;
 
@@ -195,17 +371,20 @@ const SeatStatusArea = styled.div`
   input {
     margin-right: 10px;
   }
-  & > div:first-child {
-    & > div:nth-child(2) {
+  & > div:first-child,
+  & > div:nth-child(3) {
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+
       & > span {
         font-size: 13px;
       }
     }
-    & > div:last-child {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 24px;
-    }
+  }
+  & > div:last-child {
+    margin-top: 15px;
   }
   & > div:nth-child(2) {
     display: flex;
@@ -263,8 +442,9 @@ const PeopleNumberArea = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 328px;
-  margin: 24px auto 24px auto;
-  & > div:nth-child(2) {
+  margin: 10px 0 10px 0;
+
+  & > div {
     display: flex;
     justify-content: space-around;
     align-items: center;
