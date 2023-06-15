@@ -8,9 +8,9 @@ import { styled } from 'styled-components';
 // * location : 사용하는 버튼이 2개여서 양쪽에 각각 보여줘야 할때는 props로 location={'both'}, 양쪽에 각각 나열시킴
 // *            사용하는 버튼이 1개인 경우 location을 따로 내려주지 않아도 가운데 정렬되도록 함
 
-const Button = ({ children, size, color, location }) => {
+const Button = ({ children, size, color, location, ...rest }) => {
   return (
-    <CommonButton size={size} location={location}>
+    <CommonButton size={size} location={location} {...rest}>
       {children}
     </CommonButton>
   );
