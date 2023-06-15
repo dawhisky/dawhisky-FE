@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { Layout, Button } from '../../components';
+import { Layout, Button, Image } from '../../components';
 import { login } from '../../api/login';
+import { logo } from '../../assets';
 
 const Login = () => {
   // 유저 유형 상태관리
@@ -52,7 +53,7 @@ const Login = () => {
     <Layout>
       <LoginPageWrapper userrole={userRole}>
         <LogoWrapper>
-          <p>{'다위스키 로고'}</p>
+          <Image width={'10rem'} height={'3rem'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
         </LogoWrapper>
         <LoginPageCenter>
           <PersonalLogin userrole={userRole}>
@@ -219,7 +220,8 @@ const LoginBottom = styled.div`
     background-color: transparent;
     width: 70px;
     font-size: 16px;
-    color: #0067a3;
+    font-weight: 500;
+    color: ${({ theme }) => theme.colors.orange};
   }
 `;
 
