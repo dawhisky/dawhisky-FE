@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { getWhiskyList } from '../api/whisky';
 import { Layout, Image, TabMenu, SearchInput, CategorySelect, WhiskyGrid } from '../components';
@@ -16,7 +17,6 @@ const WhiskyList = () => {
     type: '',
     region: '',
   });
-  const [whiskyList, setWhiskyList] = useState(null);
 
   // * 나라별 탭
   const tabGroup = [
@@ -38,6 +38,9 @@ const WhiskyList = () => {
   const [region, setRegion] = useState(regionList[0]);
   const [blend, setBlend] = useState(typeList[0]);
   const [american, setAmerican] = useState(americantList[0]);
+  const [whiskyList, setWhiskyList] = useState(null);
+
+  const navigate = useNavigate();
 
   // * [나라별 tab] click 이벤트
   const onTabClickHandler = (type) => {
@@ -86,12 +89,17 @@ const WhiskyList = () => {
     },
   });
 
+  // * 좋아요 리스트 버튼 클릭
+  const onLikeListClickHandler = () => {
+    navigate(`/LikeList`);
+  };
+
   return (
     <Layout>
       <Header>
         <div>
           <Image width={'8.125rem'} height={'2.188rem'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
-          <LikeListIcon />
+          <LikeListIcon onClick={onLikeListClickHandler} />
         </div>
         <SearchInput searchtype={'before'} placeholder={'위스키를 검색해보세요!'} />
       </Header>
