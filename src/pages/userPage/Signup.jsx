@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
-import { Layout, Button, Modal } from '../../components';
+import { Layout, Button, SetInfoModal } from '../../components';
 import { signup, checkBizNumber, sendEmail } from '../../api/signup';
 
 const Signup = () => {
@@ -182,7 +182,7 @@ const Signup = () => {
           </div>
         </SignupMiddle>
         {isModalOpen && (
-          <Modal height={200} width={300}>
+          <SetInfoModal height={200} width={300}>
             {whichModalOpen === 'confirm' ? (
               <ConfirmModal>
                 <div>{'첨부 사진은 사업장 대표 이미지로 적용됩니다.'}</div>
@@ -211,7 +211,7 @@ const Signup = () => {
                 <Button onClick={() => setIsModalOpen(false)}>{'취소'}</Button>
               </PictureUpload>
             )}
-          </Modal>
+          </SetInfoModal>
         )}
       </SignupWrapper>
     </Layout>
