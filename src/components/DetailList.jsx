@@ -43,6 +43,7 @@ const DetailList = ({ type, list }) => {
               <Image
                 width={'80px'}
                 height={'80px'}
+                borderradius={'5px'}
                 src={type === 'store' ? item.biz_photo : item.whisky_photo}
                 alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
               />
