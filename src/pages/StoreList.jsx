@@ -81,7 +81,7 @@ const StoreList = () => {
     <Layout>
       <ListSection>
         <KakaoMap coords={coords} storelist={storeList} />
-        <Button size={'small'} color={'white'} onClick={isShowListHandler}>
+        <Button size={'small'} onClick={isShowListHandler}>
           목록 보기
         </Button>
         {/* TODO 중간발표 후 로직 재구성하여 2차 스코프 때 해당 코드 다시 사용 */}

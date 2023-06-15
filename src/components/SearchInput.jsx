@@ -8,11 +8,10 @@ import { useNavigate } from 'react-router-dom';
 // * placeholder : input에 넣을 placeholder
 // * searchtype : before은 검색 input, after는 검색 상세페이지로 넘어간 후의 input
 
-const SearchInput = ({ searchtype, value, onchange, onclick, placeholder, ...rest }) => {
+const SearchInput = ({ searchtype, value, onchange, onclick, placeholder }) => {
   const navigate = useNavigate();
 
   const onSearchClickHandler = () => navigate(`/SearchPage`);
-  // TODO 검색 내역이 여러개일 경우 -1이 원하는 이전 페이지로 가지 않아 추후 리팩토링 필요
   const onBeforeClickHandler = () => navigate(-1);
 
   return (

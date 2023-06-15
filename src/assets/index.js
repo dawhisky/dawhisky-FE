@@ -6,5 +6,6 @@ import mypageColor from './mypageColor.svg';
 import mypageGray from './mypageGray.svg';
 import whiskyColor from './whiskyColor.svg';
 import whiskyGray from './whiskyGray.svg';
+import defaultImage from './defaultImage.png';
 
-export { bgFram, logo, barColor, barGray, mypageColor, mypageGray, whiskyColor, whiskyGray };
+export { bgFram, logo, barColor, barGray, mypageColor, mypageGray, whiskyColor, whiskyGray, defaultImage };
