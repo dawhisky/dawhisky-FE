@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { styled } from 'styled-components';
-import { Layout } from '../../components';
 import StoreInfoManage from './StoreInfoManage';
 import StoreBottleManage from './StoreBottleManage';
 import StoreBottleRegister from './StoreBottleRegister';
@@ -42,7 +41,7 @@ const StoreManagePage = () => {
   ];
 
   return (
-    <Layout>
+    <div>
       {isRegisterMode ? (
         <StoreBottleRegister setIsRegisterMode={setIsRegisterMode} />
       ) : isSeatEditMode ? (
@@ -84,7 +83,7 @@ const StoreManagePage = () => {
           )}
         </StoreManagePageWrapper>
       )}
-    </Layout>
+    </div>
   );
 };
 
