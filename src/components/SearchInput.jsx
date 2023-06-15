@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 // * placeholder : input에 넣을 placeholder
 // * searchtype : before은 검색 input, after는 검색 상세페이지로 넘어간 후의 input
 
-const SearchInput = ({ searchtype, value, onchange, onclick, placeholder }) => {
+const SearchInput = ({ searchtype, value, onchange, onclick, placeholder, ...rest }) => {
   const navigate = useNavigate();
 
   const onSearchClickHandler = () => navigate(`/SearchPage`);
@@ -17,7 +17,7 @@ const SearchInput = ({ searchtype, value, onchange, onclick, placeholder }) => {
   return (
     <InputWrapDiv onClick={onSearchClickHandler}>
       {searchtype === 'after' ? <LeftIcon onClick={onBeforeClickHandler} /> : ''}
-      <CommonInput searchtype={searchtype} value={value} onChange={onchange} placeholder={placeholder} />
+      <CommonInput searchtype={searchtype} value={value} onChange={onchange} placeholder={placeholder} {...rest} />
       <SearchIcon float={searchtype === 'after' ? 'right' : 'left'} onClick={onclick} />
     </InputWrapDiv>
   );
