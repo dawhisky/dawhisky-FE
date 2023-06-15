@@ -4,12 +4,12 @@ import { styled } from 'styled-components';
 // ! [props]
 // * width, height : 모달의 width, height
 // * message : 메세지만 띄우는 모달일 경우 해당 문구 출력
-// * both : 취소, 확인 버튼이 있는 모달일 경우 true, 확인 버튼만 있을 경우 false
+// * both : 취소, 확인 버튼이 있는 모달일 경우 'true', 확인 버튼만 있을 경우 작성하지 않음
 // * children : 모달 내 다른 디자인을 적용할 경우 해당 children값 적용 (messgae와 이중 적용 불가)
 // * oncancelclick : 취소 버튼에 적용할 클릭 이벤트가 있을 경우
 // * onconfirmclick : 확인 버튼에 적용할 클릭 이벤트가 있을 경우
 
-const Modal = ({ width, height, message, both, children, oncancelclick, onConfirmclick }) => {
+const Modal = ({ width, height, message, both, children, oncancelclick, onconfirmclick }) => {
   return (
     <BackgroundDiv>
       <ModalSection>
@@ -19,7 +19,7 @@ const Modal = ({ width, height, message, both, children, oncancelclick, onConfir
         </InfoDiv>
         <ButtonDiv>
           {both && <CancelButton onClick={oncancelclick}>취소</CancelButton>}
-          <ConfirmButton onClick={onConfirmclick}>확인</ConfirmButton>
+          <ConfirmButton onClick={onconfirmclick}>확인</ConfirmButton>
         </ButtonDiv>
       </ModalSection>
     </BackgroundDiv>
@@ -38,6 +38,7 @@ const BackgroundDiv = styled.div`
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 6;
 `;
 
 const ModalSection = styled.section`
@@ -53,11 +54,10 @@ const InfoDiv = styled.div`
 
 const MessageP = styled.p`
   height: 100%;
-  padding: 20px 40px 10px 40px;
+  padding: 1.25rem 2.5rem 0.625rem 2.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
   font-weight: 500;
 `;
 
@@ -67,9 +67,8 @@ const ButtonDiv = styled.div`
   justify-content: space-around;
   align-items: center;
   & > button {
-    padding-bottom: 25px;
+    padding-bottom: 1.563rem;
     background-color: transparent;
-    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
   }
