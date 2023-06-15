@@ -23,12 +23,6 @@ const UserManagePage = () => {
   const navigate = useNavigate();
   const params = useParams()['*'];
 
-  // * [tab] 탭 클릭
-  const onTabClickHandler = (type) => setTabChosen(type);
-
-  // * [모달] 모달창 ON, OFF
-  const modalToggleHandler = () => setModalToggle(!modalToggle);
-
   // * [좋아요] 유저 좋아요 내역 조회
   const { data } = useQuery('getUserInfo', () => getUserInfo(), {
     onSuccess: (response) => {
@@ -38,13 +32,19 @@ const UserManagePage = () => {
     },
   });
 
+  // * [tab] 탭 클릭
+  const onTabClickHandler = (type) => setTabChosen(type);
+
+  // * [모달] 모달창 ON, OFF
+  const modalToggleHandler = () => setModalToggle(!modalToggle);
+
   // * [로그인 관리] 토글 버튼 클릭
   const onToggleClickHandler = () => {
     setBottomToggle(!bottomToggle);
     setManagementChosen(null);
   };
 
-  // * [로그아웃] 유저 로그아웃 useMutation
+  // * [로그아웃] 로그아웃 useMutation
   const setLogoutMutation = useMutation(setLogout, {
     onSuccess: () => {
       localStorage.removeItem('authorization');

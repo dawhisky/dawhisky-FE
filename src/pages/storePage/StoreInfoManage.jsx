@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
-import { Button, SetInfoModal } from '../../components';
+import { GrGallery, GrCamera } from 'react-icons/gr';
+import { Image, DetailInfo, Button, Modal } from '../../components';
 import { getStoreInfo, editStoreInfo } from '../../api/storeInfo';
 
 const StoreInfoManage = ({ storeInfo }) => {
+  const storeInfoList = {
+    상호명: storeInfo.store,
+    주소: storeInfo.address,
+    전화번호: storeInfo.phone,
+    운영시간: storeInfo.runtime,
+    공지사항: storeInfo.notice,
+  };
+
   const storeInfoSet = [
     { title: '상호명', type: 'store' },
     { title: '주소', type: 'address' },
@@ -13,17 +22,11 @@ const StoreInfoManage = ({ storeInfo }) => {
     { title: '공지사항', type: 'notice' },
   ];
 
-  // 인가 정보
-  const authorization = localStorage.getItem('authorization');
-  const unEditedRefreshToken = localStorage.getItem('refreshToken');
-  const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
-  const token = { authorization, refreshtoken };
-
   // useQueryClient
   const queryClient = useQueryClient();
 
   // 모달창이 열렸는지 여부 상태관리
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalToggle, setModalToggle] = useState(false);
 
   // img url 상태관리
   const [imageUrl, setImageUrl] = useState(null);
@@ -37,23 +40,27 @@ const StoreInfoManage = ({ storeInfo }) => {
   // 스토어정보 수정
   const editInfoApi = useMutation(editStoreInfo, {
     onSuccess: () => {
-      queryClient.invalidateQueries('getStoreInfo', getStoreInfo({ token, id: storeInfo.store_id }));
+      alert('수정이 완료되었습니다.');
+      queryClient.invalidateQueries('getStoreInfo', getStoreInfo(storeInfo.store_id));
     },
     onError: (error) => {
       console.log(error);
     },
   });
 
+  // 모달창 ON, OFF
+  const modalToggleHandler = () => setModalToggle(!modalToggle);
+
   useEffect(() => {
     if (storeInfo.biz_photo) {
       setImageUrl(storeInfo.biz_photo);
       setEditedInputValue({
-        store: storeInfo.store,
-        address: storeInfo.address,
-        phone: storeInfo.phone,
-        notice: storeInfo.notice,
-        runtime: storeInfo.runtime,
-        biz_photo: storeInfo.biz_photo,
+        store: storeInfo.store || '아직 입력되지 않았습니다.',
+        address: storeInfo.address || '아직 입력되지 않았습니다.',
+        phone: storeInfo.phone || '아직 입력되지 않았습니다.',
+        notice: storeInfo.notice || '아직 입력되지 않았습니다.',
+        runtime: storeInfo.runtime || '아직 입력되지 않았습니다.',
+        biz_photo: storeInfo.biz_photo || '아직 입력되지 않았습니다.',
       });
     }
   }, [storeInfo]);
@@ -86,71 +93,63 @@ const StoreInfoManage = ({ storeInfo }) => {
     formData.append('notice', editedInputValue.notice);
     formData.append('runtime', editedInputValue.runtime);
 
-    editInfoApi.mutate({ token, formData });
-
-    setIsModalOpen(false);
+    editInfoApi.mutate(formData);
+    modalToggleHandler();
   };
 
   return (
     <>
-      <StoreInfoManageWrapper>
-        <div>
-          <img src={imageUrl} alt={'StorePhoto'} />
-        </div>
-        <StoreInfoArea>
-          {storeInfoSet.map((item) => {
-            return (
-              <div key={item.title}>
-                <div>
-                  <span>{item.title}</span>
-                </div>
-                <span>{storeInfo[item.type] !== 'null' ? storeInfo[item.type] : '아직 입력되지 않았습니다.'}</span>
-              </div>
-            );
-          })}
-        </StoreInfoArea>
-        <div>
-          <Button onClick={() => setIsModalOpen(true)}>{'수정하기'}</Button>
-        </div>
-      </StoreInfoManageWrapper>
-      {isModalOpen && (
-        <SetInfoModal height={400} width={300}>
-          <IndividualInputArea>
-            <span>{'대표사진'}</span>
-            <label htmlFor={'fileInput'}>
-              {'갤러리에서 선택'}
-              <input type={'file'} id={'fileInput'} onChange={(e) => prepareUploadImage(e)} />
-            </label>
-            <label htmlFor={'takePicture'}>
-              {'사진 촬영'}
-              <input type={'file'} id={'takePicture'} capture={'camera'} onChange={(e) => caturePictureHandler(e)} />
-            </label>
-          </IndividualInputArea>
-          {storeInfoSet.map((item) => (
-            <IndividualInputArea key={item.type}>
-              <span>{item.title}</span>
-              <input
-                onChange={(e) => getInputChange(e)}
-                data-type={item.type}
-                type={'text'}
-                placeholder={
-                  item.type === 'phone'
-                    ? '"-" 없이 입력해주세요.'
-                    : item.type === 'runtime'
-                    ? 'ex) 18:30 - 02:30'
-                    : storeInfo[item.type] === 'null' ||
-                      storeInfo[item.type] === 'undefined' ||
-                      storeInfo[item.type] === undefined
-                    ? '아직 입력되지 않았습니다.'
-                    : storeInfo[item.type]
-                }
-              />
+      <div>
+        <ImageDiv>
+          <Image width={'22.5rem'} height={'22.5rem'} src={imageUrl} alt={`${storeInfo.store} 사진`} />
+        </ImageDiv>
+        <DetailInfo info={storeInfoList} />
+        <ButtonWrapDiv>
+          <Button onClick={modalToggleHandler}>{'수정하기'}</Button>
+        </ButtonWrapDiv>
+      </div>
+      {modalToggle && (
+        <Modal
+          height={'32.5rem'}
+          both={'true'}
+          oncancelclick={modalToggleHandler}
+          onconfirmclick={submitEditedStoreInfo}
+        >
+          <ModalChildSection>
+            <IndividualInputArea>
+              <span>{'대표사진'}</span>
+              <label htmlFor={'fileInput'}>
+                <GrGallery />
+                <input type={'file'} id={'fileInput'} onChange={(e) => prepareUploadImage(e)} />
+              </label>
+              <label htmlFor={'takePicture'}>
+                <GrCamera />
+                <input type={'file'} id={'takePicture'} capture={'camera'} onChange={(e) => caturePictureHandler(e)} />
+              </label>
             </IndividualInputArea>
-          ))}
-          <Button onClick={() => submitEditedStoreInfo()} location={'both'} size={'medium'}>
-            {'작성 완료'}
-          </Button>
-        </SetInfoModal>
+            {storeInfoSet.map((item) => (
+              <IndividualInputArea key={item.type}>
+                <span>{item.title}</span>
+                <input
+                  onChange={(e) => getInputChange(e)}
+                  data-type={item.type}
+                  type={'text'}
+                  placeholder={
+                    item.type === 'phone'
+                      ? '"-" 없이 입력해주세요.'
+                      : item.type === 'runtime'
+                      ? 'ex) 18:30 - 02:30'
+                      : storeInfo[item.type] === 'null' ||
+                        storeInfo[item.type] === 'undefined' ||
+                        storeInfo[item.type] === undefined
+                      ? '아직 입력되지 않았습니다.'
+                      : storeInfo[item.type]
+                  }
+                />
+              </IndividualInputArea>
+            ))}
+          </ModalChildSection>
+        </Modal>
       )}
     </>
   );
@@ -158,95 +157,58 @@ const StoreInfoManage = ({ storeInfo }) => {
 
 export default StoreInfoManage;
 
-const StoreInfoManageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 95px;
-  margin-bottom: 80px;
-  button {
-    transform: none;
-  }
-
-  & > div:first-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background-color: rgba(217, 217, 217, 0.5);
-    height: 326px;
-    width: 360px;
-
-    & > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  #edit-button {
-    width: 326px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: #ececec;
-  }
-  & > div:last-child {
-    display: flex;
-    justify-content: center;
+const ImageDiv = styled.div`
+  width: 22.5rem;
+  height: 22.5rem;
+  margin: -1.25rem 0 1.875rem -1.063rem;
+  & > img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
-const StoreInfoArea = styled.div`
+const ButtonWrapDiv = styled.div`
+  height: 4.375rem;
   display: flex;
-  flex-direction: column;
-  margin-top: 32px;
-  padding: 0 10px 0 10px;
+  justify-content: space-around;
+  align-items: center;
+  button {
+    transform: none;
+  }
+`;
 
-  & > div {
-    display: flex;
-    margin-bottom: 20px;
-    & > div {
-      width: 90px;
-      span {
-        font-weight: bolder;
-        font-size: 18px;
-      }
+const ModalChildSection = styled.section`
+  height: 100%;
+  display: flex;
+  padding: 1.875rem 0.938rem;
+  flex-direction: column;
+  span {
+    font-weight: 700;
+    font-size: 1.063rem;
+  }
+  input {
+    height: 2.188rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.625rem;
+    border: 0.07rem solid ${({ theme }) => theme.colors.lightGray};
+    border-radius: 0.625rem;
+    box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+    &:focus {
+      outline: 0.07rem solid ${({ theme }) => theme.colors.orange};
     }
-    span {
-      font-weight: normal;
+  }
+  label {
+    margin-left: 3.125rem;
+    font-size: 1.063rem;
+    cursor: pointer;
+    input {
+      display: none;
     }
   }
 `;
 
 const IndividualInputArea = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  margin-bottom: 20px;
-
-  span {
-    margin-left: 10px;
-    font-weight: 800;
-    min-width: 60px;
-  }
-  input {
-    height: 20px;
-    width: 65%;
-    margin: 0px 10px 0 5px;
-    border: 1px solid #e3e5e6;
-    border-radius: 14px;
-    padding: 10px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  }
-
-  button {
-    margin-right: 10px;
-  }
-
-  label {
-    margin-left: 10px;
-    input {
-      display: none;
-    }
-  }
+  margin: 0 0.625rem 0.938rem 0.625rem;
 `;

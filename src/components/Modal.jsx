@@ -12,7 +12,7 @@ import { styled } from 'styled-components';
 const Modal = ({ width, height, message, both, children, oncancelclick, onconfirmclick }) => {
   return (
     <BackgroundDiv>
-      <ModalSection>
+      <ModalSection width={width} height={height}>
         <InfoDiv>
           {message && !children && <MessageP>{message}</MessageP>}
           {!message && children && <div>{children}</div>}
@@ -49,7 +49,7 @@ const ModalSection = styled.section`
 `;
 
 const InfoDiv = styled.div`
-  height: 70%;
+  height: 90%;
 `;
 
 const MessageP = styled.p`
@@ -62,7 +62,7 @@ const MessageP = styled.p`
 `;
 
 const ButtonDiv = styled.div`
-  height: 30%;
+  height: 10%;
   display: flex;
   justify-content: space-around;
   align-items: center;
