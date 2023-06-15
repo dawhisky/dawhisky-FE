@@ -40,9 +40,9 @@ const StoreBottleManage = ({ setIsRegisterMode, id }) => {
           ))}
         {(!whiskyList || whiskyList.length === 0) && <NoneData>사업장에 등록된 주류가 없습니다.</NoneData>}
       </div>
-      <Button onClick={() => setIsRegisterMode(true)} location={'both'}>
-        {'주류 등록'}
-      </Button>
+      <ButtonWrapDiv>
+        <Button onClick={() => setIsRegisterMode(true)}>{'주류 등록'}</Button>
+      </ButtonWrapDiv>
     </StoreBottleManageWrapper>
   );
 };
@@ -50,16 +50,13 @@ const StoreBottleManage = ({ setIsRegisterMode, id }) => {
 export default StoreBottleManage;
 
 const StoreBottleManageWrapper = styled.div`
-  width: 100%;
-  margin-top: 80px;
-  padding-left: 20px;
   display: flex;
+  height: 75vh;
   position: relative;
   justify-content: center;
 
   & > div:first-child {
     width: 100%;
-    height: 80vh;
     margin-top: 25px;
     overflow-y: scroll;
     &::-webkit-scrollbar {
@@ -113,12 +110,17 @@ const IndividualWhisky = styled.div`
       }
     }
   }
+`;
+
+const ButtonWrapDiv = styled.div`
+  height: 4.375rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   button {
-    display: flex;
-    width: 30px;
-    height: 20px;
-    background-color: transparent;
-    color: #979c9e;
-    font-size: 14px;
+    position: absolute;
+    bottom: 20px;
+    z-index: 1;
+    font-weight: 600;
   }
 `;

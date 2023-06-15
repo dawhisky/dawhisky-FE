@@ -1,22 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useState } from 'react';
+import { useMutation, useQuery } from 'react-query';
 import { styled } from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+import { BsThreeDots, BsCheck2 } from 'react-icons/bs';
 import StoreInfoManage from './StoreInfoManage';
 import StoreBottleManage from './StoreBottleManage';
 import StoreBottleRegister from './StoreBottleRegister';
 import StoreQueSeatManage from './StoreQueSeatManage';
 import StoreSeatEditPage from './StoreSeatEditPage';
 import { getStoreInfo } from '../../api/storeInfo';
+import { TabMenu, Button, Modal } from '../../components';
+import { setLogout } from '../../api/login';
 
 const StoreManagePage = () => {
-  // 인가 정보
-  const authorization = localStorage.getItem('authorization');
-  const unEditedRefreshToken = localStorage.getItem('refreshToken');
-  const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
-  const storeId = localStorage.getItem('store_id');
-  const token = { authorization, refreshtoken };
+  const tabGroup = [
+    { name: '좌석관리', type: 'seat' },
+    { name: '업장관리', type: 'store' },
+    { name: '주류관리', type: 'bottle' },
+  ];
+  const managementList = ['로그아웃', '회원탈퇴'];
   // 어떤 탭이 선택되었는지 여부 상태관리
-  const [whichTabChosen, setWhichTabChosen] = useState('store');
+  const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+  // 로그아웃, 회원탈퇴
+  const [managementChosen, setManagementChosen] = useState(null);
+  // 로그인, 회원탈퇴 토글 열렸는지 상태관리
+  const [bottomToggle, setBottomToggle] = useState(false);
+  // 회원탈퇴 모달 열렸는지 상태관리
+  const [modalToggle, setModalToggle] = useState(false);
   // 주류 등록 모드인지 여부 상태관리
   const [isRegisterMode, setIsRegisterMode] = useState(false);
   // 좌석 수정 모드인지 여부 상태관리
@@ -26,106 +36,200 @@ const StoreManagePage = () => {
   // 업장 정보 수정 input값 상태관리
   const [storeInfo, setStoreInfo] = useState({});
 
-  // 해당 스토어 테이블 정보
-  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ token, id: storeId }));
+  const navigate = useNavigate();
+  const params = useParams()['*'];
+  const id = localStorage.getItem('store_id');
 
-  useEffect(() => {
-    if (!isLoading && !isError) {
-      setStoreInfo(data);
+  // * [스토어 테이블 정보] 조회
+  useQuery('getStoreInfo', () => getStoreInfo(id), {
+    onSuccess: (response) => {
+      setStoreInfo(response);
+    },
+  });
+
+  // * [tab] 탭 클릭
+  const onTabClickHandler = (type) => setTabChosen(type);
+
+  // * [모달] 모달창 ON, OFF
+  const modalToggleHandler = () => setModalToggle(!modalToggle);
+
+  // * [로그인 관리] 토글 버튼 클릭
+  const onToggleClickHandler = () => {
+    setBottomToggle(!bottomToggle);
+    setManagementChosen(null);
+  };
+
+  // * [로그아웃] 로그아웃 useMutation
+  const setLogoutMutation = useMutation(setLogout, {
+    onSuccess: () => {
+      localStorage.removeItem('authorization');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('store_id');
+      alert('로그아웃이 완료되었습니다.');
+      navigate(`/`, { replace: true });
+    },
+  });
+
+  // * [로그아웃, 회원탈퇴] 버튼 클릭
+  const onManagementClickHandler = (idx) => {
+    setManagementChosen(managementList[idx]);
+    if (idx === 1) {
+      modalToggleHandler();
+    } else if (params === 'user') {
+      setLogoutMutation.mutate(params);
     }
-  }, [data]);
-  const tabGroup = [
-    { name: '좌석 관리', type: 'seat' },
-    { name: '업장 관리', type: 'store' },
-    { name: '주류 관리', type: 'bottle' },
-  ];
+  };
+
+  // * [회원탈퇴]
+  const onDeleteUserHandler = () => {
+    console.log('회원탈퇴 로직 연결 예정');
+  };
 
   return (
     <div>
-      {isRegisterMode ? (
-        <StoreBottleRegister setIsRegisterMode={setIsRegisterMode} />
-      ) : isSeatEditMode ? (
-        <StoreSeatEditPage
-          setWhichTabChosen={setWhichTabChosen}
-          setWhichMode={setWhichMode}
-          setIsSeatEditMode={setIsSeatEditMode}
-          storeId={storeId}
-        />
-      ) : (
-        <StoreManagePageWrapper>
-          <div>{storeInfo.store}</div>
-          <TopTabGroup>
-            {tabGroup.map((item) => {
+      <Header>
+        <UserNameH1>{storeInfo && storeInfo.store}</UserNameH1>
+        <SignoutSpan>
+          <BsThreeDots onClick={onToggleClickHandler} />
+        </SignoutSpan>
+      </Header>
+      {bottomToggle && (
+        <>
+          <BackgroundDiv onClick={onToggleClickHandler} />
+          <ListUl>
+            <span>로그인 관리</span>
+            {managementList.map((item, idx) => {
               return (
-                <TopTab
-                  type={'button'}
-                  key={item.type}
-                  id={item.type}
-                  onClick={(e) => setWhichTabChosen(e.target.id)}
-                  whichtabchosen={whichTabChosen}
+                <ListLi
+                  key={item}
+                  active={item === managementChosen ? 'true' : 'false'}
+                  onClick={() => onManagementClickHandler(idx, item)}
                 >
-                  {item.name}
-                </TopTab>
+                  <p>{item}</p>
+                  <BsCheck2 />
+                </ListLi>
               );
             })}
-          </TopTabGroup>
-          {whichTabChosen === 'store' ? (
-            <StoreInfoManage storeInfo={storeInfo} />
-          ) : whichTabChosen === 'bottle' ? (
-            data && <StoreBottleManage setIsRegisterMode={setIsRegisterMode} id={data.store_id} />
-          ) : (
-            <StoreQueSeatManage
-              whichMode={whichMode}
-              setWhichMode={setWhichMode}
-              setIsSeatEditMode={setIsSeatEditMode}
-              storeId={storeId}
-            />
-          )}
-        </StoreManagePageWrapper>
+            <ButtonWrapDiv>
+              <Button location={'both'} onClick={onToggleClickHandler}>
+                닫기
+              </Button>
+            </ButtonWrapDiv>
+          </ListUl>
+        </>
       )}
+      {modalToggle && (
+        <Modal
+          message={'회원탈퇴 하시겠습니까?'}
+          both={'true'}
+          oncancelclick={modalToggleHandler}
+          onconfirmclick={onDeleteUserHandler}
+        />
+      )}
+      <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
+      {isRegisterMode && <StoreBottleRegister setIsRegisterMode={setIsRegisterMode} />}
+      {isSeatEditMode && (
+        <StoreSeatEditPage
+          setWhichMode={setWhichMode}
+          setIsSeatEditMode={setIsSeatEditMode}
+          storeId={storeInfo.store_id}
+        />
+      )}
+      {tabChosen === 'seat' && (
+        <StoreQueSeatManage
+          whichMode={whichMode}
+          setWhichMode={setWhichMode}
+          setIsSeatEditMode={setIsSeatEditMode}
+          storeId={storeInfo.store_id}
+        />
+      )}
+      {tabChosen === 'store' && <StoreInfoManage storeInfo={storeInfo} />}
+      {tabChosen === 'bottle' && <StoreBottleManage setIsRegisterMode={setIsRegisterMode} id={storeInfo.store_id} />}
     </div>
   );
 };
 
 export default StoreManagePage;
 
-const StoreManagePageWrapper = styled.div`
+const Header = styled.header`
+  padding: 2.5rem 0.625rem 0.938rem 0.625rem;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+`;
 
-  & > div:first-child {
+const UserNameH1 = styled.h1`
+  font-size: 1.25rem;
+  font-weight: 700;
+`;
+
+const SignoutSpan = styled.span`
+  font-size: 1.25;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const BackgroundDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+`;
+
+const ListUl = styled.ul`
+  width: 22.5rem;
+  position: fixed;
+  bottom: 3.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0.75rem 0.75rem 0 0;
+  background-color: ${({ theme }) => theme.colors.white};
+  z-index: 1;
+  overflow-y: auto;
+  animation: fadeInUp 0.7s;
+  & span {
+    height: 3.75rem;
     display: flex;
-    align-items: flex-end;
-    position: fixed;
-    height: 40px;
-    width: 360px;
-    padding-left: 20px;
-    font-size: 20px;
+    justify-content: center;
+    align-items: center;
     font-weight: 700;
-    background-color: white;
+  }
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, 100%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
   }
 `;
 
-const TopTabGroup = styled.div`
+const ListLi = styled.li`
+  margin: 1rem 1.25rem;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  position: fixed;
-  top: 40px;
-  height: 50px;
-  width: 360px;
-  border-bottom: 0.5px solid #eaeaea;
-  margin: 0 -16px 0 -16px;
-  background-color: white;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  :first-child {
+    font-weight: ${({ active }) => (active === 'true' ? '700' : '400')};
+    width: 18.75rem;
+  }
+  :last-child {
+    font-size: 1.25rem;
+    color: ${({ theme, active }) => (active === 'true' ? theme.colors.orange : 'transparent')};
+  }
 `;
 
-const TopTab = styled.button`
-  font-weight: ${(props) => (props.id === props.whichtabchosen ? '900' : '100')};
-  font-size: ${(props) => (props.id === props.whichtabchosen ? '17px' : '16px')};
-  ${(props) => props.id === props.whichtabchosen && 'text-decoration : underline'};
-  text-decoration-thickness: 3px;
-  text-underline-offset: 5px;
-  padding-bottom: 5px;
-  background-color: transparent;
+const ButtonWrapDiv = styled.div`
+  height: 4.375rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;

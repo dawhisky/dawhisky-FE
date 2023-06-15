@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { styled } from 'styled-components';
 import StoreQueManage from './StoreQueManage';
 import StoreSeatManage from './StoreSeatManage';
@@ -26,7 +26,6 @@ const StoreQueSeatManage = ({ setIsSeatEditMode, whichMode, setWhichMode, storeI
 export default StoreQueSeatManage;
 
 const StoreQueSeatManageWrapper = styled.div`
-  margin-top: 90px;
   width: 100%;
 
   & > div:first-child {
@@ -41,12 +40,18 @@ const StoreQueSeatManageWrapper = styled.div`
       width: 156px;
       height: 60px;
       border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
     }
     button:first-child {
-      ${(props) => props.whichMode === 'que' && 'background-color : #A5A5A5'}
+      background-color: ${(props) =>
+        props.whichMode === 'que' ? props.theme.colors.orange : props.theme.colors.white};
+      border: ${(props) => (props.whichMode === 'que' ? 'none' : `1px solid ${props.theme.colors.gray}`)};
     }
     button:last-child {
-      ${(props) => props.whichMode === 'seat' && 'background-color : #A5A5A5'}
+      background-color: ${(props) =>
+        props.whichMode === 'seat' ? props.theme.colors.orange : props.theme.colors.white};
+      border: ${(props) => (props.whichMode === 'que' ? `1px solid ${props.theme.colors.gray}` : 'none')};
     }
   }
 `;

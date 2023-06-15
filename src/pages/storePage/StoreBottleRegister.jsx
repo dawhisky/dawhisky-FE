@@ -20,31 +20,30 @@ const StoreBottleRegister = ({ setIsRegisterMode }) => {
   };
 
   return (
-    <Layout>
-      <StoreBottleRegisterWrapper>
+    <StoreBottleRegisterWrapper>
+      <div>
         <div>
-          <div>
-            <button onClick={() => setIsRegisterMode(false)} type={'button'}>
-              {'이전'}
-            </button>
-            <div>{'주류 등록'}</div>
-          </div>
-          <input onChange={(e) => onChangeHandler(e)} type={'text'} placeholder={'등록할 위스키를 검색해보세요!'} />
-          <div>
-            <CategorySelect category={'나라별'} list={countryFilter} />
-            <CategorySelect category={'지역별'} list={[1, 2, 3, 4, 5]} />
-            <CategorySelect category={'재료별'} list={[1, 2, 3, 4, 5]} />
-          </div>
+          <button onClick={() => setIsRegisterMode(false)} type={'button'}>
+            {'이전'}
+          </button>
+          <div>{'주류 등록'}</div>
         </div>
-        {data && <DetailList list={data} />}
-      </StoreBottleRegisterWrapper>
-    </Layout>
+        <input onChange={(e) => onChangeHandler(e)} type={'text'} placeholder={'등록할 위스키를 검색해보세요!'} />
+        <div>
+          <CategorySelect category={'나라별'} list={countryFilter} />
+          <CategorySelect category={'지역별'} list={[1, 2, 3, 4, 5]} />
+          <CategorySelect category={'재료별'} list={[1, 2, 3, 4, 5]} />
+        </div>
+      </div>
+      {data && <DetailList list={data} />}
+    </StoreBottleRegisterWrapper>
   );
 };
 
 export default StoreBottleRegister;
 
 const StoreBottleRegisterWrapper = styled.div`
+  border: 2px solid blue;
   display: flex;
   justify-content: center;
   width: 100%;
