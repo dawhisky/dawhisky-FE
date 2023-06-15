@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
-import { Button, Modal } from '../../components';
+import { Button, SetInfoModal } from '../../components';
 import { getStoreInfo, editStoreInfo } from '../../api/storeInfo';
 
 const StoreInfoManage = ({ storeInfo }) => {
@@ -114,7 +114,7 @@ const StoreInfoManage = ({ storeInfo }) => {
         </div>
       </StoreInfoManageWrapper>
       {isModalOpen && (
-        <Modal height={400} width={300}>
+        <SetInfoModal height={400} width={300}>
           <IndividualInputArea>
             <span>{'대표사진'}</span>
             <label htmlFor={'fileInput'}>
@@ -150,7 +150,7 @@ const StoreInfoManage = ({ storeInfo }) => {
           <Button onClick={() => submitEditedStoreInfo()} location={'both'} size={'medium'}>
             {'작성 완료'}
           </Button>
-        </Modal>
+        </SetInfoModal>
       )}
     </>
   );
