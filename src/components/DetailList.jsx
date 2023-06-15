@@ -41,9 +41,9 @@ const DetailList = ({ type, list }) => {
               onClick={() => onListClickHandler(item.store_id ? item.store_id : item.whisky_id)}
             >
               <Image
-                width={'80px'}
-                height={'80px'}
-                borderradius={'5px'}
+                width={'5rem'}
+                height={'5rem'}
+                borderradius={'0.313rem'}
                 src={type === 'store' ? item.biz_photo : item.whisky_photo}
                 alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
               />
@@ -86,34 +86,34 @@ const DetailList = ({ type, list }) => {
 export default DetailList;
 
 const StockListDiv = styled.div`
-  margin-bottom: 30px;
+  margin-bottom: 1.875rem;
 `;
 
 const ListDiv = styled.div`
-  margin: 5px 0;
-  padding: 10px;
+  margin: 0.313rem 0;
+  padding: 0.625rem;
   display: flex;
   flex-direction: row;
   cursor: pointer;
 `;
 
 const StoreInfoDiv = styled.div`
-  margin-left: 15px;
+  margin-left: 0.938rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
 const TotalInfoDiv = styled.div`
-  margin-left: 15px;
+  margin-left: 0.938rem;
   & h3 {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 600;
   }
 `;
 
 const TextH1 = styled.h1`
-  width: 225px;
+  width: 14rem;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
@@ -121,13 +121,13 @@ const TextH1 = styled.h1`
 `;
 
 const TextH2 = styled.h2`
-  width: 225px;
-  margin: 5px 0 12px 0;
-  font-size: 13px;
+  width: 14rem;
+  margin: 0.313rem 0 0.75rem 0;
+  font-size: 0.813rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #818181;
+  color: ${({ theme }) => theme.colors.darkGray};
 `;
 
 const BarInfoDiv = styled.div`
@@ -135,9 +135,9 @@ const BarInfoDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   & button {
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 12px;
+    padding: 0.313rem 0.625rem;
+    font-size: 0.75rem;
+    border-radius: 0.75rem;
   }
 `;
 
@@ -146,8 +146,8 @@ const WhiskyInfoDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   & button {
-    padding: 5px 10px;
-    font-size: 12px;
+    padding: 0.313rem 0.625rem;
+    font-size: 0.75rem;
     background-color: transparent;
     cursor: pointer;
   }

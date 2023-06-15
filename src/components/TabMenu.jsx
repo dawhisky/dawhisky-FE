@@ -48,13 +48,6 @@ const TabSection = styled.section`
   flex-wrap: wrap;
   gap: 0.625rem;
   background-color: ${({ theme, url }) => (url === '/' ? theme.colors.darkBrown : 'transperant')};
-  // ! 임시 주석 처리
-  /* overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  } */
 `;
 
 const TabMenuButton = styled.button`
@@ -68,7 +61,7 @@ const TabMenuButton = styled.button`
       : url === '/'
       ? '0.125rem solid transparent'
       : ''};
-  font-weight: ${({ active }) => (active === 'true' ? '500' : '400')};
+  font-weight: ${({ active }) => (active === 'true' ? '700' : '500')};
   color: ${({ theme, active, url }) =>
     active === 'true' && url === '/'
       ? theme.colors.white

@@ -124,7 +124,7 @@ const ListLi = styled.li`
 `;
 
 const ButtonWrapDiv = styled.div`
-  height: 70px;
+  height: 4.375rem;
   display: flex;
   justify-content: space-around;
   align-items: center;

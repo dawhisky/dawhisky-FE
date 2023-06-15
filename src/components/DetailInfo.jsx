@@ -23,17 +23,15 @@ export default DetailInfo;
 
 const InfoDiv = styled.div`
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 `;
 
 const InfoKeyDt = styled.dt`
-  width: 90px;
+  width: 5.625rem;
   font-weight: 600;
 `;
 
 const InfoValueDd = styled.dd`
-  width: calc(100% - 90px);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  width: calc(100% - 5.625rem);
+  white-space: wrap;
 `;

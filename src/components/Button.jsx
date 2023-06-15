@@ -8,9 +8,9 @@ import { styled } from 'styled-components';
 // * location : 사용하는 버튼이 2개여서 양쪽에 각각 보여줘야 할때는 props로 location={'both'}, 양쪽에 각각 나열시킴
 // *            사용하는 버튼이 1개인 경우 location을 따로 내려주지 않아도 가운데 정렬되도록 함
 
-const Button = ({ children, size, color, location, ...rest }) => {
+const Button = ({ children, size, color, location }) => {
   return (
-    <CommonButton size={size} color={color} location={location} {...rest}>
+    <CommonButton size={size} location={location}>
       {children}
     </CommonButton>
   );
@@ -19,20 +19,11 @@ const Button = ({ children, size, color, location, ...rest }) => {
 const sizeHandler = (size) => {
   switch (size) {
     case 'small':
-      return 'width: 100px;';
+      return 'width: 6.25rem;';
     case 'medium':
-      return 'width: 155px;';
+      return 'width: 9.688rem;';
     default:
-      return 'width: 325px;';
-  }
-};
-
-const colorHandler = (color) => {
-  switch (color) {
-    case 'white':
-      return 'background-color: #fff;';
-    default:
-      return 'background-color: #ececec;';
+      return 'width: 20.313rem;';
   }
 };
 
@@ -41,7 +32,7 @@ const locationHandler = (location) => {
     case 'both':
       return '';
     default:
-      return 'bottom: 80px; left: 50%; transform: translate(-50%, -50%); z-index: 1;';
+      return 'bottom: 5rem; left: 50%; transform: translate(-50%, -50%); z-index: 1;';
   }
 };
 
@@ -49,9 +40,10 @@ export default Button;
 
 const CommonButton = styled.button`
   ${(props) => sizeHandler(props.size)};
-  ${(props) => colorHandler(props.color)};
   ${(props) => locationHandler(props.location)};
-  height: 40px;
-  border-radius: 20px;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  background-color: ${({ theme, color }) => (color === 'white' ? theme.colors.white : theme.colors.orange)};
+  color: ${({ theme, color }) => (color === 'white' ? theme.colors.darkGray : theme.colors.white)};
   cursor: pointer;
 `;
