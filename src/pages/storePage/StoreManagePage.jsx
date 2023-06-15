@@ -76,7 +76,7 @@ const StoreManagePage = () => {
     setManagementChosen(managementList[idx]);
     if (idx === 1) {
       modalToggleHandler();
-    } else if (params === 'user') {
+    } else if (params === 'store') {
       setLogoutMutation.mutate(params);
     }
   };
