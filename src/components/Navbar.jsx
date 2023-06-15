@@ -1,7 +1,6 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
-import userFlagCheck from '../hook/userFlagCheck';
 import Image from './Image';
 import { whiskyColor, whiskyGray, barColor, barGray, mypageColor, mypageGray } from '../assets';
 
@@ -10,9 +9,9 @@ const Navbar = () => {
   const location = useLocation();
   const url = location.pathname;
 
-  // * 로그인 구분에 따라 유저/사업자 마이페이지 이동 처리
+  // * 마이페이지 이동
   const onMagagePageClickHandler = () => {
-    navigate(`/StoreManagePage`);
+    navigate(`/ManagePage`);
   };
 
   // * pathname에 따라 아이콘 fill 여부 결정
