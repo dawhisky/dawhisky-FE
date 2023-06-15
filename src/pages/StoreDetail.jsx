@@ -83,7 +83,7 @@ const StoreDetail = () => {
     // 1. 로그인 여부 및 token값 확인
     const getToken = userFlagCheck();
     if (getToken !== null) {
-      setLoginStatus({ login: true, userFlag: getToken.userFlag });
+      setLoginStatus({ login: true, userFlag: getToken });
     }
     // 2. 스토어에서 보유한 위스키 조회
     getStoreWhisky();
@@ -125,6 +125,4 @@ const ImageDiv = styled.div`
   }
 `;
 
-const TabSection = styled.section`
-  padding-top: 15px;
-`;
+const TabSection = styled.section``;

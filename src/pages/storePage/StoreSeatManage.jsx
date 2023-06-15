@@ -145,7 +145,7 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
         </div>
       </div>
       <div>
-        <span>{'테이블 좌석'}</span>
+        <span>{'홀 좌석'}</span>
         <div>
           <div>
             {hallSeatData?.map((item) => (

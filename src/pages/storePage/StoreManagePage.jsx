@@ -79,6 +79,7 @@ const StoreManagePage = () => {
               whichMode={whichMode}
               setWhichMode={setWhichMode}
               setIsSeatEditMode={setIsSeatEditMode}
+              storeId={storeId}
             />
           )}
         </StoreManagePageWrapper>
