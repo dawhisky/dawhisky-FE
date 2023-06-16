@@ -10,7 +10,7 @@ import StoreQueSeatManage from './StoreQueSeatManage';
 import StoreSeatEditPage from './StoreSeatEditPage';
 import { getStoreInfo } from '../../api/storeInfo';
 import { TabMenu, Button, Modal } from '../../components';
-import { setLogout } from '../../api/login';
+import { setLogout, setSignout } from '../../api/login';
 
 const StoreManagePage = () => {
   const tabGroup = [
@@ -81,9 +81,21 @@ const StoreManagePage = () => {
     }
   };
 
-  // * [회원탈퇴]
+  // * [회원탈퇴] useMutation
+  const setSignoutMutation = useMutation(setSignout, {
+    onSuccess: () => {
+      localStorage.removeItem('authorization');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('store_id');
+      alert('회원탈퇴가 완료되었습니다.');
+      navigate(`/`, { replace: true });
+    },
+  });
+
+  // * [회원탈퇴] 버튼 클릭
   const onDeleteUserHandler = () => {
-    console.log('회원탈퇴 로직 연결 예정');
+    setSignoutMutation.mutate(params);
   };
 
   return (

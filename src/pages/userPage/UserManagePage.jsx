@@ -6,7 +6,7 @@ import { useMutation, useQuery } from 'react-query';
 import { TabMenu, Button, Modal, WhiskyGrid } from '../../components';
 import SelectWhisky from './SelectWhisky';
 import { getUserInfo } from '../../api/user';
-import { setLogout } from '../../api/login';
+import { setLogout, setSignout } from '../../api/login';
 
 const UserManagePage = () => {
   const tabGroup = [
@@ -66,9 +66,21 @@ const UserManagePage = () => {
     }
   };
 
+  // * [회원탈퇴] useMutation
+  const setSignoutMutation = useMutation(setSignout, {
+    onSuccess: () => {
+      localStorage.removeItem('authorization');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('store_id');
+      alert('회원탈퇴가 완료되었습니다.');
+      navigate(`/`, { replace: true });
+    },
+  });
+
   // * [회원탈퇴]
   const onDeleteUserHandler = () => {
-    console.log('회원탈퇴 로직 연결 예정');
+    setSignoutMutation.mutate(params);
   };
 
   return (
