@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsChevronLeft } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 import userFlagCheck from '../hook/userFlagCheck';
 import { isWhiskyLike, isStoreLike } from '../api/like';
 
@@ -45,7 +46,7 @@ const DetailHeader = ({ korname, engname, like, id }) => {
         isStoreLikeMutation.mutate(id);
       }
     } else if (userFlag === null) {
-      alert(`로그인 후 좋아요 등록이 가능합니다.`);
+      toast.error(`로그인 후 좋아요 등록이 가능합니다.`);
       navigate(`/Login`);
     }
   };

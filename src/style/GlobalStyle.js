@@ -60,6 +60,11 @@ const GlobalStyle = createGlobalStyle`
       font-display: swap;
   }
 
+  :root {
+    --toastify-icon-color-success: #FF8B00;
+    --toastify-font-family: 'Pretendard';
+  }
+
   html,
   body,
   div,

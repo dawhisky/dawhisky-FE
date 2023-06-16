@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { Layout, Button, Image } from '../../components';
 import { login } from '../../api/login';
 import { logo } from '../../assets';
@@ -39,7 +40,7 @@ const Login = () => {
       localStorage.setItem('authorization', authorization);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('store_id', store);
-      alert(message, { replace: true });
+      toast.success(message, { replace: true });
       navigate('/');
     },
     onError: () => {},

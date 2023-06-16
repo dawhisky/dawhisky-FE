@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { GrGallery, GrCamera } from 'react-icons/gr';
 import { Image, DetailInfo, Button, Modal } from '../../components';
 import { getStoreInfo, editStoreInfo } from '../../api/storeInfo';
@@ -40,7 +41,7 @@ const StoreInfoManage = ({ storeInfo }) => {
   // 스토어정보 수정
   const editInfoApi = useMutation(editStoreInfo, {
     onSuccess: () => {
-      alert('수정이 완료되었습니다.');
+      toast.success('수정이 완료되었습니다.');
       queryClient.invalidateQueries('getStoreInfo', getStoreInfo(storeInfo.store_id));
     },
     onError: (error) => {
