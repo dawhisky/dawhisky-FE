@@ -23,7 +23,7 @@ const UserManagePage = () => {
   const navigate = useNavigate();
   const params = useParams()['*'];
 
-  // * [좋아요] 유저 좋아요 내역 조회
+  // * [마이페이지] 유저 마이페이지 데이터 조회
   const { data } = useQuery('getUserInfo', () => getUserInfo(), {
     onSuccess: (response) => {
       if (response) {

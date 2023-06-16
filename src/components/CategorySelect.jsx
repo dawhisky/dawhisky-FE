@@ -10,7 +10,6 @@ import Button from './Button';
 // * onclickhandler : 세부 리스트 중 사용자가 선택한 값으로 setState 처리
 
 const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
-  // 닫기 버튼이나 외부 레이아웃을 선택했을 때 세부 리스트가 닫히도록 설정
   const [showUlList, setShowUlList] = useState(false);
   const isShowListHandler = () => setShowUlList(!showUlList);
 
@@ -24,6 +23,7 @@ const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
         <>
           <BackgroundDiv onClick={isShowListHandler} />
           <ListUl>
+            {/* // TODO 초기 category name값 유지 */}
             <span>{category}</span>
             {list.map((item, idx) => {
               return (

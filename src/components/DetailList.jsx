@@ -15,7 +15,7 @@ const DetailList = ({ type, list }) => {
   const url = location.pathname;
 
   const onListClickHandler = (id) => {
-    if (url.includes('/UserManagePage')) {
+    if (url.includes('/ManagePage')) {
       navigate(`/MyComment/${id}`);
     } else if (url.includes('/LikeList') || url.includes('/StoreList') || url.includes('/WhiskyDetail')) {
       navigate(`/StoreDetail/${id}`);
@@ -40,13 +40,26 @@ const DetailList = ({ type, list }) => {
               key={item.store_id || item.whisky_id}
               onClick={() => onListClickHandler(item.store_id ? item.store_id : item.whisky_id)}
             >
-              <Image
-                width={'5rem'}
-                height={'5rem'}
-                borderradius={'0.313rem'}
-                src={type === 'store' ? item.biz_photo : item.whisky_photo}
-                alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
-              />
+              {url.includes('/ManagePage') && (
+                <ImageWrapDiv>
+                  <Image
+                    width={'5rem'}
+                    height={'5rem'}
+                    borderradius={'0.313rem'}
+                    src={type === 'store' ? item.biz_photo : item.whisky_photo}
+                    alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
+                  />
+                </ImageWrapDiv>
+              )}
+              {!url.includes('/ManagePage') && (
+                <Image
+                  width={'5rem'}
+                  height={'5rem'}
+                  borderradius={'0.313rem'}
+                  src={type === 'store' ? item.biz_photo : item.whisky_photo}
+                  alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
+                />
+              )}
               {url.includes('/LikeList') ? (
                 <StoreInfoDiv>
                   <TextH1>{item.store}</TextH1>
@@ -61,15 +74,12 @@ const DetailList = ({ type, list }) => {
                       <button type="button">
                         바 {filteredBarTables}석 | 홀 {filteredHallTables}석
                       </button>
-                      {/* <h3>60m</h3> */}
                     </BarInfoDiv>
                   ) : (
                     <WhiskyInfoDiv>
                       <h2>{item.whisky_abv} vol</h2>
                       {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
-                      <button type="button">
-                        {(url.includes('/UserManagePage') || url.includes('/StoreManagePage')) && '등록'}
-                      </button>
+                      <button type="button">{url.includes('/ManagePage') && '등록'}</button>
                     </WhiskyInfoDiv>
                   )}
                 </TotalInfoDiv>
@@ -86,6 +96,7 @@ const DetailList = ({ type, list }) => {
 export default DetailList;
 
 const StockListDiv = styled.div`
+  margin-top: -0.625rem;
   margin-bottom: 1.875rem;
 `;
 
@@ -95,6 +106,18 @@ const ListDiv = styled.div`
   display: flex;
   flex-direction: row;
   cursor: pointer;
+`;
+
+const ImageWrapDiv = styled.div`
+  border: 1px solid blue;
+  width: 5.2rem;
+  height: 5.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 4px -5px;
 `;
 
 const StoreInfoDiv = styled.div`
@@ -114,7 +137,8 @@ const TotalInfoDiv = styled.div`
 
 const TextH1 = styled.h1`
   width: 14rem;
-  font-weight: 600;
+  margin-top: 0.3rem;
+  font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -123,7 +147,7 @@ const TextH1 = styled.h1`
 const TextH2 = styled.h2`
   width: 14rem;
   margin: 0.313rem 0 0.75rem 0;
-  font-size: 0.813rem;
+  font-size: 0.75rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -145,10 +169,16 @@ const WhiskyInfoDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  & h2 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.orange};
+  }
   & button {
     padding: 0.313rem 0.625rem;
-    font-size: 0.75rem;
     background-color: transparent;
+    font-size: 0.75rem;
+    color: ${({ theme }) => theme.colors.darkGray};
     cursor: pointer;
   }
 `;
