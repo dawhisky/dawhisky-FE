@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { NoneData } from '../pages/statusPage';
 import Image from './Image';
 
 // ! [props]
@@ -20,28 +21,31 @@ const WhiskyGrid = ({ list }) => {
   };
 
   return (
-    <WhiskyListSection>
-      {list &&
-        list.length !== 0 &&
-        list.map((item) => (
-          <WhiskyDataDiv key={item.whisky_id} onClick={() => onWhiskyClickHandler(item.whisky_id)}>
-            <ImageWrapDiv>
-              <Image
-                width={'9.5rem'}
-                height={'9.5rem'}
-                borderradius={'0.313rem'}
-                src={item.whisky_photo}
-                alt={`${item.whisky_kor} 사진`}
-              />
-            </ImageWrapDiv>
-            <h1>{item.whisky_kor}</h1>
-            <div>
-              <h2>{item.whisky_eng}</h2>
-              <h3>{item.whisky_abv} vol</h3>
-            </div>
-          </WhiskyDataDiv>
-        ))}
-    </WhiskyListSection>
+    <>
+      <WhiskyListSection>
+        {list &&
+          list.length !== 0 &&
+          list.map((item) => (
+            <WhiskyDataDiv key={item.whisky_id} onClick={() => onWhiskyClickHandler(item.whisky_id)}>
+              <ImageWrapDiv>
+                <Image
+                  width={'9.5rem'}
+                  height={'9.5rem'}
+                  borderradius={'0.313rem'}
+                  src={item.whisky_photo}
+                  alt={`${item.whisky_kor} 사진`}
+                />
+              </ImageWrapDiv>
+              <h1>{item.whisky_kor}</h1>
+              <div>
+                <h2>{item.whisky_eng}</h2>
+                <h3>{item.whisky_abv} vol</h3>
+              </div>
+            </WhiskyDataDiv>
+          ))}
+      </WhiskyListSection>
+      <div>{(!list || list.length === 0) && <NoneData>위스키가 없어요</NoneData>}</div>
+    </>
   );
 };
 

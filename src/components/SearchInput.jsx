@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 // * placeholder : input에 넣을 placeholder
 // * searchtype : before은 검색 input, after는 검색 상세페이지로 넘어간 후의 input
 
-const SearchInput = ({ searchtype, value, onchange, onclick, placeholder, ...rest }) => {
+const SearchInput = ({ searchtype, value, color, onchange, onclick, placeholder, ...rest }) => {
   const navigate = useNavigate();
 
   const onSearchClickHandler = () => navigate(`/SearchPage`);
@@ -17,7 +17,14 @@ const SearchInput = ({ searchtype, value, onchange, onclick, placeholder, ...res
   return (
     <InputWrapDiv onClick={onSearchClickHandler}>
       {searchtype === 'after' ? <LeftIcon onClick={onBeforeClickHandler} /> : ''}
-      <CommonInput searchtype={searchtype} value={value} onChange={onchange} placeholder={placeholder} {...rest} />
+      <CommonInput
+        searchtype={searchtype}
+        value={value}
+        color={color}
+        onChange={onchange}
+        placeholder={placeholder}
+        {...rest}
+      />
       <SearchIcon float={searchtype === 'after' ? 'right' : 'left'} onClick={onclick} />
     </InputWrapDiv>
   );
@@ -30,7 +37,7 @@ const searchTypeHandler = (searchtype) => {
     case 'before':
       return 'width: 20.625rem; padding: 0.75rem 1px 0.75rem 3rem;';
     case 'after':
-      return 'width: 18.438rem; margin-left: 2rem; padding: 0.75rem 3rem 0.75rem 1rem; background-color: #f3f3f3';
+      return 'width: 18.438rem; margin-left: 2rem; padding: 0.75rem 3rem 0.75rem 1rem;';
     default:
       return '';
   }
@@ -61,6 +68,8 @@ const CommonInput = styled.input`
   &:focus {
     outline: none;
   }
+  background-color: ${(props) =>
+    props.searchtype === 'after' || props.color === 'gray' ? props.theme.colors.lightGray : props.theme.colors.white};
 `;
 
 const LeftIcon = styled(BsChevronLeft)`
