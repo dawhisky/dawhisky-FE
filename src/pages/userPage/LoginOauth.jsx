@@ -15,7 +15,8 @@ const LoginOauth = () => {
         localStorage.setItem('authorization', response.data.authorization);
         localStorage.setItem('refreshToken', response.data.refreshToken);
         localStorage.setItem('user', response.data.user);
-        navigate('/');
+        alert(response.data.message);
+        navigate('/', { replace: true });
       })
       .catch((error) => {
         throw error;
