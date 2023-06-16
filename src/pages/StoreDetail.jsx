@@ -24,7 +24,7 @@ const StoreDetail = () => {
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
 
   // * [상세 정보 tab] 해당 스토어 테이블 정보
-  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo({ id: storeId }));
+  const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo(storeId));
 
   // * [상세 정보 tab] 해당 스토어 정보 상태관리
   const [barDetail, setBarDetail] = useState({});
