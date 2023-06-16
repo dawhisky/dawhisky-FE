@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
-import { Layout, Button, SetInfoModal } from '../../components';
+import { BsChevronLeft } from 'react-icons/bs';
+import { GrGallery, GrCamera } from 'react-icons/gr';
+import { Layout, Button, Modal, Image } from '../../components';
 import { signup, checkBizNumber, sendEmail } from '../../api/signup';
 
 const Signup = () => {
@@ -31,6 +33,9 @@ const Signup = () => {
   // 업로드 예정 사진 상태관리
   const [uploadImage, setUploadImage] = useState(null);
 
+  // 사업장 사진 썸네일 상태관리
+  const [preview, setPreview] = useState(null);
+
   // 사업자번호 유효여부
   const [isBizNumberPassed, setIsBizNumberPassed] = useState(false);
 
@@ -52,7 +57,7 @@ const Signup = () => {
   const signupApi = useMutation(signup, {
     onSuccess: () => {
       alert('회원가입이 완료되었습니다.');
-      navigate('/Login');
+      navigate('/Login', { replace: true });
     },
     onError: (error) => {
       alert(error);
@@ -108,15 +113,27 @@ const Signup = () => {
   // 사진데이터 상태관리하고, 모달창 닫기
   const prepareUploadImage = (e) => {
     const file = e.target.files[0];
+    if (!file) return;
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      alert('jpg, png 형식의 이미지 파일을 업로드해주세요.');
+      return;
+    }
+    const previewURL = window.URL.createObjectURL(file);
+    setPreview(previewURL);
     setUploadImage(file);
-    setWhichModalOpen('confirm');
   };
 
   // 카메라 촬영하여 사진데이터 상태관리하고, 모달창 닫기
   const caturePictureHandler = (e) => {
     const file = e.target.files[0];
+    if (!file) return;
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      alert('jpg, png 형식의 이미지 파일을 업로드해주세요.');
+      return;
+    }
+    const previewURL = window.URL.createObjectURL(file);
+    setPreview(previewURL);
     setUploadImage(file);
-    setWhichModalOpen('confirm');
   };
 
   // '가입' 버튼 누르면 예외상황에 따라 분기처리하고, formData만들어서 전송
@@ -132,7 +149,7 @@ const Signup = () => {
     } else if (storeInfo.password !== storeInfo.passwordConfirm) {
       alert('비밀번호가 일치하지 않습니다.');
     } else if (isBizNumberPassed !== true) {
-      alert('유효하지 않는 사업자번호입니다.');
+      alert('유효하지 않은 사업자번호입니다.');
     } else {
       const formData = new FormData();
       formData.append('email', storeInfo.email);
@@ -155,7 +172,7 @@ const Signup = () => {
       <SignupWrapper>
         <SignupTop>
           <button onClick={() => navigate('/Login')} type={'button'}>
-            {'이전'}
+            <BsChevronLeft />
           </button>
           <div>
             <h1>{'회원가입'}</h1>
@@ -177,28 +194,36 @@ const Signup = () => {
             );
           })}
           <div>
-            <div>{'사업장 사진'}</div>
+            <p>{'사업장 사진'}</p>
             <Button onClick={() => onUploadHandler()}>{'사진을 첨부해주세요'}</Button>
           </div>
         </SignupMiddle>
-        {isModalOpen && (
-          <SetInfoModal height={200} width={300}>
-            {whichModalOpen === 'confirm' ? (
-              <ConfirmModal>
-                <div>{'첨부 사진은 사업장 대표 이미지로 적용됩니다.'}</div>
-                <button onClick={() => setIsModalOpen(false)} type={'button'}>
-                  {'확인'}
-                </button>
-              </ConfirmModal>
-            ) : (
-              <PictureUpload>
-                <div>{'사진첨부'}</div>
-                <div>
+        {isModalOpen && whichModalOpen === 'confirm' && (
+          <Modal
+            message={'첨부 사진은 사업장 대표 이미지로 적용됩니다.'}
+            onconfirmclick={() => setIsModalOpen(false)}
+          />
+        )}
+        {isModalOpen && whichModalOpen === 'pictureUpload' && (
+          <Modal
+            height={'400px'}
+            both={'true'}
+            oncancelclick={() => setIsModalOpen(false)}
+            onconfirmclick={() => setWhichModalOpen('confirm')}
+          >
+            <ModalInnerDiv>
+              <Image width={'220px'} height={'220px'} borderradius={'10px'} src={preview} />
+              <SetImageDiv>
+                <OptionsDiv>
                   <label htmlFor={'fileInput'}>
+                    <GrGallery />
                     {'갤러리에서 선택'}
-                    <input type={'file'} id={'fileInput'} onChange={(e) => prepareUploadImage(e)} />
+                    <input type={'file'} id={'fileInput'} name={'image'} onChange={(e) => prepareUploadImage(e)} />
                   </label>
+                </OptionsDiv>
+                <OptionsDiv>
                   <label htmlFor={'takePicture'}>
+                    <GrCamera />
                     {'사진 촬영'}
                     <input
                       type={'file'}
@@ -207,11 +232,11 @@ const Signup = () => {
                       onChange={(e) => caturePictureHandler(e)}
                     />
                   </label>
-                </div>
-                <Button onClick={() => setIsModalOpen(false)}>{'취소'}</Button>
-              </PictureUpload>
-            )}
-          </SetInfoModal>
+                </OptionsDiv>
+              </SetImageDiv>
+            </ModalInnerDiv>
+            <Hr />
+          </Modal>
         )}
       </SignupWrapper>
     </Layout>
@@ -235,7 +260,7 @@ const IndividualInputArea = ({ item, saveInputValue, checkBizNumberHandler, chec
 
       {item.type === 'email' ? (
         <button onClick={() => checkEmailHandler()} type={'button'}>
-          {'중복 확인'}
+          {'중복확인'}
         </button>
       ) : item.type === 'biz_number' ? (
         <button onClick={() => checkBizNumberHandler()} type={'button'}>
@@ -258,12 +283,10 @@ const SignupTop = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
   height: 74px;
   width: 360px;
-  border: 0.5px solid #eaeaea;
-  background-color: white;
-  z-index: 1;
+  border-bottom: 0.5px solid ${({ theme }) => theme.colors.lightGray};
+  background-color: ${({ theme }) => theme.colors.white};
 
   h1 {
     font-size: 20px;
@@ -276,10 +299,11 @@ const SignupTop = styled.div`
     background-color: transparent;
     height: 30px;
     padding: 15px;
+    cursor: pointer;
   }
 
   & > button:last-child {
-    color: #b4b4b4;
+    color: ${({ theme }) => theme.colors.orange};
   }
 `;
 
@@ -287,11 +311,9 @@ const SignupMiddle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 85px;
-  margin-bottom: 60px;
+  margin: 20px 0;
   height: 100%;
   box-sizing: border-box;
-  width: 328px;
   overflow-y: auto;
 
   & > div:last-child {
@@ -302,10 +324,12 @@ const SignupMiddle = styled.div`
       width: 312px;
       border-radius: 24px;
       margin-top: 12px;
-      background-color: #a5a5a5;
-      color: white;
       box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      cursor: pointer;
     }
+  }
+  p {
+    font-weight: 700;
   }
 `;
 
@@ -325,82 +349,65 @@ const InputAreaWrapper = styled.div`
     padding-left: 10px;
     margin-top: 12px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    &:focus {
+      outline: 0.07rem solid ${({ theme }) => theme.colors.orange};
+    }
   }
   button {
-    position: absolute;
-    bottom: 12%;
-    right: 3%;
-    height: 24px;
     width: 70px;
-    background-color: #ececec;
+    height: 28px;
+    position: absolute;
+    bottom: 9%;
+    right: 3%;
+    background-color: ${({ theme }) => theme.colors.orange};
+    color: ${({ theme }) => theme.colors.white};
     border-radius: 14px;
-    font-size: 14px;
+    font-size: 13px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
   }
 `;
 
-const ConfirmModal = styled.div`
+const ModalInnerDiv = styled.div`
+  height: 330px;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  height: 200px;
-  width: 300px;
-  padding: 40px;
-  text-align: center;
-  line-height: 200%;
-  button {
-    margin-top: 30px;
-    font-size: 20px;
-    font-weight: 700;
-    background-color: transparent;
-  }
-`;
-
-const PictureUpload = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  gap: 20px;
+  justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 100%;
-  font-size: 20px;
+`;
 
-  button {
-    transform: none;
-  }
+const SetImageDiv = styled.div`
+  display: flex;
+  gap: 35px;
+`;
 
-  div:first-child {
-  }
-
-  div:nth-child(2) {
+const OptionsDiv = styled.div`
+  label {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    font-size: 16px;
-
-    input {
-      display: none;
-    }
-    label {
-      margin: 5px;
-      font-weight: 800;
-    }
-    button {
-      background-color: transparent;
-      margin: 5px;
-      font-weight: 800;
-    }
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: ${({ theme }) => theme.colors.darkGray};
+    cursor: pointer;
   }
-
-  & > button:last-child {
-    width: 90%;
-    margin: 10px;
+  label > :first-child {
+    font-size: 24px;
+  }
+  input {
+    display: none;
   }
 `;
 
-// '이전'버튼 아이콘 받기
+const Hr = styled.hr`
+  width: 250px;
+  height: 1px;
+  border: 0;
+  background-color: ${({ theme }) => theme.colors.lightGray};
+`;
+
 // 유효성에 문제가 있을 경우 input 테두리 붉은색 되는 로직 보류
 // '중복확인'버튼이랑 '조회'버튼 저대로 괜찮은걸까나
 // 사진 촬영 기능
