@@ -35,10 +35,11 @@ const Login = () => {
 
   // useMutation hook 로그인 api 성공시/실패시
   const loginApi = useMutation(login, {
-    onSuccess: ({ authorization, refreshToken, store }) => {
+    onSuccess: ({ authorization, refreshToken, store, message }) => {
       localStorage.setItem('authorization', authorization);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('store_id', store);
+      alert(message, { replace: true });
       navigate('/');
     },
     onError: () => {},
