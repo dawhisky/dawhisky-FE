@@ -39,6 +39,7 @@ const isAuthenticated = () => {
 
   // 로그인 관련 모든 데이터가 존재할 경우
   if (result.userFlag && authorization && refreshToken) {
+    console.log('...result', ...result);
     return { ...result };
   }
 
@@ -53,12 +54,14 @@ const isAuthenticated = () => {
     return updatedResult;
   }
 
+  console.log('...result', ...result);
   return { ...result };
 };
 
 // * PrivateRoute 검증
 const PrivateRoute = ({ category, element }) => {
   const { userFlag, msg } = isAuthenticated();
+  console.log('userFlag : ', userFlag, 'msg : ', msg, 'element.type.name', element.type.name);
 
   // ManagePage 진입할 경우
   if (userFlag !== '' && msg === '' && element.type.name === 'ManagePage') {
