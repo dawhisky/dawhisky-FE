@@ -43,7 +43,9 @@ const Login = () => {
       toast.success(message, { replace: true });
       navigate('/');
     },
-    onError: () => {},
+    onError: (error) => {
+      toast.error(error.response.data.errorMessage);
+    },
   });
 
   // 로그인버튼 핸들러함수

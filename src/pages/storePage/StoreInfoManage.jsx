@@ -8,11 +8,11 @@ import { getStoreInfo, editStoreInfo } from '../../api/storeInfo';
 
 const StoreInfoManage = ({ storeInfo }) => {
   const storeInfoList = {
-    상호명: storeInfo.store,
-    주소: storeInfo.address,
-    전화번호: storeInfo.phone,
-    운영시간: storeInfo.runtime,
-    공지사항: storeInfo.notice,
+    상호명: storeInfo.store !== 'null' ? storeInfo.store : '아직 입력되지 않았습니다.',
+    주소: storeInfo.address !== 'null' ? storeInfo.address : '아직 입력되지 않았습니다.',
+    전화번호: storeInfo.phone !== 'null' ? storeInfo.phone : '아직 입력되지 않았습니다.',
+    운영시간: storeInfo.runtime !== 'null' ? storeInfo.runtime : '아직 입력되지 않았습니다.',
+    공지사항: storeInfo.notice !== 'null' ? storeInfo.notice : '아직 입력되지 않았습니다.',
   };
 
   const storeInfoSet = [
