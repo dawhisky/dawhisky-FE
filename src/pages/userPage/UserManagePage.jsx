@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BsThreeDots, BsCheck2 } from 'react-icons/bs';
 import { useMutation, useQuery } from 'react-query';
@@ -51,7 +52,7 @@ const UserManagePage = () => {
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
       localStorage.removeItem('store_id');
-      alert('로그아웃이 완료되었습니다.');
+      toast.success('로그아웃이 완료되었습니다.');
       navigate(`/`, { replace: true });
     },
   });
@@ -73,7 +74,7 @@ const UserManagePage = () => {
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
       localStorage.removeItem('store_id');
-      alert('회원탈퇴가 완료되었습니다.');
+      toast.success('회원탈퇴가 완료되었습니다.');
       navigate(`/`, { replace: true });
     },
   });

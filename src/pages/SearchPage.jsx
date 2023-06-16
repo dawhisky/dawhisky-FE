@@ -3,6 +3,7 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { GrSearch } from 'react-icons/gr';
+import { toast } from 'react-toastify';
 import { getKeywordList } from '../api/whisky';
 import { Layout, SearchInput } from '../components';
 import { NoneData } from './statusPage';
@@ -49,7 +50,7 @@ const SearchPage = () => {
   useEffect(() => {
     const searchKeywordHandler = async () => {
       if (!/^[ㄱ-ㅎ가-힣0-9]*$|^[a-zA-Z0-9]*$/g.test(userInput)) {
-        alert(`검색어는 한글과 영문을 혼합하거나 특수문자, 공백을 포함할 수 없습니다.`);
+        toast.error(`검색어는 한글과 영문을 혼합하거나 특수문자, 공백을 포함할 수 없습니다.`);
       } else if (keyword) {
         searchKeywordMutation.mutate(keyword);
       }

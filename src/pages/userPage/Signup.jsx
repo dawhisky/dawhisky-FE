@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { BsChevronLeft } from 'react-icons/bs';
 import { GrGallery, GrCamera } from 'react-icons/gr';
 import { Layout, Button, Modal, Image } from '../../components';
@@ -56,11 +57,11 @@ const Signup = () => {
   // useMutation hook 회원가입 api 통신 성공시/실패시
   const signupApi = useMutation(signup, {
     onSuccess: () => {
-      alert('회원가입이 완료되었습니다.');
+      toast.success('회원가입이 완료되었습니다.');
       navigate('/Login', { replace: true });
     },
     onError: (error) => {
-      alert(error);
+      toast.error(error);
     },
   });
 
@@ -69,13 +70,13 @@ const Signup = () => {
     onSuccess: (data) => {
       if (data !== '국세청에 등록되지 않은 사업자등록번호입니다.') {
         setIsBizNumberPassed(true);
-        alert('유효한 사업자 등록번호입니다.');
+        toast.success('유효한 사업자 등록번호입니다.');
       } else {
-        alert('유효하지 않은 사업자 등록번호입니다.');
+        toast.error('유효하지 않은 사업자 등록번호입니다.');
       }
     },
     onError: () => {
-      alert('유효하지 않은 사업자 등록번호입니다.');
+      toast.error('유효하지 않은 사업자 등록번호입니다.');
     },
   });
 
@@ -87,21 +88,21 @@ const Signup = () => {
   // email 본인인증 메일 발송
   const sendEmailApi = useMutation(sendEmail, {
     onSuccess: (response) => {
-      alert(response.message);
+      toast.success(response.message);
     },
     onError: (error) => {
-      alert(error.response.data.errorMessage);
+      toast.error(error.response.data.errorMessage);
     },
   });
 
   // useMutation hook 이메일 중복여부 api 통신 성공시/실패시
   // const checkEmailApi = useMutation(checkEmail, {
   //   onSuccess: (response) => {
-  //     alert(response.data.message);
+  //     toast.error(response.data.message);
   //     sendEmailApi.mutate(storeInfo.email);
   //   },
   //   onError: (error) => {
-  //     alert(error.response.data.errorMessage);
+  //     toast.error(error.response.data.errorMessage);
   //   },
   // });
 
@@ -115,7 +116,7 @@ const Signup = () => {
     const file = e.target.files[0];
     if (!file) return;
     if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
-      alert('jpg, png 형식의 이미지 파일을 업로드해주세요.');
+      toast.error('jpg, png 형식의 이미지 파일을 업로드해주세요.');
       return;
     }
     const previewURL = window.URL.createObjectURL(file);
@@ -128,7 +129,7 @@ const Signup = () => {
     const file = e.target.files[0];
     if (!file) return;
     if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
-      alert('jpg, png 형식의 이미지 파일을 업로드해주세요.');
+      toast.error('jpg, png 형식의 이미지 파일을 업로드해주세요.');
       return;
     }
     const previewURL = window.URL.createObjectURL(file);
@@ -145,11 +146,11 @@ const Signup = () => {
       storeInfo.biz_number === '' ||
       uploadImage === null
     ) {
-      alert('입력되지 않은 입력칸이 있습니다.');
+      toast.error('입력되지 않은 입력칸이 있습니다.');
     } else if (storeInfo.password !== storeInfo.passwordConfirm) {
-      alert('비밀번호가 일치하지 않습니다.');
+      toast.error('비밀번호가 일치하지 않습니다.');
     } else if (isBizNumberPassed !== true) {
-      alert('유효하지 않은 사업자번호입니다.');
+      toast.error('유효하지 않은 사업자번호입니다.');
     } else {
       const formData = new FormData();
       formData.append('email', storeInfo.email);
