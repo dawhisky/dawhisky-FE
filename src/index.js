@@ -51,6 +51,7 @@ requestPermission();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={theme}>
+    <ToastContainer position={'top-center'} autoClose={2000} hideProgressBar={'true'} limit={1} />
     <GlobalStyle />
     <App />
   </ThemeProvider>,
