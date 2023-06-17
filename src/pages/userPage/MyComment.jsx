@@ -95,8 +95,8 @@ const MyComment = () => {
         />
         <ImageDiv>
           <Image
-            width={'360px'}
-            height={'360px'}
+            width={'22.5rem'}
+            height={'22.5rem'}
             src={myCommentData.whisky_photo}
             alt={`${myCommentData.whisky_kor} 사진`}
           />
@@ -163,24 +163,24 @@ const MyComment = () => {
 export default MyComment;
 
 const ImageDiv = styled.div`
-  width: 360px;
-  padding-top: 75px;
-  margin-left: -17px;
+  width: 22.5rem;
+  padding-top: 4.688rem;
+  margin-left: -1.063rem;
   position: relative;
 `;
 
 const CommentP = styled.p`
-  padding: 30px 20px;
+  padding: 1.875rem 1.25rem;
   text-align: ${(props) => (props.data === 'none' ? 'center' : 'none')};
 `;
 
 const CommentTextarea = styled.textarea`
   width: 100%;
-  margin: 20px 0;
-  padding: 30px 20px;
+  margin: 1.25rem 0;
+  padding: 1.875rem 1.25rem;
   &:focus {
     outline-color: ${({ theme }) => theme.colors.orange};
-    border-radius: 10px;
+    border-radius: 0.625rem;
   }
 `;
 
@@ -191,17 +191,17 @@ const ButtonWrapDiv = styled.div`
     font-weight: 600;
   }
   & > button:last-child {
-    width: 40px;
-    height: 40px;
-    padding: 7px;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.438rem;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 100px;
-    right: 20px;
+    bottom: 6.25rem;
+    right: 1.25rem;
     background-color: #ececec;
-    font-size: 23px;
+    font-size: 1.438rem;
     border-radius: 50%;
     z-index: 1;
     cursor: pointer;
@@ -209,6 +209,6 @@ const ButtonWrapDiv = styled.div`
 `;
 
 const NullDiv = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 `;

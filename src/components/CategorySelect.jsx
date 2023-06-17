@@ -23,7 +23,6 @@ const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
         <>
           <BackgroundDiv onClick={isShowListHandler} />
           <ListUl>
-            {/* // TODO 초기 category name값 유지 */}
             <span>{category}</span>
             {list.map((item, idx) => {
               return (
@@ -39,7 +38,7 @@ const CategorySelect = ({ category, list, categorychosen, onclickhandler }) => {
             })}
             <ButtonWrapDiv>
               <Button location={'both'} onClick={isShowListHandler}>
-                닫기
+                {'닫기'}
               </Button>
             </ButtonWrapDiv>
           </ListUl>

@@ -18,8 +18,8 @@ const Modal = ({ width, height, message, both, children, oncancelclick, onconfir
           {!message && children && <div>{children}</div>}
         </InfoDiv>
         <ButtonDiv>
-          {both && <CancelButton onClick={oncancelclick}>취소</CancelButton>}
-          <ConfirmButton onClick={onconfirmclick}>확인</ConfirmButton>
+          {both && <CancelButton onClick={oncancelclick}>{'취소'}</CancelButton>}
+          <ConfirmButton onClick={onconfirmclick}>{'확인'}</ConfirmButton>
         </ButtonDiv>
       </ModalSection>
     </BackgroundDiv>

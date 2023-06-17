@@ -27,7 +27,7 @@ const Navbar = () => {
               src={whiskyColor}
               alt={'네비게이션바 위스키 탭 선택된 이미지'}
             />
-            <ColoredP>위스키</ColoredP>
+            <ColoredP>{'위스키'}</ColoredP>
           </>
         ) : (
           <>
@@ -38,7 +38,7 @@ const Navbar = () => {
               src={whiskyGray}
               alt={'네비게이션바 위스키탭 기본 이미지'}
             />
-            <GrayP>위스키</GrayP>
+            <GrayP>{'위스키'}</GrayP>
           </>
         )}
       </NavButton>
@@ -52,7 +52,7 @@ const Navbar = () => {
               src={barColor}
               alt={'네비게이션바 바 탭 선택된 이미지'}
             />
-            <ColoredP>바</ColoredP>
+            <ColoredP>{'바'}</ColoredP>
           </>
         ) : (
           <>
@@ -63,7 +63,7 @@ const Navbar = () => {
               src={barGray}
               alt={'네비게이션바 바 탭 기본 이미지'}
             />
-            <GrayP>바</GrayP>
+            <GrayP>{'바'}</GrayP>
           </>
         )}
       </NavButton>
@@ -77,7 +77,7 @@ const Navbar = () => {
               src={mypageColor}
               alt={'네비게이션바 마이페이지 탭 선택된 이미지'}
             />
-            <ColoredP>마이페이지</ColoredP>
+            <ColoredP>{'마이페이지'}</ColoredP>
           </>
         ) : (
           <>
@@ -88,7 +88,7 @@ const Navbar = () => {
               src={mypageGray}
               alt={'네비게이션바 마이페이지 탭 기본 이미지'}
             />
-            <GrayP>마이페이지</GrayP>
+            <GrayP>{'마이페이지'}</GrayP>
           </>
         )}
       </NavButton>
