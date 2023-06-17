@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { useMutation } from 'react-query';
 import { useLocation } from 'react-router-dom';
 import { getWhiskyDetail, getWhiskyStore, getWhiskyComment } from '../api/whisky';
-import { Layout, DetailHeader, DetailInfo, DetailList, Image, TabMenu } from '../components';
+import { Layout, DetailHeader, DetailInfo, DetailList, Image, TabMenu, RoundButton } from '../components';
 import WhiskyComment from './WhiskyComment';
 
 const WhiskyDetail = () => {
@@ -45,9 +45,7 @@ const WhiskyDetail = () => {
 
   // * [위스키 코멘트] 조회 useMutation
   const getWhiskyCommentMutation = useMutation(getWhiskyComment, {
-    onSuccess: (response) => {
-      setWhiskyComment(response);
-    },
+    onSuccess: (response) => setWhiskyComment(response),
   });
 
   // * [위스키 코멘트] 조회
@@ -55,9 +53,7 @@ const WhiskyDetail = () => {
 
   // * [위스키 보유 스토어] 조회 useMutation
   const getWhiskyStoreMutation = useMutation(getWhiskyStore, {
-    onSuccess: (response) => {
-      setWhiskyStore(response);
-    },
+    onSuccess: (response) => setWhiskyStore(response),
   });
 
   // * [위스키 보유 스토어] 조회
@@ -96,6 +92,7 @@ const WhiskyDetail = () => {
         {tabChosen === 'bar' && whiskyStore && <DetailList type={'store'} list={whiskyStore} />}
         {tabChosen === 'comment' && whiskyComment && <WhiskyComment comment={whiskyComment} />}
       </TabSection>
+      <RoundButton />
     </Layout>
   );
 };
@@ -103,11 +100,11 @@ const WhiskyDetail = () => {
 export default WhiskyDetail;
 
 const ImageDiv = styled.div`
-  width: 360px;
-  padding-top: 75px;
-  margin-left: -17px;
+  width: 22.5rem;
+  padding-top: 4.688rem;
+  margin-left: -1.063rem;
 `;
 
 const TabSection = styled.section`
-  padding-top: 15px;
+  padding: 0.938rem 0;
 `;

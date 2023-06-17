@@ -1,4 +1,5 @@
 import Button from './Button';
+import RoundButton from './RoundButton';
 import SearchInput from './SearchInput';
 import CategorySelect from './CategorySelect';
 import TabMenu from './TabMenu';
@@ -13,6 +14,7 @@ import Modal from './Modal';
 
 export {
   Button,
+  RoundButton,
   SearchInput,
   CategorySelect,
   TabMenu,
