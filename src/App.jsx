@@ -58,12 +58,11 @@ const isAuthenticated = () => {
 };
 
 // * PrivateRoute 검증
-const PrivateRoute = ({ category, element }) => {
+const PrivateRoute = ({ category, element, isManagePage }) => {
   const { userFlag, msg } = isAuthenticated();
-  console.log('element.type.name', element.type.name);
 
   // ManagePage 진입할 경우
-  if (userFlag !== '' && msg === '' && element.type.name === 'ManagePage') {
+  if (userFlag !== '' && msg === '' && isManagePage === 'true') {
     return element;
   }
 
@@ -93,7 +92,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* PrivateRoute */}
-          <Route path={'/ManagePage/*'} element={<PrivateRoute element={<ManagePage />} />}>
+          <Route path={'/ManagePage/*'} element={<PrivateRoute element={<ManagePage />} isManagePage={'true'} />}>
             <Route path={'user'} element={<PrivateRoute category={'user'} element={<UserManagePage />} />} />
             <Route path={'store'} element={<PrivateRoute category={'store'} element={<StoreManagePage />} />} />
           </Route>
