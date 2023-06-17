@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 import { initializeApp } from 'firebase/app';
 import { getMessaging } from 'firebase/messaging';
@@ -10,6 +12,7 @@ import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={theme}>
+    <ToastContainer position={'top-center'} autoClose={2000} hideProgressBar={'true'} limit={1} />
     <GlobalStyle />
     <App />
   </ThemeProvider>,

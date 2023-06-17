@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { GrGallery, GrCamera } from 'react-icons/gr';
 import { Image, DetailInfo, Button, Modal } from '../../components';
 import { getStoreInfo, editStoreInfo } from '../../api/storeInfo';
 
 const StoreInfoManage = ({ storeInfo }) => {
   const storeInfoList = {
-    상호명: storeInfo.store,
-    주소: storeInfo.address,
-    전화번호: storeInfo.phone,
-    운영시간: storeInfo.runtime,
-    공지사항: storeInfo.notice,
+    상호명: storeInfo.store !== 'null' ? storeInfo.store : '아직 입력되지 않았습니다.',
+    주소: storeInfo.address !== 'null' ? storeInfo.address : '아직 입력되지 않았습니다.',
+    전화번호: storeInfo.phone !== 'null' ? storeInfo.phone : '아직 입력되지 않았습니다.',
+    운영시간: storeInfo.runtime !== 'null' ? storeInfo.runtime : '아직 입력되지 않았습니다.',
+    공지사항: storeInfo.notice !== 'null' ? storeInfo.notice : '아직 입력되지 않았습니다.',
   };
 
   const storeInfoSet = [
@@ -40,7 +41,7 @@ const StoreInfoManage = ({ storeInfo }) => {
   // 스토어정보 수정
   const editInfoApi = useMutation(editStoreInfo, {
     onSuccess: () => {
-      alert('수정이 완료되었습니다.');
+      toast.success('수정이 완료되었습니다.');
       queryClient.invalidateQueries('getStoreInfo', getStoreInfo(storeInfo.store_id));
     },
     onError: (error) => {

@@ -19,3 +19,13 @@ export const setLogout = (userFlag) => {
       throw error;
     });
 };
+
+// * 회원탈퇴
+export const setSignout = (userFlag) => {
+  return api
+    .delete(`/api/auth/signout/${userFlag}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};

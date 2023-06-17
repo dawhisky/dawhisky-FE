@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BsThreeDots, BsCheck2 } from 'react-icons/bs';
 import StoreInfoManage from './StoreInfoManage';
@@ -10,7 +11,7 @@ import StoreQueSeatManage from './StoreQueSeatManage';
 import StoreSeatEditPage from './StoreSeatEditPage';
 import { getStoreInfo } from '../../api/storeInfo';
 import { TabMenu, Button, Modal } from '../../components';
-import { setLogout } from '../../api/login';
+import { setLogout, setSignout } from '../../api/login';
 
 const StoreManagePage = () => {
   const tabGroup = [
@@ -66,7 +67,7 @@ const StoreManagePage = () => {
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
       localStorage.removeItem('store_id');
-      alert('로그아웃이 완료되었습니다.');
+      toast.success('로그아웃이 완료되었습니다.');
       navigate(`/`, { replace: true });
     },
   });
@@ -81,9 +82,21 @@ const StoreManagePage = () => {
     }
   };
 
-  // * [회원탈퇴]
+  // * [회원탈퇴] useMutation
+  const setSignoutMutation = useMutation(setSignout, {
+    onSuccess: () => {
+      localStorage.removeItem('authorization');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('store_id');
+      toast.success('회원탈퇴가 완료되었습니다.');
+      navigate(`/`, { replace: true });
+    },
+  });
+
+  // * [회원탈퇴] 버튼 클릭
   const onDeleteUserHandler = () => {
-    console.log('회원탈퇴 로직 연결 예정');
+    setSignoutMutation.mutate(params);
   };
 
   return (

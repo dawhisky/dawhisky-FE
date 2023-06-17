@@ -4,6 +4,7 @@ import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken } from 'firebase/messaging';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { getTableInfo } from '../api/table';
 import { getMyQueue, postMyQueue, editMyQueue, deleteMyQueue } from '../api/queue';
 import { Button } from '../components';
@@ -54,7 +55,7 @@ const UserQuePage = () => {
   const postMyQueueApi = useMutation(postMyQueue, {
     onSuccess: () => {
       queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
-      alert('줄서기를 완료하셨습니다.');
+      toast.success('줄서기를 완료하셨습니다.');
     },
     onError: (error) => {
       console.log(error);
@@ -65,7 +66,7 @@ const UserQuePage = () => {
   const editMyQueueApi = useMutation(editMyQueue, {
     onSuccess: () => {
       queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
-      alert('줄서기 수정을 완료하셨습니다.');
+      toast.success('줄서기 수정을 완료하셨습니다.');
     },
     onError: (error) => {
       console.log(error);
@@ -76,7 +77,7 @@ const UserQuePage = () => {
   const deleteMyQueueApi = useMutation(deleteMyQueue, {
     onSuccess: () => {
       queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
-      alert('줄서기 삭제를 완료하셨습니다.');
+      toast.success('줄서기 삭제를 완료하셨습니다.');
     },
     onError: (error) => {
       console.log(error);

@@ -12,7 +12,7 @@ const WhiskyList = () => {
   // * 나라별 탭 + 상세 카테고리
   const [categorization, setCategorization] = useState({
     page: '1',
-    pageSize: '10',
+    pageSize: '700',
     country: '',
     type: '',
     region: '',

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { styled } from 'styled-components';
 import { BsTrash3 } from 'react-icons/bs';
@@ -15,10 +15,9 @@ const MyComment = () => {
   const [myCommentData, setMyCommnetData] = useState([]);
   const focusComment = useRef();
   const navigate = useNavigate();
-  const location = useLocation();
-  const id = location.pathname.slice(11);
+  const { id } = useParams();
 
-  // * [위스키 코멘트] 조회
+  // * [위스키 코멘트] 위스키 상세 조회 및 내가 작성한 댓글 조회
   useQuery('getUserComment', () => getUserComment(id), {
     onSuccess: (response) => {
       setMyCommnetData(response);

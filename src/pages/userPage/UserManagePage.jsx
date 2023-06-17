@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BsThreeDots, BsCheck2 } from 'react-icons/bs';
 import { useMutation, useQuery } from 'react-query';
 import { TabMenu, Button, Modal, WhiskyGrid } from '../../components';
 import SelectWhisky from './SelectWhisky';
 import { getUserInfo } from '../../api/user';
-import { setLogout } from '../../api/login';
+import { setLogout, setSignout } from '../../api/login';
 
 const UserManagePage = () => {
   const tabGroup = [
@@ -23,7 +24,7 @@ const UserManagePage = () => {
   const navigate = useNavigate();
   const params = useParams()['*'];
 
-  // * [좋아요] 유저 좋아요 내역 조회
+  // * [마이페이지] 유저 마이페이지 데이터 조회
   const { data } = useQuery('getUserInfo', () => getUserInfo(), {
     onSuccess: (response) => {
       if (response) {
@@ -51,7 +52,7 @@ const UserManagePage = () => {
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
       localStorage.removeItem('store_id');
-      alert('로그아웃이 완료되었습니다.');
+      toast.success('로그아웃이 완료되었습니다.');
       navigate(`/`, { replace: true });
     },
   });
@@ -66,9 +67,21 @@ const UserManagePage = () => {
     }
   };
 
+  // * [회원탈퇴] useMutation
+  const setSignoutMutation = useMutation(setSignout, {
+    onSuccess: () => {
+      localStorage.removeItem('authorization');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('user');
+      localStorage.removeItem('store_id');
+      toast.success('회원탈퇴가 완료되었습니다.');
+      navigate(`/`, { replace: true });
+    },
+  });
+
   // * [회원탈퇴]
   const onDeleteUserHandler = () => {
-    console.log('회원탈퇴 로직 연결 예정');
+    setSignoutMutation.mutate(params);
   };
 
   return (
