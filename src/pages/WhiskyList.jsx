@@ -45,7 +45,7 @@ const WhiskyList = () => {
   // * [나라별 tab] click 이벤트
   const onTabClickHandler = (type) => {
     setTabChosen(type);
-    setCategorization((prev) => ({ ...prev, country: type, type: '', region: '' }));
+    setCategorization((prev) => ({ ...prev, country: '', type: '', region: '' }));
     setRegion(regionList[0]);
     setBlend(typeList[0]);
     setAmerican(americantList[0]);
@@ -142,7 +142,7 @@ const WhiskyList = () => {
         </CategorySection>
       )}
       {whiskyList && (!whiskyList || whiskyList.length === 0) && (
-        <NoneData>카테고리에 일치하는 위스키가 없어요</NoneData>
+        <NoneData>{'카테고리에 일치하는 위스키가 없어요'}</NoneData>
       )}
       {whiskyList && whiskyList.length !== 0 && <WhiskyGrid list={whiskyList} />}
     </Layout>
@@ -163,6 +163,10 @@ const Header = styled.header`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+  & div:first-child {
+    padding-bottom: 0.3rem;
+    padding-left: 0.188rem;
   }
 `;
 
