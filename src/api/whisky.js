@@ -33,7 +33,7 @@ export const getWhiskyDetail = (id) => {
 // * 위스키 보유 스토어 조회
 export const getWhiskyStore = (id) => {
   return api
-    .get(`/api/whisky/comment/${id}`)
+    .get(`/api/whisky/store/${id}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
