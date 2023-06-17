@@ -10,11 +10,11 @@ export const getUserInfo = () => {
     });
 };
 
-// * 마이코멘트 페이지 위스키 코멘트 조회
+// * 유저가 작성한 위스키 코멘트 조회
 export const getUserComment = (id) => {
   return api
     .get(`/api/review/${id}`)
-    .then((response) => response)
+    .then((response) => response.data)
     .catch((error) => {
       throw error;
     });

@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { styled } from 'styled-components';
-import { toast } from 'react-toastify';
 import { BsTrash3 } from 'react-icons/bs';
 import { Layout, DetailHeader, Image, TabMenu, Button } from '../../components';
 import { getUserComment, setUserComment, setEditUserComment, setDeleteUserComment } from '../../api/user';
@@ -21,9 +20,8 @@ const MyComment = () => {
   // * [위스키 코멘트] 위스키 상세 조회 및 내가 작성한 댓글 조회
   useQuery('getUserComment', () => getUserComment(id), {
     onSuccess: (response) => {
-      // console.log('조회!', response);
-      // setMyCommnetData(response);
-      // setEditComment(response.content);
+      setMyCommnetData(response);
+      setEditComment(response.content);
     },
   });
 
@@ -49,7 +47,7 @@ const MyComment = () => {
   // * [댓글 등록] useMutation
   const setUserCommentMutation = useMutation(setUserComment, {
     onSuccess: (response) => {
-      toast.success(response);
+      alert(response);
     },
   });
 
@@ -63,7 +61,7 @@ const MyComment = () => {
   // * [댓글 수정] useMutation
   const setEditUserCommentMutation = useMutation(setEditUserComment, {
     onSuccess: () => {
-      toast.success('댓글이 수정되었습니다.');
+      alert('댓글이 수정되었습니다.');
       setEditmode(!editmode);
     },
   });
@@ -78,7 +76,7 @@ const MyComment = () => {
   // * [댓글 삭제] useMutation
   const setDeleteUserCommentMutation = useMutation(setDeleteUserComment, {
     onSuccess: () => {
-      toast.success('댓글이 삭제되었습니다.');
+      alert('댓글이 삭제되었습니다.');
       navigate(`/UserManagePage`);
     },
   });
@@ -86,7 +84,6 @@ const MyComment = () => {
   // * 댓글 삭제 버튼 click
   const onDeleteClickHandler = (e) => {
     e.preventDefault();
-    // TODO 모달로 바꿔서 진행할 것!
     const confirm = window.confirm('댓글을 삭제하시겠습니까?');
     if (confirm) {
       setDeleteUserCommentMutation.mutate(id);
