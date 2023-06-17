@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { MdOutlineGpsFixed } from 'react-icons/md';
 import { Layout, SearchInput, Button, DetailList } from '../components';
 import KakaoMap from './KakaoMap';
@@ -28,7 +29,9 @@ const StoreList = () => {
         getAddressName.region_2depth_name !== '중구' ||
         getAddressName.region_2depth_name !== '종로구'
       ) {
-        alert('현재 위스키바 조회는 서울시 중구, 서울시 종로구만 가능합니다.\n지도 위치를 서울시 중구로 이동합니다.');
+        toast.error(
+          '현재 위스키바 조회는 서울시 중구, 서울시 종로구만 가능합니다.\n지도 위치를 서울시 중구로 이동합니다.',
+        );
         setCoords({ lat: DEFAULT_LAT, lon: DEFAULT_LON });
       } else {
         setCoords({ lat: position.coords.latitude, lon: position.coords.longitude });

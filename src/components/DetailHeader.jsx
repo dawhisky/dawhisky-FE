@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsChevronLeft } from 'react-icons/bs';
-import userFlagCheck from '../hook/userFlagCheck';
+import { toast } from 'react-toastify';
 import { isWhiskyLike, isStoreLike } from '../api/like';
 
 // ! [props]
@@ -16,15 +16,10 @@ const DetailHeader = ({ korname, engname, like, id }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const url = location.pathname;
-  const [userFlag, setUserFlag] = useState(() => userFlagCheck());
+  const [userFlag, setUserFlag] = useState(localStorage.getItem('user'));
   const [likeStatus, setLikeStatus] = useState(() => like);
 
   const onBeforeClickHandler = () => navigate(-1);
-
-  // * 로그인 여부 및 token값 확인
-  useEffect(() => {
-    console.log('userFlag', userFlag);
-  }, []);
 
   // * [위스키 좋아요] 좋아요 등록/취소 useMutation
   const isWhiskyLikeMutation = useMutation(isWhiskyLike, {
@@ -38,15 +33,14 @@ const DetailHeader = ({ korname, engname, like, id }) => {
 
   // * 로그인 구분에 따라 로그인 페이지 이동/좋아요 로직 처리
   const onLikeClickHandler = () => {
-    if (userFlag === 'user') {
-      if (url.includes('/WhiskyDetail')) {
-        isWhiskyLikeMutation.mutate(id);
-      } else if (url.includes('/StoreDetail')) {
-        isStoreLikeMutation.mutate(id);
-      }
-    } else if (userFlag === null) {
-      alert(`로그인 후 좋아요 등록이 가능합니다.`);
+    if (!userFlag) {
+      toast.error(`로그인 후 좋아요 등록이 가능합니다.`);
       navigate(`/Login`);
+    }
+    if (url.includes('/WhiskyDetail')) {
+      isWhiskyLikeMutation.mutate(id);
+    } else if (url.includes('/StoreDetail')) {
+      isStoreLikeMutation.mutate(id);
     }
   };
 
@@ -60,11 +54,11 @@ const DetailHeader = ({ korname, engname, like, id }) => {
       }
     >
       <LeftIcon onClick={onBeforeClickHandler} />
-      <NameDiv flag={userFlag === 'store' ? 'store' : 'user'}>
+      <NameDiv flag={userFlag ? 'user' : 'store'}>
         <p>{korname}</p>
         {!!engname && <span>{engname}</span>}
       </NameDiv>
-      {url.includes('/LikeList') || (userFlag && userFlag === 'store') ? (
+      {url.includes('/LikeList') || !userFlag ? (
         <NullDiv />
       ) : !likeStatus ? (
         <OutlineHeartIcon onClick={onLikeClickHandler} />

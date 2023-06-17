@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { Layout, Button, Image } from '../../components';
 import { login } from '../../api/login';
 import { logo } from '../../assets';
@@ -35,13 +36,16 @@ const Login = () => {
 
   // useMutation hook 로그인 api 성공시/실패시
   const loginApi = useMutation(login, {
-    onSuccess: ({ authorization, refreshToken, store }) => {
+    onSuccess: ({ authorization, refreshToken, store, message }) => {
       localStorage.setItem('authorization', authorization);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('store_id', store);
+      toast.success(message, { replace: true });
       navigate('/');
     },
-    onError: () => {},
+    onError: (error) => {
+      toast.error(error.response.data.errorMessage);
+    },
   });
 
   // 로그인버튼 핸들러함수

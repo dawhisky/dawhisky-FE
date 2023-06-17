@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   WhiskyList,
   WhiskyDetail,
@@ -49,7 +50,7 @@ const isAuthenticated = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('store_id');
     const updatedResult = { ...result };
-    updatedResult.msg = '로그인 정보가 유효하지 않습니다. 다시 로그인을 진행해주세요.';
+    updatedResult.msg = '로그인 정보가 유효하지 않습니다. \n다시 로그인을 진행해주세요.';
     return updatedResult;
   }
 
@@ -67,7 +68,7 @@ const PrivateRoute = ({ category, element }) => {
 
   // 로그인 정보는 있으나 해당 정보가 유효하지 않을 경우
   if (msg !== '') {
-    alert(msg);
+    toast.error(msg);
     return <Navigate to={'/Login'} replace />;
   }
 
@@ -78,7 +79,7 @@ const PrivateRoute = ({ category, element }) => {
 
   // 로그인 정보와 해당 페이지 진입 조건이 불일치할 경우
   if (userFlag !== '' && category && category !== userFlag) {
-    alert(`접근 권한이 없습니다. 메인페이지로 이동합니다.`);
+    toast.error(`접근 권한이 없습니다. \n메인페이지로 이동합니다.`);
     return <Navigate to={'/'} replace />;
   }
 

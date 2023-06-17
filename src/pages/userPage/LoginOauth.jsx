@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { Layout } from '../../components';
 
 const LoginOauth = () => {
@@ -15,7 +16,8 @@ const LoginOauth = () => {
         localStorage.setItem('authorization', response.data.authorization);
         localStorage.setItem('refreshToken', response.data.refreshToken);
         localStorage.setItem('user', response.data.user);
-        navigate('/');
+        toast.success(response.data.message);
+        navigate('/', { replace: true });
       })
       .catch((error) => {
         throw error;
