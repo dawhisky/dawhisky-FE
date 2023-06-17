@@ -1,94 +1,89 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
 import { BsTrash3 } from 'react-icons/bs';
-import { Layout, DetailHeader, Image, TabMenu, Button } from '../../components';
+import { Layout, DetailHeader, Image, TabMenu, Button, Modal } from '../../components';
 import { getUserComment, setUserComment, setEditUserComment, setDeleteUserComment } from '../../api/user';
+import { NoneData } from '../statusPage';
 
 const MyComment = () => {
   const tabGroup = [{ name: '내 코멘트', type: 'myComment' }];
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
-  const [editmode, setEditmode] = useState(false);
-  // TODO useState 초기값 기존에 작성한 댓글 값으로 넣어줘야 함
-  const [editComment, setEditComment] = useState('');
   const [myCommentData, setMyCommnetData] = useState([]);
+  const [editmode, setEditmode] = useState(false);
+  const [editComment, setEditComment] = useState('');
+  const [modalToggle, setModalToggle] = useState(false);
   const focusComment = useRef();
-  const navigate = useNavigate();
   const { id } = useParams();
 
   // * [위스키 코멘트] 위스키 상세 조회 및 내가 작성한 댓글 조회
-  useQuery('getUserComment', () => getUserComment(id), {
-    onSuccess: (response) => {
-      setMyCommnetData(response);
-      setEditComment(response.content);
-    },
+  const { refetch } = useQuery('getUserComment', () => getUserComment(id), {
+    onSuccess: (response) => setMyCommnetData(response),
   });
 
   // * 수정모드일 때 textarea에 포커싱
   useEffect(() => {
-    if (editmode) {
-      focusComment.current.focus();
-    }
+    if (editmode) focusComment.current.focus();
   }, [editmode]);
 
-  // * 수정모드로 변경
+  // * 등록 <-> 수정모드 변경
   const onEditModeChangeHandler = (e) => {
     e.preventDefault();
     setEditmode(!editmode);
   };
 
   // * 댓글 onChange Handler
-  const onCommentChangeHandler = (e) => {
-    e.preventDefault();
-    setEditComment(e.target.value);
-  };
+  const onCommentChangeHandler = (e) => setEditComment(e.target.value);
 
   // * [댓글 등록] useMutation
   const setUserCommentMutation = useMutation(setUserComment, {
-    onSuccess: (response) => {
-      alert(response);
+    onSuccess: () => {
+      toast.success('코멘트 등록이 완료되었습니다.');
+      setEditmode(!editmode);
+      refetch();
     },
   });
-
-  // * [댓글 등록] 버튼 click
-  const onSubmitClickHandler = (e) => {
-    e.preventDefault();
-    const comment = { id, content: editComment };
-    setUserCommentMutation.mutate(comment);
-  };
 
   // * [댓글 수정] useMutation
   const setEditUserCommentMutation = useMutation(setEditUserComment, {
     onSuccess: () => {
-      alert('댓글이 수정되었습니다.');
+      toast.success('댓글이 수정되었습니다.');
       setEditmode(!editmode);
+      refetch();
     },
   });
 
-  // * [댓글 수정] 버튼 click
-  const onEditClickHandler = (e) => {
+  // * [댓글 등록] 버튼 click
+  const onSubmitClickHandler = (flag, e) => {
     e.preventDefault();
+    if (/^\s/.test(editComment) || editComment.length === 0) {
+      toast.error('댓글이 입력되지 않았습니다.');
+      return;
+    }
     const comment = { id, content: editComment };
-    setEditUserCommentMutation.mutate(comment);
+    if (flag === 'submit') {
+      setUserCommentMutation.mutate(comment);
+    } else {
+      setEditUserCommentMutation.mutate(comment);
+    }
   };
 
   // * [댓글 삭제] useMutation
   const setDeleteUserCommentMutation = useMutation(setDeleteUserComment, {
     onSuccess: () => {
-      alert('댓글이 삭제되었습니다.');
-      navigate(`/UserManagePage`);
+      toast.success('댓글이 삭제되었습니다.');
+      setModalToggle(!modalToggle);
+      refetch();
     },
   });
 
-  // * 댓글 삭제 버튼 click
-  const onDeleteClickHandler = (e) => {
-    e.preventDefault();
-    const confirm = window.confirm('댓글을 삭제하시겠습니까?');
-    if (confirm) {
-      setDeleteUserCommentMutation.mutate(id);
-    }
-  };
+  // * [댓글 삭제] 삭제 confirm 모달 T/F
+  const modalToggleHandler = () => setModalToggle(!modalToggle);
+
+  // * [댓글 삭제] 버튼 click
+  const onDeleteClickHandler = () => setDeleteUserCommentMutation.mutate(id);
 
   return (
     myCommentData && (
@@ -108,40 +103,58 @@ const MyComment = () => {
         </ImageDiv>
         <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} />
         <form>
-          {/* TODO editmode === 'false'이고 불러온 데이터가 없을 경우 '수정' 버튼 '등록'으로 수정, 가운데에 NoneData.jsx 출력 */}
-          {tabChosen === 'myComment' && !editmode ? (
-            // * 코멘트 조회
-            <CommentP>{editComment}</CommentP>
-          ) : (
-            // * 코멘트 수정
+          {!editmode && myCommentData.content !== '' && <CommentP>{myCommentData.content}</CommentP>}
+          {!editmode && myCommentData.content === '' && <NoneData>{'아직 등록한 댓글이 없습니다.'}</NoneData>}
+          {editmode && (
             <CommentTextarea
-              type="text"
-              rows="5"
+              type={'text'}
+              rows={6}
               ref={focusComment}
-              value={editComment}
+              value={editComment || myCommentData.content}
               onChange={onCommentChangeHandler}
             />
           )}
           <ButtonWrapDiv>
-            {!editmode ? (
+            {!editmode && !myCommentData.content && (
+              <>
+                <Button onClick={onEditModeChangeHandler}>{'코멘트 작성하기'}</Button>
+                <NullDiv />
+              </>
+            )}
+            {!editmode && myCommentData.content !== '' && (
               <>
                 <Button size={'medium'} onClick={onEditModeChangeHandler}>
-                  수정
+                  {'코멘트 수정하기'}
                 </Button>
-                <button type="button" onClick={onDeleteClickHandler}>
+                <button type={'button'} onClick={modalToggleHandler}>
                   <BsTrash3 />
                 </button>
               </>
-            ) : (
+            )}
+            {editmode && (
               <>
-                <Button onClick={setMyCommnetData.content === '' ? onSubmitClickHandler : onEditClickHandler}>
-                  등록
+                <Button
+                  onClick={
+                    myCommentData.content === ''
+                      ? (e) => onSubmitClickHandler('submit', e)
+                      : (e) => onSubmitClickHandler('edit', e)
+                  }
+                >
+                  {'코멘트 등록하기'}
                 </Button>
                 <NullDiv />
               </>
             )}
           </ButtonWrapDiv>
         </form>
+        {modalToggle && (
+          <Modal
+            message={'코멘트를 삭제하시겠습니까?'}
+            both={'true'}
+            oncancelclick={modalToggleHandler}
+            onconfirmclick={onDeleteClickHandler}
+          />
+        )}
       </Layout>
     )
   );
@@ -157,13 +170,18 @@ const ImageDiv = styled.div`
 `;
 
 const CommentP = styled.p`
-  padding: 30px 0;
+  padding: 30px 20px;
+  text-align: ${(props) => (props.data === 'none' ? 'center' : 'none')};
 `;
 
 const CommentTextarea = styled.textarea`
   width: 100%;
   margin: 20px 0;
-  padding: 10px 10px 10px 0;
+  padding: 30px 20px;
+  &:focus {
+    outline-color: ${({ theme }) => theme.colors.orange};
+    border-radius: 10px;
+  }
 `;
 
 const ButtonWrapDiv = styled.div`

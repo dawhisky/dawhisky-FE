@@ -21,9 +21,11 @@ export const getUserComment = (id) => {
 };
 
 // * 유저가 작성한 위스키 코멘트 등록
-export const setUserComment = ({ id, content }) => {
+export const setUserComment = (comment) => {
+  const { id, content } = comment;
+  const userComment = { content };
   return api
-    .post(`/api/review/${id}`, content)
+    .post(`/api/review/${id}`, userComment)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
@@ -32,10 +34,10 @@ export const setUserComment = ({ id, content }) => {
 
 // * 유저가 작성한 위스키 코멘트 수정
 export const setEditUserComment = (comment) => {
-  const content = { content: comment.content };
-  const { id } = comment;
+  const { id, content } = comment;
+  const userComment = { content };
   return api
-    .put(`/api/review/${id}`, content)
+    .put(`/api/review/${id}`, userComment)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
