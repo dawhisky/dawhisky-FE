@@ -40,8 +40,8 @@ const Login = () => {
       localStorage.setItem('authorization', authorization);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('store_id', store);
-      toast.success(message, { replace: true });
-      navigate('/');
+      toast.success(message);
+      navigate('/', { replace: true });
     },
     onError: (error) => {
       toast.error(error.response.data.errorMessage);
