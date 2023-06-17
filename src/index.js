@@ -33,17 +33,23 @@ onMessage(messaging, (payload) => {
   console.log('push message: ', payload);
 });
 
+const isSupported = () => 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
+
 function requestPermission() {
   console.log('권한 요청 중...');
-  Notification.requestPermission().then((permission) => {
-    if (permission === 'granted') {
-      console.log('알림 권한이 허용됨');
+  if (isSupported()) {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('알림 권한이 허용됨');
 
-      // FCM 메세지 처리
-    } else {
-      console.log('알림 권한 허용 안됨');
-    }
-  });
+        // FCM 메세지 처리
+      } else {
+        console.log('알림 권한 허용 안됨');
+      }
+    });
+  } else {
+    console.log('ios이용자는 해당기능을 사용할 수 없음');
+  }
 }
 
 requestPermission();
