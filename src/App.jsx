@@ -60,6 +60,7 @@ const isAuthenticated = () => {
 // * PrivateRoute 검증
 const PrivateRoute = ({ category, element }) => {
   const { userFlag, msg } = isAuthenticated();
+  console.log('element.type.name', element.type.name);
 
   // ManagePage 진입할 경우
   if (userFlag !== '' && msg === '' && element.type.name === 'ManagePage') {
