@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useMutation, useQuery } from 'react-query';
 import { styled } from 'styled-components';
 import { Layout, DetailHeader, DetailInfo, DetailList, Image, TabMenu } from '../components';
@@ -11,7 +11,6 @@ const StoreDetail = () => {
   const [storeWhiskyList, setStoreWhiskyList] = useState([]);
 
   // * Store ID Url에서 get
-  const navigate = useNavigate();
   const location = useLocation();
   const storeId = location.pathname.slice(13);
 
@@ -31,9 +30,7 @@ const StoreDetail = () => {
 
   // * [보유 위스키 tab] 조회 useMutation
   const getStoreWhiskyMutation = useMutation(getStoreWhiskyList, {
-    onSuccess: (response) => {
-      setStoreWhiskyList(response);
-    },
+    onSuccess: (response) => setStoreWhiskyList(response),
   });
 
   // * [보유 위스키 tab] 조회
@@ -58,9 +55,7 @@ const StoreDetail = () => {
   }, [data]);
 
   // * [줄서기 tab] 클릭 시 로그인/회원 구분에 따라 분기 처리
-  const onTabClickHandler = (type) => {
-    setTabChosen(type);
-  };
+  const onTabClickHandler = (type) => setTabChosen(type);
 
   // * 페이지가 마운트될 때 스토어에서 보유한 위스키 조회
   useEffect(() => {
@@ -73,7 +68,7 @@ const StoreDetail = () => {
         <>
           <DetailHeader korname={data.store} like={data.slikes === 1} id={data.store_id} />
           <ImageDiv>
-            <Image width={'360px'} height={'360px'} src={data.biz_photo} alt={`${data.store} 대표 이미지`} />
+            <Image width={'22.5rem'} height={'22.5rem'} src={data.biz_photo} alt={`${data.store} 대표 이미지`} />
           </ImageDiv>
           <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
 
@@ -94,9 +89,9 @@ const ImageDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 328px;
-  width: 360px;
-  margin-left: -17px;
+  height: 20.5rem;
+  width: 22.5rem;
+  margin-left: -1.063rem;
   overflow: hidden;
   & > img {
     object-fit: cover;

@@ -39,12 +39,12 @@ const WhiskyGrid = ({ list }) => {
               <h1>{item.whisky_kor}</h1>
               <div>
                 <h2>{item.whisky_eng}</h2>
-                <h3>{item.whisky_abv} vol</h3>
+                <h3>{`${item.whisky_abv} vol`}</h3>
               </div>
             </WhiskyDataDiv>
           ))}
       </WhiskyListSection>
-      <div>{(!list || list.length === 0) && <NoneData>위스키가 없어요</NoneData>}</div>
+      <div>{(!list || list.length === 0) && <NoneData>{'위스키가 없어요'}</NoneData>}</div>
     </>
   );
 };

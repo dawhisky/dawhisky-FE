@@ -71,15 +71,13 @@ const DetailList = ({ type, list }) => {
                   <TextH2>{type === 'store' ? item.address : item.whisky_eng}</TextH2>
                   {type === 'store' ? (
                     <BarInfoDiv>
-                      <button type="button">
-                        바 {filteredBarTables}석 | 홀 {filteredHallTables}석
-                      </button>
+                      <button type={'button'}>{`바 ${filteredBarTables}석 | 홀 ${filteredHallTables}석`}</button>
                     </BarInfoDiv>
                   ) : (
                     <WhiskyInfoDiv>
-                      <h2>{item.whisky_abv} vol</h2>
+                      <h2>{`${item.whisky_abv} vol`}</h2>
                       {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
-                      <button type="button">{url.includes('/ManagePage') && '등록'}</button>
+                      <button type={'button'}>{url.includes('/ManagePage') && '등록'}</button>
                     </WhiskyInfoDiv>
                   )}
                 </TotalInfoDiv>
@@ -87,8 +85,8 @@ const DetailList = ({ type, list }) => {
             </ListDiv>
           );
         })}
-      {(!list || list.length === 0) && type === 'store' && <NoneData>위스키 바가 없어요</NoneData>}
-      {(!list || list.length === 0) && type !== 'store' && <NoneData>위스키 데이터가 존재하지 않아요</NoneData>}
+      {(!list || list.length === 0) && type === 'store' && <NoneData>{'위스키 바가 없어요'}</NoneData>}
+      {(!list || list.length === 0) && type !== 'store' && <NoneData>{'위스키 데이터가 존재하지 않아요'}</NoneData>}
     </StockListDiv>
   );
 };

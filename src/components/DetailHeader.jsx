@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -17,8 +17,14 @@ const DetailHeader = ({ korname, engname, like, id }) => {
   const location = useLocation();
   const url = location.pathname;
   const [userFlag, setUserFlag] = useState(localStorage.getItem('user'));
-  const [likeStatus, setLikeStatus] = useState(() => like);
+  const [likeStatus, setLikeStatus] = useState(false);
 
+  // * 설정되어있는 좋아요가 있다면 세팅
+  useEffect(() => {
+    setLikeStatus(like);
+  }, [like]);
+
+  // * 이전 버튼 클릭
   const onBeforeClickHandler = () => navigate(-1);
 
   // * [위스키 좋아요] 좋아요 등록/취소 useMutation
@@ -73,11 +79,14 @@ export default DetailHeader;
 
 const Header = styled.header`
   color: ${(props) => props.color};
-  background: ${(props) => (props.flag === 'store' ? 'linear-gradient(rgba(90, 90, 90, 0.9), transparent)' : 'none')};
-  width: 360px;
-  height: 70px;
-  padding: 10px 20px;
-  margin-left: -17px;
+  background: ${(props) =>
+    props.flag === 'store'
+      ? 'linear-gradient(rgba(200, 200, 200, 0.9), transparent)'
+      : 'linear-gradient(rgba(200, 200, 200, 0.5), rgba(200, 200, 200, 0.3), transparent)'};
+  width: 22.5rem;
+  height: 4.375rem;
+  padding: 0.625rem 1.25rem;
+  margin-left: -1.063rem;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -90,10 +99,10 @@ const NameDiv = styled.div`
   padding-left: ${(props) => (props.flag === 'store' ? '20px' : '0px')};
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
   & p {
     width: 100%;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
@@ -103,7 +112,7 @@ const NameDiv = styled.div`
   & span {
     width: 100%;
     display: block;
-    font-size: 14px;
+    font-size: 0.875rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -112,21 +121,22 @@ const NameDiv = styled.div`
 `;
 
 const LeftIcon = styled(BsChevronLeft)`
-  font-size: 20px;
+  font-size: 1.25rem;
   cursor: pointer;
 `;
 
 const NullDiv = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 `;
 
 const OutlineHeartIcon = styled(AiOutlineHeart)`
-  font-size: 24px;
+  font-size: 1.5rem;
   cursor: pointer;
 `;
 
 const FillHeartIcon = styled(AiFillHeart)`
-  font-size: 24px;
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme.colors.orange};
   cursor: pointer;
 `;
