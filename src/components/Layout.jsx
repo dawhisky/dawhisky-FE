@@ -34,7 +34,7 @@ const ContainerDiv = styled.div`
     width: 0.125rem;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #ccc;
+    background-color: ${({ theme }) => theme.colors.gray};
   }
 `;
 

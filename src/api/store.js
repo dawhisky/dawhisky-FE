@@ -1,9 +1,9 @@
 import api from './interceptor';
 
 // * 스토어 리스트 전체 조회
-export const getStoreList = () => {
+export const getStoreList = (location) => {
   return api
-    .get(`/api/map/store`)
+    .get(`/api/map/store/${location}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;

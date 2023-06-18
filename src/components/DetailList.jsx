@@ -157,9 +157,11 @@ const BarInfoDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   & button {
-    padding: 0.313rem 0.625rem;
+    padding: 0.2rem 0.625rem;
     font-size: 0.75rem;
     border-radius: 0.75rem;
+    background-color: ${({ theme }) => theme.colors.orange};
+    color: ${({ theme }) => theme.colors.white};
   }
 `;
 
