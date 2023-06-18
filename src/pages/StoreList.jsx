@@ -120,7 +120,7 @@ const StoreList = () => {
       statusOptions.findIndex((i) => i.label === selectStatus.label),
     );
     refetch();
-  }, [selectStatus]);
+  }, [selectStatus, currentLocationToggle]);
 
   // * [위치 동의] 페이지가 처음 마운트될 때 위치 정보 동의 실행
   useEffect(() => {
