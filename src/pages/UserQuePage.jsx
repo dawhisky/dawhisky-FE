@@ -334,6 +334,7 @@ const SeatStatusArea = styled.div`
   margin-bottom: 24px;
   input {
     margin-right: 10px;
+    cursor: pointer;
   }
   & > div:first-child,
   & > div:nth-child(3) {
@@ -364,6 +365,8 @@ const SeatStatusArea = styled.div`
     overflow: hidden;
     white-space: nowrap;
     & > div {
+      width: 100%;
+      text-align: center;
       & > p {
         font-size: 13px;
         font-weight: 500;
@@ -376,9 +379,11 @@ const SeatStatusArea = styled.div`
     }
     & > button:first-child {
       left: 15px;
+      cursor: pointer;
     }
     & > button:last-child {
       right: 15px;
+      cursor: pointer;
     }
     & > div {
       ${(props) => `transform : translateX(${props.px}px)`};
@@ -427,6 +432,7 @@ const PeopleNumberArea = styled.div`
       width: 20px;
       background-color: white;
       color: #ff8b00;
+      cursor: pointer;
     }
   }
 `;
