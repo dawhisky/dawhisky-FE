@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
-import { Layout } from '../../components';
 import { getTableInfo, editTableInfo } from '../../api/table';
 
-const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen, storeId }) => {
-  // 인가 정보
-  const authorization = localStorage.getItem('authorization');
-  const unEditedRefreshToken = localStorage.getItem('refreshToken');
-  const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
-  const token = { authorization, refreshtoken };
-
-  // 각 테이블 입력값 상태관리
-  const [editedSeatData, setEditedSeatData] = useState({ bar_table: [], hall_table: [] });
-
+const StoreSeatEditPage = ({ storeId, editedSeatData, changeSeatNumberHandler }) => {
   // useQueryClient 호출
   const queryClient = useQueryClient();
 
@@ -27,103 +17,58 @@ const StoreSeatEditPage = ({ setIsSeatEditMode, setWhichMode, setWhichTabChosen,
     },
   });
 
-  // '+','-'버튼 클릭에 따라 상태관리 변경
-  const changeSeatNumberHandler = (e) => {
-    if (e.target.dataset.type === 'bar') {
-      if (e.target.dataset.button === 'plus' && editedSeatData.bar_table.length < 16) {
-        const newEditedSeatData = { ...editedSeatData };
-        newEditedSeatData.bar_table.push(0);
-        setEditedSeatData(newEditedSeatData);
-      } else if (e.target.dataset.button === 'minus' && editedSeatData.bar_table.length > 0) {
-        const newEditedSeatData = { ...editedSeatData };
-        newEditedSeatData.bar_table.shift();
-        setEditedSeatData(newEditedSeatData);
-      }
-    } else if (e.target.dataset.type === 'table') {
-      if (e.target.dataset.button === 'plus' && editedSeatData.hall_table.length < 16) {
-        const newEditedSeatData = { ...editedSeatData };
-        newEditedSeatData.hall_table.push(0);
-        setEditedSeatData(newEditedSeatData);
-      } else if (e.target.dataset.button === 'minus' && editedSeatData.hall_table.length > 0) {
-        const newEditedSeatData = { ...editedSeatData };
-        newEditedSeatData.hall_table.shift();
-        setEditedSeatData(newEditedSeatData);
-      }
-    }
-  };
-
   // 완료버튼 핸들러 함수
-  const submitTableInfo = () => {
-    const payload = {
-      bar_table: JSON.stringify(editedSeatData.bar_table),
-      hall_table: JSON.stringify(editedSeatData.hall_table),
-    };
-    editTableApi.mutate({ editedSeatData: payload });
-    setWhichTabChosen('seat');
-    setWhichMode('seat');
-    setIsSeatEditMode(false);
-  };
+  // const submitTableInfo = () => {
+  //   const payload = {
+  //     bar_table: JSON.stringify(editedSeatData.bar_table),
+  //     hall_table: JSON.stringify(editedSeatData.hall_table),
+  //   };
+  //   editTableApi.mutate({ editedSeatData: payload });
+  //   setIsSeatEditMode(false);
+  // };
 
   return (
-    <Layout>
-      <StoreSeatEditPageWrapper>
+    <StoreSeatEditPageWrapper>
+      <div>
+        <h1>{'좌석 수정'}</h1>
+      </div>
+      <div>
         <div>
-          <button onClick={() => setIsSeatEditMode(false)} type={'button'}>
-            {'이전'}
-          </button>
-          <h1>{'좌석 수정'}</h1>
-          <button onClick={() => submitTableInfo()} type={'button'}>
-            {'완료'}
-          </button>
-        </div>
-        <div>
+          <span>{'바 좌석'}</span>
           <div>
-            <span>{'바 좌석'}</span>
-            <div>
-              <button
-                onClick={(e) => changeSeatNumberHandler(e)}
-                data-type={'bar'}
-                data-button={'minus'}
-                type={'button'}
-              >
-                {'-'}
-              </button>
-              <div>{editedSeatData.bar_table.length}</div>
-              <button
-                onClick={(e) => changeSeatNumberHandler(e)}
-                data-type={'bar'}
-                data-button={'plus'}
-                type={'button'}
-              >
-                {'+'}
-              </button>
-            </div>
-          </div>
-          <div>
-            <span>{'테이블 좌석'}</span>
-            <div>
-              <button
-                onClick={(e) => changeSeatNumberHandler(e)}
-                data-type={'table'}
-                data-button={'minus'}
-                type={'button'}
-              >
-                {'-'}
-              </button>
-              <div>{editedSeatData.hall_table.length}</div>
-              <button
-                onClick={(e) => changeSeatNumberHandler(e)}
-                data-type={'table'}
-                data-button={'plus'}
-                type={'button'}
-              >
-                {'+'}
-              </button>
-            </div>
+            <button onClick={(e) => changeSeatNumberHandler(e)} data-type={'bar'} data-button={'minus'} type={'button'}>
+              {'-'}
+            </button>
+            <div>{editedSeatData.bar_table.length}</div>
+            <button onClick={(e) => changeSeatNumberHandler(e)} data-type={'bar'} data-button={'plus'} type={'button'}>
+              {'+'}
+            </button>
           </div>
         </div>
-      </StoreSeatEditPageWrapper>
-    </Layout>
+        <div>
+          <span>{'테이블 좌석'}</span>
+          <div>
+            <button
+              onClick={(e) => changeSeatNumberHandler(e)}
+              data-type={'table'}
+              data-button={'minus'}
+              type={'button'}
+            >
+              {'-'}
+            </button>
+            <div>{editedSeatData.hall_table.length}</div>
+            <button
+              onClick={(e) => changeSeatNumberHandler(e)}
+              data-type={'table'}
+              data-button={'plus'}
+              type={'button'}
+            >
+              {'+'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </StoreSeatEditPageWrapper>
   );
 };
 
