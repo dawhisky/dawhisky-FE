@@ -15,10 +15,12 @@ const StoreQueManage = ({ storeId }) => {
     // 컴포넌트 마운트 시 소켓 연결 설정
     // 이벤트 리스너 등록 등 필요한 작업 수행
     socket.on('connect', () => {
+      console.log('이건 연결됐을 때, 쏘는 스토어아이디 : ', storeId);
       socket.emit('enter', storeId);
     });
 
     socket.on('getQueData', (response) => {
+      console.log(response);
       setQueueList(response);
     });
 
@@ -27,9 +29,9 @@ const StoreQueManage = ({ storeId }) => {
       socket.disconnect();
       // 필요한 정리 작업 수행
     };
-  }, []);
+  }, [storeId]);
 
-  useEffect(() => {}, [queueList]);
+  console.log(queueList);
 
   return (
     <div>
@@ -39,10 +41,15 @@ const StoreQueManage = ({ storeId }) => {
             <div>
               <div>{item?.User?.name}</div>
               <div>
-                <span>
-                  {item?.want_table}
-                  {' 좌석 '}
-                </span>
+                {item?.want_table === 'dontCare' ? (
+                  <span>{'좌석 상관없음 / '}</span>
+                ) : (
+                  <span>
+                    {item?.want_table}
+                    {' 좌석 / '}
+                  </span>
+                )}
+
                 <span>
                   {item?.head_count}
                   {'명'}
@@ -69,19 +76,23 @@ const IndividualQueList = styled.div`
   align-items: center;
   width: 100%;
   padding: 10px;
-  border-bottom: 0.5px solid #d3d3d3;
+  border: 0.5px solid #d3d3d3;
+  border-radius: 10px;
+  margin: 5px 0 5px 0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   & > div:first-child {
+    width: 70%;
     div:first-child {
       font-weight: 800;
       font-size: 20px;
-    }
-    span {
     }
   }
   button {
     width: 74px;
     height: 24px;
     border-radius: 14px;
-    background-color: #c2c2c2;
+    background-color: #ff8b00;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    font-weight: 600;
   }
 `;

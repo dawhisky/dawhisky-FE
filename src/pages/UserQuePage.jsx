@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { styled } from 'styled-components';
 import { toast } from 'react-toastify';
+import { initializeApp } from 'firebase/app';
+import { getMessaging } from 'firebase/messaging/sw';
+import { getToken, onMessage } from 'firebase/messaging';
 import { getTableInfo } from '../api/table';
 import { getMyQueue, postMyQueue, editMyQueue, deleteMyQueue } from '../api/queue';
 import { Button } from '../components';
@@ -26,6 +29,8 @@ const UserQuePage = () => {
   const [editedPeopleNumber, setEditedPeopleNumber] = useState(0);
   // 요청사항 상태관리
   const [request, setRequest] = useState('');
+  // 디바이스 토큰 상태관리
+  const [deviceToken, setDeviceToken] = useState('');
   // 해당스토어 내 줄서기 현황
   const [myQueData, setMyQueData] = useState({});
   // 유저가 이미 줄서기를 한 상태인지
@@ -141,6 +146,41 @@ const UserQuePage = () => {
     }
   };
 
+  useEffect(() => {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyDNjGs_B7jtd-cMVORaQ0Jr7de1XTr5TdE',
+      authDomain: 'da-whisky.firebaseapp.com',
+      databaseURL: 'https://da-whisky-default-rtdb.firebaseio.com',
+      projectId: 'da-whisky',
+      storageBucket: 'da-whisky.appspot.com',
+      messagingSenderId: '700714522444',
+      appId: '1:700714522444:web:c4b65426f8225e8e5561e9',
+      measurementId: 'G-G9TQB9FJYT',
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    const isSupported = () => 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
+
+    function requestPermission() {
+      console.log('권한 요청 중...');
+      if (isSupported()) {
+        const messaging = getMessaging(app);
+        getToken(messaging, {
+          vapidKey: 'BHurO6CO7I5aITSEDN9qfNy3FzJN41n-EIzJFKRWTPK2GC28hiFMEeBXxhgZjwYp92_dL4pjIZpymrvNufrmgEc',
+        }).then((token) => setDeviceToken(token));
+
+        onMessage(messaging, (payload) => {
+          console.log('push message: ', payload);
+        });
+      } else {
+        console.log('ios이용자는 해당기능을 사용할 수 없음');
+      }
+    }
+
+    requestPermission();
+  }, []);
+
   // 줄서기 제출 핸들러
   const submitQueInfo = () => {
     // 작성된 줄서기 정보
@@ -148,7 +188,7 @@ const UserQuePage = () => {
       want_table: whichButtonClicked,
       head_count: editedPeopleNumber,
       request,
-      device_token: '',
+      device_token: deviceToken,
     };
     console.log(editedQueue.device_token);
     postMyQueueApi.mutate({ storeId, editedQueue });
@@ -161,7 +201,7 @@ const UserQuePage = () => {
       want_table: whichButtonClicked,
       head_count: editedPeopleNumber,
       request,
-      device_token: '',
+      device_token: deviceToken,
     };
     editMyQueueApi.mutate({ queId, editedQueue });
   };
@@ -316,17 +356,17 @@ const UserQuePageWrapper = styled.div`
     display: flex;
     width: 100%;
 
-    button[data-type='post'] {
+    & > button[data-type='post'] {
+      margin-top: 15px;
       background-color: #ff8b00;
     }
-    button[data-type='edit'] {
+    & > button[data-type='edit'] {
+      margin-top: 15px;
       background-color: #ff8b00;
     }
-    button[data-type='delete'] {
+    & > button[data-type='delete'] {
+      margin-top: 15px;
     }
-  }
-  & > button {
-    margin-top: 15px;
   }
 `;
 

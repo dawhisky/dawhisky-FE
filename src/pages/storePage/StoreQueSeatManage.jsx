@@ -40,8 +40,9 @@ const StoreQueSeatManageWrapper = styled.div`
       width: 156px;
       height: 60px;
       border-radius: 8px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     }
     button:first-child {
       background-color: ${(props) =>
