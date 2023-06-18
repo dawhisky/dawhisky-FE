@@ -7,23 +7,27 @@ import { NoneData } from './statusPage';
 
 const WhiskyComment = ({ comment }) => {
   return (
-    <CommentDiv>
-      {comment && [comment].map((item) => <p key={item.review_id}>{item.content}</p>)}
-      {!comment && <NoneData>등록된 코멘트가 없어요</NoneData>}
-    </CommentDiv>
+    <>
+      {comment &&
+        comment.map((item, idx) => (
+          <CommentDiv key={item.review_id}>
+            <CommentP idx={idx}>{item.content}</CommentP>
+          </CommentDiv>
+        ))}
+      {!comment && <NoneData>{'등록된 코멘트가 없어요'}</NoneData>}
+    </>
   );
 };
 
 export default WhiskyComment;
 
 const CommentDiv = styled.div`
-  & p {
-    border-bottom: 1px solid #eaeaea;
-  }
-  & > p:first-child {
-    padding-bottom: 30px;
-  }
-  & > p:nth-child(n + 2) {
-    padding: 30px 0;
-  }
+  margin: 0 0.625rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.lightGray};
+  display: flex;
+  align-items: center;
+`;
+
+const CommentP = styled.p`
+  padding: ${(props) => (props.idx === 0 ? '0 1.875rem 1.875rem 1.875rem' : '1.875rem')};
 `;
