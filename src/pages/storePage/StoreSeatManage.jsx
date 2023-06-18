@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { getTableInfo, createTableInfo, editTableInfo } from '../../api/table';
 import { Modal } from '../../components';
 import StoreSeatEditPage from './StoreSeatEditPage';
+import { NoneData } from '../statusPage';
 
 const StoreSeatManage = () => {
   const storeId = localStorage.getItem('store_id');
@@ -167,18 +168,22 @@ const StoreSeatManage = () => {
           </div>
           <div>
             <div>
-              {barSeatData?.map((item) => (
-                <button
-                  onClick={(e) => toggleSeatHandler(e)}
-                  type={'button'}
-                  id={item.id}
-                  key={item.id}
-                  data-type={'bar'}
-                  data-activated={item.activated}
-                >
-                  {item.id}
-                </button>
-              ))}
+              {barSeatData.length !== 0 ? (
+                barSeatData.map((item) => (
+                  <button
+                    onClick={(e) => toggleSeatHandler(e)}
+                    type={'button'}
+                    id={item.id}
+                    key={item.id}
+                    data-type={'bar'}
+                    data-activated={item.activated}
+                  >
+                    {item.id}
+                  </button>
+                ))
+              ) : (
+                <NoneData>{'바 좌석정보가 없습니다.'}</NoneData>
+              )}
             </div>
           </div>
         </div>
@@ -186,18 +191,22 @@ const StoreSeatManage = () => {
           <span>{'홀 좌석'}</span>
           <div>
             <div>
-              {hallSeatData?.map((item) => (
-                <button
-                  onClick={(e) => toggleSeatHandler(e)}
-                  type={'button'}
-                  id={item.id}
-                  key={item.id}
-                  data-type={'table'}
-                  data-activated={item.activated}
-                >
-                  {item.id}
-                </button>
-              ))}
+              {hallSeatData.length !== 0 ? (
+                hallSeatData.map((item) => (
+                  <button
+                    onClick={(e) => toggleSeatHandler(e)}
+                    type={'button'}
+                    id={item.id}
+                    key={item.id}
+                    data-type={'table'}
+                    data-activated={item.activated}
+                  >
+                    {item.id}
+                  </button>
+                ))
+              ) : (
+                <NoneData>{'홀 좌석 정보가 없습니다.'}</NoneData>
+              )}
             </div>
           </div>
         </div>
