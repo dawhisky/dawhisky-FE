@@ -63,10 +63,8 @@ const StoreManagePage = () => {
   // * [로그아웃] 로그아웃 useMutation
   const setLogoutMutation = useMutation(setLogout, {
     onSuccess: () => {
-      localStorage.removeItem('authorization');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('user');
-      localStorage.removeItem('store_id');
+      localStorage.clear();
+      sessionStorage.clear();
       toast.success('로그아웃이 완료되었습니다.');
       navigate(`/`, { replace: true });
     },
@@ -85,10 +83,8 @@ const StoreManagePage = () => {
   // * [회원탈퇴] useMutation
   const setSignoutMutation = useMutation(setSignout, {
     onSuccess: () => {
-      localStorage.removeItem('authorization');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('user');
-      localStorage.removeItem('store_id');
+      localStorage.clear();
+      sessionStorage.clear();
       toast.success('회원탈퇴가 완료되었습니다.');
       navigate(`/`, { replace: true });
     },

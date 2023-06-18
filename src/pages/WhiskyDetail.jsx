@@ -74,7 +74,6 @@ const WhiskyDetail = () => {
             korname={whiskyDetail.whiskyInfo.whisky_kor}
             engname={whiskyDetail.whiskyInfo.whisky_eng}
             like={isWhiskyLike}
-            id={whiskyDetail.whiskyInfo.whisky_id}
           />
           <ImageDiv>
             <Image

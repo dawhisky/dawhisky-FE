@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsChevronLeft } from 'react-icons/bs';
 import { toast } from 'react-toastify';
@@ -12,12 +12,13 @@ import { isWhiskyLike, isStoreLike } from '../api/like';
 // * korname : 화면에서 보일 아이템 명
 // * engname : 화면에서 보일 아이템의 영문명, 없으면 props 아예 안내려도 됨
 
-const DetailHeader = ({ korname, engname, like, id }) => {
+const DetailHeader = ({ korname, engname, like }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [likeStatus, setLikeStatus] = useState(false);
   const url = location.pathname;
   const [userFlag, setUserFlag] = useState(localStorage.getItem('user'));
-  const [likeStatus, setLikeStatus] = useState(false);
+  const { id } = useParams();
 
   // * 설정되어있는 좋아요가 있다면 세팅
   useEffect(() => {
@@ -43,7 +44,7 @@ const DetailHeader = ({ korname, engname, like, id }) => {
       toast.error(`로그인 후 좋아요 등록이 가능합니다.`);
       navigate(`/Login`);
     }
-    if (url.includes('/WhiskyDetail')) {
+    if (url.includes('/WhiskyDetail') || url.includes('/MyComment')) {
       isWhiskyLikeMutation.mutate(id);
     } else if (url.includes('/StoreDetail')) {
       isStoreLikeMutation.mutate(id);
