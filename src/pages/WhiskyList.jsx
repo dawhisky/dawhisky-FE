@@ -45,7 +45,11 @@ const WhiskyList = () => {
   // * [나라별 tab] click 이벤트
   const onTabClickHandler = (type) => {
     setTabChosen(type);
-    setCategorization((prev) => ({ ...prev, country: '', type: '', region: '' }));
+    if (type === 'all') {
+      setCategorization((prev) => ({ ...prev, country: '', type: '', region: '' }));
+    } else {
+      setCategorization((prev) => ({ ...prev, country: type, type: '', region: '' }));
+    }
     setRegion(regionList[0]);
     setBlend(typeList[0]);
     setAmerican(americantList[0]);
