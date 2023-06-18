@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from 'react-query';
-import { initializeApp } from 'firebase/app';
-import { getMessaging, getToken } from 'firebase/messaging';
 import { styled } from 'styled-components';
 import { toast } from 'react-toastify';
 import { getTableInfo } from '../api/table';
@@ -28,8 +26,6 @@ const UserQuePage = () => {
   const [editedPeopleNumber, setEditedPeopleNumber] = useState(0);
   // 요청사항 상태관리
   const [request, setRequest] = useState('');
-  // 디바이스 토큰 상태관리
-  const [deviceToken, setDeviceToken] = useState('');
   // 해당스토어 내 줄서기 현황
   const [myQueData, setMyQueData] = useState({});
   // 유저가 이미 줄서기를 한 상태인지
@@ -130,45 +126,6 @@ const UserQuePage = () => {
     }
   };
 
-  // firebase초기화 세팅
-  const firebaseConfig = {
-    apiKey: 'AIzaSyDNjGs_B7jtd-cMVORaQ0Jr7de1XTr5TdE',
-    authDomain: 'da-whisky.firebaseapp.com',
-    projectId: 'da-whisky',
-    storageBucket: 'da-whisky.appspot.com',
-    messagingSenderId: '700714522444',
-    appId: '1:700714522444:web:c4b65426f8225e8e5561e9',
-    measurementId: 'G-G9TQB9FJYT',
-  };
-
-  // firebase 초기화
-  const app = initializeApp(firebaseConfig);
-
-  // firebase인스턴스 생성
-  const messaging = getMessaging(app);
-
-  // 권한 요청
-  useEffect(() => {
-    const requestNotificationPermission = async () => {
-      try {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-          console.log('알림 허용됨');
-          // Firebase Messaging 등록 토큰을 가져오는 등 추가 작업 수행
-          const token = await getToken(messaging);
-          setDeviceToken(token);
-        } else {
-          console.log('알림 거부됨');
-        }
-      } catch (error) {
-        console.error('알림 권한 요청 중 오류가 발생했습니다 : ', error);
-        throw error;
-      }
-    };
-    // 알림 권한 요청
-    requestNotificationPermission();
-  }, []);
-
   // 요청사항 input onChange핸들러
   const getRequest = (e) => {
     setRequest(e.target.value);
@@ -191,7 +148,7 @@ const UserQuePage = () => {
       want_table: whichButtonClicked,
       head_count: editedPeopleNumber,
       request,
-      device_token: deviceToken,
+      device_token: '',
     };
     console.log(editedQueue.device_token);
     postMyQueueApi.mutate({ storeId, editedQueue });
@@ -204,7 +161,7 @@ const UserQuePage = () => {
       want_table: whichButtonClicked,
       head_count: editedPeopleNumber,
       request,
-      device_token: deviceToken,
+      device_token: '',
     };
     editMyQueueApi.mutate({ queId, editedQueue });
   };
@@ -241,9 +198,9 @@ const UserQuePage = () => {
             </div>
             <span>
               {barTableStatus.length}
-              {'석 중 '}
+              {'좌석 중 '}
               {restSeat.restBarSeat}
-              {'석 남음'}
+              {'좌석 남음'}
             </span>
           </div>
         </div>
@@ -252,11 +209,15 @@ const UserQuePage = () => {
             {'<'}
           </button>
           <div>
-            {barTableStatus.map((item) => (
-              <button key={item.id} data-activated={item.activated} type={'button'}>
-                {item.id}
-              </button>
-            ))}
+            {barTableStatus.length === 0 ? (
+              <p>{'입력된 좌석정보가 없습니다.'}</p>
+            ) : (
+              barTableStatus.map((item) => (
+                <button key={item.id} data-activated={item.activated} type={'button'}>
+                  {item.id}
+                </button>
+              ))
+            )}
           </div>
           <button onClick={(e) => movCarouselPx(e)} data-type={'right'} type={'button'}>
             {'>'}
@@ -274,6 +235,7 @@ const UserQuePage = () => {
               />
               <span>{'홀 좌석'}</span>
             </div>
+
             <span>
               {hallTableStatus.length}
               {'테이블 중 '}
@@ -353,17 +315,18 @@ const UserQuePageWrapper = styled.div`
   & > div:last-child {
     display: flex;
     width: 100%;
+
     button[data-type='post'] {
-      margin-top: 10px;
       background-color: #ff8b00;
     }
     button[data-type='edit'] {
-      margin-top: 10px;
       background-color: #ff8b00;
     }
     button[data-type='delete'] {
-      margin-top: 10px;
     }
+  }
+  & > button {
+    margin-top: 15px;
   }
 `;
 
@@ -400,6 +363,12 @@ const SeatStatusArea = styled.div`
     border-radius: 8px;
     overflow: hidden;
     white-space: nowrap;
+    & > div {
+      & > p {
+        font-size: 13px;
+        font-weight: 500;
+      }
+    }
     & > button {
       position: absolute;
       background-color: transparent;

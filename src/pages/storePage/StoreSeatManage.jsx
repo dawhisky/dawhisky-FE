@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
 import { getTableInfo, createTableInfo, editTableInfo } from '../../api/table';
+import { Modal } from '../../components';
+import StoreSeatEditPage from './StoreSeatEditPage';
 
-const StoreSeatManage = ({ setIsSeatEditMode }) => {
-  // 인가 정보
-  const authorization = localStorage.getItem('authorization');
-  const unEditedRefreshToken = localStorage.getItem('refreshToken');
-  const refreshtoken = unEditedRefreshToken.replace('Bearer', '');
-  const token = { authorization, refreshtoken };
+const StoreSeatManage = () => {
   const storeId = localStorage.getItem('store_id');
   // 해당 스토어 테이블 정보
   const { isLoading, isError, data } = useQuery('getTableInfo', () => getTableInfo(storeId));
@@ -19,6 +16,8 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
   const [entireSeatData, setEntireSeatData] = useState([]);
   // 초기 테이블 정보와 다른지 판별
   const [isDifferent, setIsDifferent] = useState(false);
+  // 모달창이 열렸는지 여부 상태관리
+  const [modalToggle, setModalToggle] = useState(false);
 
   // useQueryClient hook 호출
   const queryClient = useQueryClient();
@@ -118,55 +117,109 @@ const StoreSeatManage = ({ setIsSeatEditMode }) => {
     }
   };
 
+  // 각 테이블 입력값 상태관리
+  const [editedSeatData, setEditedSeatData] = useState({ bar_table: [], hall_table: [] });
+
+  // '+','-'버튼 클릭에 따라 상태관리 변경
+  const changeSeatNumberHandler = (e) => {
+    if (e.target.dataset.type === 'bar') {
+      if (e.target.dataset.button === 'plus' && editedSeatData.bar_table.length < 16) {
+        const newEditedSeatData = { ...editedSeatData };
+        newEditedSeatData.bar_table.push(0);
+        setEditedSeatData(newEditedSeatData);
+      } else if (e.target.dataset.button === 'minus' && editedSeatData.bar_table.length > 0) {
+        const newEditedSeatData = { ...editedSeatData };
+        newEditedSeatData.bar_table.shift();
+        setEditedSeatData(newEditedSeatData);
+      }
+    } else if (e.target.dataset.type === 'table') {
+      if (e.target.dataset.button === 'plus' && editedSeatData.hall_table.length < 16) {
+        const newEditedSeatData = { ...editedSeatData };
+        newEditedSeatData.hall_table.push(0);
+        setEditedSeatData(newEditedSeatData);
+      } else if (e.target.dataset.button === 'minus' && editedSeatData.hall_table.length > 0) {
+        const newEditedSeatData = { ...editedSeatData };
+        newEditedSeatData.hall_table.shift();
+        setEditedSeatData(newEditedSeatData);
+      }
+    }
+  };
+
+  const submitTableInfo = () => {
+    const payload = {
+      bar_table: JSON.stringify(editedSeatData.bar_table),
+      hall_table: JSON.stringify(editedSeatData.hall_table),
+    };
+    editTableApi.mutate({ editedSeatData: payload });
+    setModalToggle(false);
+  };
+
   return (
-    <StoreSeatManageWrapper>
-      <div>
-        <div>
-          <span>{'바 좌석'}</span>
-          <button onClick={() => setIsSeatEditMode(true)} type={'button'}>
-            {'수정'}
-          </button>
-        </div>
+    <>
+      {' '}
+      <StoreSeatManageWrapper>
         <div>
           <div>
-            {barSeatData?.map((item) => (
-              <button
-                onClick={(e) => toggleSeatHandler(e)}
-                type={'button'}
-                id={item.id}
-                key={item.id}
-                data-type={'bar'}
-                data-activated={item.activated}
-              >
-                {item.id}
-              </button>
-            ))}
+            <span>{'바 좌석'}</span>
+            <button onClick={() => setModalToggle(true)} type={'button'}>
+              {'수정'}
+            </button>
           </div>
-        </div>
-      </div>
-      <div>
-        <span>{'홀 좌석'}</span>
-        <div>
           <div>
-            {hallSeatData?.map((item) => (
-              <button
-                onClick={(e) => toggleSeatHandler(e)}
-                type={'button'}
-                id={item.id}
-                key={item.id}
-                data-type={'table'}
-                data-activated={item.activated}
-              >
-                {item.id}
-              </button>
-            ))}
+            <div>
+              {barSeatData?.map((item) => (
+                <button
+                  onClick={(e) => toggleSeatHandler(e)}
+                  type={'button'}
+                  id={item.id}
+                  key={item.id}
+                  data-type={'bar'}
+                  data-activated={item.activated}
+                >
+                  {item.id}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <button data-isDifferent={isDifferent} onClick={() => submitSeatHandler()} type={'button'}>
-        {'등록'}
-      </button>
-    </StoreSeatManageWrapper>
+        <div>
+          <span>{'홀 좌석'}</span>
+          <div>
+            <div>
+              {hallSeatData?.map((item) => (
+                <button
+                  onClick={(e) => toggleSeatHandler(e)}
+                  type={'button'}
+                  id={item.id}
+                  key={item.id}
+                  data-type={'table'}
+                  data-activated={item.activated}
+                >
+                  {item.id}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        <button data-isDifferent={isDifferent} onClick={() => submitSeatHandler()} type={'button'}>
+          {'등록'}
+        </button>
+      </StoreSeatManageWrapper>
+      {modalToggle && (
+        <Modal
+          height={'18rem'}
+          both={'true'}
+          onconfirmclick={submitTableInfo}
+          oncancelclick={() => setModalToggle(false)}
+        >
+          <StoreSeatEditPage
+            editedSeatData={editedSeatData}
+            setEditedSeatData={setEditedSeatData}
+            changeSeatNumberHandler={changeSeatNumberHandler}
+          />
+        </Modal>
+      )}
+    </>
   );
 };
 
