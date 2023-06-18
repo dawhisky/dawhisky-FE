@@ -72,7 +72,9 @@ const StoreList = () => {
     }),
   };
 
-  const [selectStatus, setSelectStatus] = useState(statusOptions[0]);
+  const sessionIdx = sessionStorage.getItem('mapSelectIdx');
+  const [selectStatus, setSelectStatus] = useState(sessionIdx ? statusOptions[sessionIdx] : statusOptions[0]);
+
   const [coords, setCoords] = useState({ lat: 0, lon: 0 });
   const [currentLocationToggle, setCurrentLocationToggle] = useState(false);
   const [toggleId, setToggleId] = useState(0);
@@ -112,6 +114,11 @@ const StoreList = () => {
 
   // * [스토어 리스트] select의 값이 바뀔때마다 위스키바 리스트 재조회
   useEffect(() => {
+    // 현재 선택한 select를 기억하기 위해 sessionStorage에 해당 idx값 저장
+    sessionStorage.setItem(
+      'mapSelectIdx',
+      statusOptions.findIndex((i) => i.label === selectStatus.label),
+    );
     refetch();
   }, [selectStatus]);
 
@@ -152,7 +159,7 @@ const StoreList = () => {
             {'목록 보기'}
           </Button>
           <button type={'button'} onClick={onCurrentLocationClickHandler}>
-            <UserGpsIcon gpsOn={currentLocationToggle ? 'true' : ''} />
+            <UserGpsIcon gpsstatus={currentLocationToggle ? 'true' : ''} />
           </button>
         </ButtonWrapDiv>
       </ListSection>
@@ -181,7 +188,6 @@ const ListSection = styled.section`
   position: relative;
   & > div {
     position: absolute;
-    z-index: 2;
   }
 `;
 
@@ -191,6 +197,7 @@ const SelectWrapDiv = styled.div`
   margin-top: 1.25rem;
   display: flex;
   justify-content: center;
+  z-index: 3;
 `;
 
 const StyledSelect = styled(Select)`
@@ -208,6 +215,7 @@ const ButtonWrapDiv = styled.div`
   height: 6.25rem;
   bottom: 0;
   display: flex;
+  z-index: 2;
   & button {
     position: absolute;
     font-weight: 600;
@@ -226,7 +234,7 @@ const ButtonWrapDiv = styled.div`
 `;
 
 const UserGpsIcon = styled(MdOutlineGpsFixed)`
-  color: ${({ theme, gpsOn }) => (gpsOn === 'true' ? theme.colors.orange : '')};
+  color: ${({ theme, gpsstatus }) => (gpsstatus === 'true' ? theme.colors.orange : '')};
 `;
 
 const BackgroundDiv = styled.div`
@@ -236,7 +244,7 @@ const BackgroundDiv = styled.div`
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 2;
+  z-index: 3;
 `;
 
 const NearbyListDiv = styled.div`

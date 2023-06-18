@@ -19,24 +19,33 @@ const KakaoMap = ({ coords, storelist }) => {
 
   // * storelist 주소를 지도에 마킹할 수 있도록 x, y값 변환
   useEffect(() => {
-    const addMarkers = [];
+    const fetchMarkerData = async () => {
+      const addMarkers = [];
 
-    storelist.forEach((item) => {
-      geocoder.addressSearch(item.address, (result, status) => {
-        if (status === kakao.maps.services.Status.OK && result[0]) {
-          addMarkers.push({
-            position: {
-              lat: result[0].address.y,
-              lng: result[0].address.x,
-            },
-            content: item.store,
-            id: item.store_id,
-            isOverlayVisible: false,
+      const markerPromises = storelist.map((item) => {
+        return new Promise((resolve) => {
+          geocoder.addressSearch(item.address, (result, status) => {
+            if (status === kakao.maps.services.Status.OK && result[0]) {
+              addMarkers.push({
+                position: {
+                  lat: result[0].address.y,
+                  lng: result[0].address.x,
+                },
+                content: item.store,
+                id: item.store_id,
+                isOverlayVisible: false,
+              });
+            }
+            resolve();
           });
-        }
-        setMarkers(addMarkers);
+        });
       });
-    });
+
+      await Promise.all(markerPromises);
+      setMarkers(addMarkers);
+    };
+
+    fetchMarkerData();
   }, [storelist]);
 
   // * 업장 아이콘 클릭 시 overlay visible true/false
@@ -60,42 +69,43 @@ const KakaoMap = ({ coords, storelist }) => {
           width: '100%',
           height: '94%',
         }}
-        level={4}
+        level={5}
       >
-        {markers.map((marker) => (
-          <React.Fragment key={`marker_${marker.id}`}>
-            <MapMarker
-              position={marker.position}
-              image={{
-                src: 'https://cdn-icons-png.flaticon.com/512/2722/2722538.png',
-                size: {
-                  width: 24,
-                  height: 35,
-                },
-                options: {
-                  offset: {
-                    x: 15,
-                    y: -7,
-                  },
-                },
-              }}
-              onClick={() => onMarkerClickHandler(marker.id)}
-            />
-            {marker.isOverlayVisible && (
-              <CustomOverlayMap
-                value={marker.isOverlayVisible}
+        {markers &&
+          markers.map((marker) => (
+            <React.Fragment key={`marker_${marker.id}`}>
+              <MapMarker
                 position={marker.position}
-                yAnchor={1}
+                image={{
+                  src: 'https://cdn-icons-png.flaticon.com/512/2722/2722538.png',
+                  size: {
+                    width: 24,
+                    height: 35,
+                  },
+                  options: {
+                    offset: {
+                      x: 15,
+                      y: -7,
+                    },
+                  },
+                }}
                 onClick={() => onMarkerClickHandler(marker.id)}
-              >
-                <OverlayDiv onClick={() => onOverlayClickHandler(marker.id)}>
-                  {marker.content}
-                  <BiChevronRight />
-                </OverlayDiv>
-              </CustomOverlayMap>
-            )}
-          </React.Fragment>
-        ))}
+              />
+              {marker.isOverlayVisible && (
+                <CustomOverlayMap
+                  value={marker.isOverlayVisible}
+                  position={marker.position}
+                  yAnchor={1}
+                  onClick={() => onMarkerClickHandler(marker.id)}
+                >
+                  <OverlayDiv onClick={() => onOverlayClickHandler(marker.id)}>
+                    {marker.content}
+                    <BiChevronRight />
+                  </OverlayDiv>
+                </CustomOverlayMap>
+              )}
+            </React.Fragment>
+          ))}
       </Map>
     </MapSection>
   );
@@ -104,19 +114,19 @@ const KakaoMap = ({ coords, storelist }) => {
 export default KakaoMap;
 
 const MapSection = styled.section`
-  width: 360px;
+  width: 22.5rem;
   height: 100vh;
-  margin-left: -17px;
+  margin-left: -1.063rem;
 `;
 
 const OverlayDiv = styled.div`
-  padding: 5px;
+  padding: 0.313rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 13px;
+  font-size: 0.813rem;
   border: 1px solid #ececec;
-  border-radius: 5px;
+  border-radius: 0.313rem;
   background-color: white;
   cursor: pointer;
 `;
