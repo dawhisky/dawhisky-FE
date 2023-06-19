@@ -36,6 +36,9 @@ const ContainerDiv = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.colors.gray};
   }
+  &::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.colors.lightGray};
+  }
 `;
 
 const WrapMain = styled.main`

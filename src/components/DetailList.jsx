@@ -15,7 +15,7 @@ const DetailList = ({ type, list }) => {
   const url = location.pathname;
 
   const onListClickHandler = (id) => {
-    if (url.includes('/ManagePage')) {
+    if (url.includes('/ManagePage/user')) {
       navigate(`/MyComment/${id}`);
     } else if (url.includes('/LikeList') || url.includes('/StoreList') || url.includes('/WhiskyDetail')) {
       navigate(`/StoreDetail/${id}`);
@@ -76,8 +76,7 @@ const DetailList = ({ type, list }) => {
                   ) : (
                     <WhiskyInfoDiv>
                       <h2>{`${item.whisky_abv} vol`}</h2>
-                      {/* TODO 아래 버튼은 코멘트 등록, 주류 등록 페이지에서는 버튼 / 주류관리 페이지에서는 삭제, 나머지 페이지는 출력 X */}
-                      <button type={'button'}>{url.includes('/ManagePage') && '등록'}</button>
+                      <button type={'button'}>{url.includes('/ManagePage/store') && '삭제'}</button>
                     </WhiskyInfoDiv>
                   )}
                 </TotalInfoDiv>

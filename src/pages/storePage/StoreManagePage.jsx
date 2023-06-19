@@ -154,7 +154,7 @@ const StoreManagePage = () => {
         />
       )}
       {tabChosen === 'store' && <StoreInfoManage storeInfo={storeInfo} />}
-      {tabChosen === 'bottle' && <StoreBottleManage setIsRegisterMode={setIsRegisterMode} id={storeInfo.store_id} />}
+      {tabChosen === 'bottle' && <StoreBottleManage id={storeInfo.store_id} />}
     </div>
   );
 };
