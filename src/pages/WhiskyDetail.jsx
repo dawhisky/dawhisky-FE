@@ -91,7 +91,7 @@ const WhiskyDetail = () => {
         {tabChosen === 'bar' && whiskyStore && <DetailList type={'store'} list={whiskyStore} />}
         {tabChosen === 'comment' && whiskyComment && <WhiskyComment comment={whiskyComment} />}
       </TabSection>
-      <RoundButton />
+      {localStorage.getItem('user') ? <RoundButton /> : ''}
     </Layout>
   );
 };

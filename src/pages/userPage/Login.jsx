@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { BiUserCircle } from 'react-icons/bi';
+import { HiOutlineOfficeBuilding } from 'react-icons/hi';
+import { BsFillChatFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { Layout, Button, Image } from '../../components';
 import { login } from '../../api/login';
@@ -62,13 +65,23 @@ const Login = () => {
         <LoginPageCenter>
           <PersonalLogin userrole={userRole}>
             <div>
-              <Button onClick={() => setUserRole('user')}>{'개인회원 로그인'}</Button>
+              <PersonalIcon />
+              <button type={'button'} onClick={() => setUserRole('user')}>
+                {'개인회원 로그인'}
+              </button>
             </div>
-            <Button onClick={() => socialLogin()}>{'카카오톡으로 시작하기'}</Button>
+            {/* <Button onClick={() => socialLogin()}>{'카카오톡으로 시작하기'}</Button> */}
+            <button type={'button'} onClick={() => socialLogin()}>
+              <BsFillChatFill />
+              {'카카오톡으로 시작하기'}
+            </button>
           </PersonalLogin>
           <OwnerLogin userrole={userRole}>
             <div>
-              <Button onClick={() => setUserRole('owner')}>{'사업자회원 로그인'}</Button>
+              <StoreIcon />
+              <button type={'button'} onClick={() => setUserRole('owner')}>
+                {'사업자회원 로그인'}
+              </button>
             </div>
             <InputArea>
               <input onChange={(e) => inputHandler(e)} data-type={'email'} placeholder={'Email'} type={'text'} />
@@ -78,12 +91,15 @@ const Login = () => {
                 placeholder={'Password'}
                 type={'password'}
               />
-              <div>
+              {/* <div>
                 <Button>{'아이디 / 비밀번호 찾기'}</Button>
-              </div>
+              </div> */}
             </InputArea>
-
-            <Button onClick={() => loginButtonHandler()}>{'로그인'}</Button>
+            <div>
+              <button type={'button'} onClick={() => loginButtonHandler()}>
+                {'로그인'}
+              </button>
+            </div>
           </OwnerLogin>
         </LoginPageCenter>
         <LoginBottom>
@@ -129,65 +145,86 @@ const PersonalLogin = styled.div`
 
   & > div:first-child {
     width: 100%;
+    margin-left: 13px;
+    display: flex;
+    align-items: center;
+    color: ${(props) => (props.userrole === 'user' ? 'black' : '#afb1b6')};
+    gap: 3px;
     button {
       height: 100%;
       width: 120px;
-      font-size: 18px;
+      font-size: 17px;
+      text-align: left;
       background-color: transparent;
       color: ${(props) => (props.userrole === 'user' ? 'black' : '#afb1b6')};
       border-radius: 0;
       margin-top: 0;
       box-shadow: none;
+      font-weight: 600;
+      cursor: pointer;
     }
   }
-
-  & button:last-child {
+  & > button {
+    background-color: ${(props) => (props.userrole === 'user' ? '#FAE100' : '#afb1b6')};
+    color: ${(props) => (props.userrole === 'user' ? 'black' : 'white')};
     height: 46px;
     width: 312px;
-    background-color: #b4b4b4;
-    color: white;
     border-radius: 8px;
     margin-top: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
   }
+`;
+
+const PersonalIcon = styled(BiUserCircle)`
+  font-size: 20px;
 `;
 
 const OwnerLogin = styled.div`
   height: 146px;
-
   button {
     transform: none;
   }
   & > div:first-child {
     width: 100%;
-    button:first-child {
-      width: 130px;
-      font-size: 18px;
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    gap: 3px;
+    color: ${(props) => (props.userrole === 'owner' ? 'black' : '#afb1b6')};
+    margin-bottom: 10px;
+    button {
+      width: 100%;
+      text-align: left;
+      font-size: 17px;
       background-color: transparent;
+      font-weight: 600;
+      cursor: pointer;
       color: ${(props) => (props.userrole === 'owner' ? 'black' : '#afb1b6')};
-      margin-bottom: 4px;
     }
   }
+  & button:first-child {
+    background-color: ${(props) => (props.userrole !== 'user' ? '#FF8B00' : '#afb1b6')};
+    color: white;
+    height: 46px;
+    width: 312px;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+`;
 
-  & > div:nth-child(3) {
-    button {
-      display: flex;
-      justify-content: flex-end;
-      background-color: transparent;
-      font-size: 14px;
-    }
-  }
-
-  & > div:last-child {
-    button {
-      height: 46px;
-      width: 312px;
-      border-radius: 8px;
-      color: #72777a;
-      background-color: #f3f3f3;
-      margin-top: 18px;
-    }
-  }
+const StoreIcon = styled(HiOutlineOfficeBuilding)`
+  font-size: 20px;
 `;
 
 const InputArea = styled.div`

@@ -11,6 +11,7 @@ const DetailInfo = ({ info }) => {
     return (
       <InfoDiv key={item[0]}>
         <InfoKeyDt>{item[0]}</InfoKeyDt>
+        <InfoLine>{'|'}</InfoLine>
         <InfoValueDd>{item[1]}</InfoValueDd>
       </InfoDiv>
     );
@@ -23,15 +24,23 @@ export default DetailInfo;
 
 const InfoDiv = styled.div`
   display: flex;
+  padding: 0 10px;
   margin-bottom: 1.25rem;
 `;
 
 const InfoKeyDt = styled.dt`
-  width: 5.625rem;
+  width: 5rem;
   font-weight: 600;
+`;
+
+const InfoLine = styled.dd`
+  width: 0.625rem;
+  margin-right: 0.625rem;
+  font-weight: 500;
 `;
 
 const InfoValueDd = styled.dd`
   width: calc(100% - 5.625rem);
   white-space: wrap;
+  text-align: justify;
 `;

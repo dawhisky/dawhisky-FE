@@ -48,11 +48,13 @@ const StoreQueSeatManageWrapper = styled.div`
       background-color: ${(props) =>
         props.whichMode === 'que' ? props.theme.colors.orange : props.theme.colors.white};
       border: ${(props) => (props.whichMode === 'que' ? 'none' : `1px solid ${props.theme.colors.gray}`)};
+      color: ${(props) => (props.whichMode === 'que' ? props.theme.colors.white : 'black')};
     }
     button:last-child {
       background-color: ${(props) =>
         props.whichMode === 'seat' ? props.theme.colors.orange : props.theme.colors.white};
       border: ${(props) => (props.whichMode === 'que' ? `1px solid ${props.theme.colors.gray}` : 'none')};
+      color: ${(props) => (props.whichMode === 'seat' ? props.theme.colors.white : 'black')};
     }
   }
 `;

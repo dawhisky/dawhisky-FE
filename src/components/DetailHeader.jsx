@@ -82,7 +82,7 @@ const Header = styled.header`
   color: ${(props) => props.color};
   background: ${(props) =>
     props.flag === 'store'
-      ? 'linear-gradient(rgba(200, 200, 200, 0.9), transparent)'
+      ? 'linear-gradient(rgba(75, 74, 74, 0.9), transparent)'
       : 'linear-gradient(rgba(200, 200, 200, 0.5), rgba(200, 200, 200, 0.3), transparent)'};
   width: 22.5rem;
   height: 4.375rem;

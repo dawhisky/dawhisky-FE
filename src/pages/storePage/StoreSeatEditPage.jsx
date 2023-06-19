@@ -46,7 +46,7 @@ const StoreSeatEditPage = ({ storeId, editedSeatData, changeSeatNumberHandler })
           </div>
         </div>
         <div>
-          <span>{'테이블 좌석'}</span>
+          <span>{'홀 좌석'}</span>
           <div>
             <button
               onClick={(e) => changeSeatNumberHandler(e)}
@@ -75,18 +75,20 @@ const StoreSeatEditPage = ({ storeId, editedSeatData, changeSeatNumberHandler })
 export default StoreSeatEditPage;
 
 const StoreSeatEditPageWrapper = styled.div`
+  padding: 10px;
   & > div:first-child {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 74px;
-    width: 100%;
-    padding: 10px;
+    height: 70px;
+    width: 250px;
+    margin: 15px 10px 10px 10px;
     border-bottom: 0.5px solid #eaeaea;
 
     h1 {
       font-size: 18px;
       font-weight: 800;
+      margin-left: 8px;
     }
     button {
       background-color: transparent;
@@ -106,10 +108,12 @@ const StoreSeatEditPageWrapper = styled.div`
       }
       & > div {
         display: flex;
+        gap: 7px;
         margin-right: 20px;
         & > button {
           height: 20px;
           width: 20px;
+          cursor: pointer;
         }
         & > div {
           display: flex;
