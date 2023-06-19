@@ -60,7 +60,7 @@ const UserQuePage = () => {
   const postMyQueueApi = useMutation(postMyQueue, {
     onSuccess: () => {
       queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
-      toast.success('줄서기를 완료하셨습니다.');
+      toast.success('줄서기를 완료했습니다.');
     },
     onError: (error) => {
       console.log(error);
@@ -71,7 +71,7 @@ const UserQuePage = () => {
   const editMyQueueApi = useMutation(editMyQueue, {
     onSuccess: () => {
       queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
-      toast.success('줄서기 수정을 완료하셨습니다.');
+      toast.success('줄서기 수정을 완료했습니다.');
     },
     onError: (error) => {
       console.log(error);
@@ -82,7 +82,7 @@ const UserQuePage = () => {
   const deleteMyQueueApi = useMutation(deleteMyQueue, {
     onSuccess: () => {
       queryClient.invalidateQueries('getMyQueue', getMyQueue(storeId));
-      toast.success('줄서기 삭제를 완료하셨습니다.');
+      toast.success('줄서기 삭제를 완료했습니다.');
     },
     onError: (error) => {
       console.log(error);

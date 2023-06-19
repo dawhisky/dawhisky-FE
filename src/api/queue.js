@@ -40,10 +40,30 @@ export const editMyQueue = ({ queId, editedQueue }) => {
     });
 };
 
-// 줈허기 삭제api, method : delete, url : /api/que/:que_id
+// 줄서기 삭제api, method : delete, url : /api/que/:que_id
 export const deleteMyQueue = (queId) => {
   return api
     .delete(`/api/que/${queId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
+// 입장알림api, method : post, url : /api/auth/push
+export const notifyEntrance = (queId) => {
+  return api
+    .post(`/api/auth/reservePush`, { que_id: queId })
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
+// store측 줄서기 거절api, method : post, url : /api/auth/push
+export const rejectEntrance = (queId) => {
+  return api
+    .post(`/api/auth/cancelPush`, { que_id: queId })
     .then((response) => response.data)
     .catch((error) => {
       throw error;
