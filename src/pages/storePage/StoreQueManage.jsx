@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
 import { io } from 'socket.io-client';
 import { styled } from 'styled-components';
+import { toast } from 'react-toastify';
+import { notifyEntrance, rejectEntrance, deleteMyQueue } from '../../api/queue';
 
 const StoreQueManage = ({ storeId }) => {
   // 줄서기 리스트 상태관리
@@ -29,13 +32,53 @@ const StoreQueManage = ({ storeId }) => {
     };
   }, [storeId]);
 
+  // 입장 알림api
+  const notifyEntranceApi = useMutation(notifyEntrance, {
+    onSuccess: () => {
+      toast.success('입장알림 메시지를 송신했습니다. 화면반영에는 약간의 시간이 소요될 수 있습니다.');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // 입장 거절api
+  const rejectEntranceApi = useMutation(rejectEntrance, {
+    onSuccess: () => {
+      toast.success('입장거절 메시지를 송신했습니다. 화면반영에는 약간의 시간이 소요될 수 있습니다.');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // 줄서기 삭제api
+  const deleteQueueApi = useMutation(deleteMyQueue, {
+    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // 입장 알림 핸들러함수
+  const notifyEntranceHandler = (e) => {
+    notifyEntranceApi.mutate(e.target.dataset.queid);
+    deleteQueueApi.mutate(e.target.dataset.queid);
+  };
+
+  // 입장 거절 핸들러함수
+  const rejectEntranceHandler = (e) => {
+    rejectEntranceApi.mutate(e.target.dataset.queid);
+    deleteQueueApi.mutate(e.target.dataset.queid);
+  };
+
   return (
     <div>
       {queueList.map((item) => {
         return (
           <IndividualQueList key={item?.que_id}>
             <div>
-              <QueUserNamdH1>{item?.User?.name}</QueUserNamdH1>
+              <QueUserNamdH1>{item?.user_name}</QueUserNamdH1>
               <QueCommentDiv>
                 {item?.want_table === 'dontCare' ? (
                   <span>{'좌석 상관없음 / '}</span>
@@ -53,7 +96,14 @@ const StoreQueManage = ({ storeId }) => {
                 <p>{item.request}</p>
               </QueCommentDiv>
             </div>
-            <button type={'button'}>{'입장알림'}</button>
+            <div>
+              <button onClick={(e) => notifyEntranceHandler(e)} data-queId={item?.que_id} type={'button'}>
+                {'입장알림'}
+              </button>
+              <button onClick={(e) => rejectEntranceHandler(e)} data-queId={item?.que_id} type={'button'}>
+                {'입장거절'}
+              </button>
+            </div>
           </IndividualQueList>
         );
       })}
@@ -82,16 +132,18 @@ const IndividualQueList = styled.div`
       font-size: 20px;
     }
   }
-  button {
-    width: 74px;
-    height: 30px;
-    border-radius: 14px;
-    background-color: #ff8b00;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    font-weight: 500;
-    font-size: 14px;
-    color: white;
-    cursor: pointer;
+  div:last-child {
+    button {
+      width: 74px;
+      height: 30px;
+      border-radius: 14px;
+      background-color: #ff8b00;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      font-weight: 500;
+      font-size: 14px;
+      color: white;
+      cursor: pointer;
+    }
   }
 `;
 

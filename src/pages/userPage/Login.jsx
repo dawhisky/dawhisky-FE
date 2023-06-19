@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -13,6 +13,8 @@ import { logo } from '../../assets';
 const Login = () => {
   // 유저 유형 상태관리
   const [userRole, setUserRole] = useState('user');
+  // 로그인 input 적합성
+  const [isSuitable, setIsSuitable] = useState(false);
 
   // useNavigate hook 호출
   const navigate = useNavigate();
@@ -22,7 +24,11 @@ const Login = () => {
 
   // 소셜로그인 핸들러 함수
   const socialLogin = () => {
-    window.location.href = KAKAO_AUTH;
+    if (userRole === 'user') {
+      window.location.href = KAKAO_AUTH;
+    } else {
+      setUserRole('user');
+    }
   };
 
   // input 입력값 상태관리
@@ -36,6 +42,27 @@ const Login = () => {
       setLoginInput({ email: loginInput.email, password: e.target.value });
     }
   };
+
+  // 사업자회원 로그인 입력값 적합성 검사
+  useEffect(() => {
+    if (
+      loginInput.email.length > 0 &&
+      loginInput.email.includes('@') &&
+      loginInput.email.includes('.') &&
+      loginInput.password.length > 0
+    ) {
+      setIsSuitable(true);
+    } else {
+      setIsSuitable(false);
+    }
+  }, [loginInput]);
+
+  useEffect(() => {
+    if (localStorage.getItem('user') || localStorage.getItem('store')) {
+      toast.error('로그아웃 후에 진행해주세요');
+      navigate('/');
+    }
+  }, []);
 
   // useMutation hook 로그인 api 성공시/실패시
   const loginApi = useMutation(login, {
@@ -56,18 +83,24 @@ const Login = () => {
     loginApi.mutate(loginInput);
   };
 
+  // 회원가입버튼 핸들러함수
+  const signupButtonHandler = () => {
+    toast.info('개인회원은 "카카오톡으로 시작하기" 버튼으로 회원가입 하실 수 있습니다.');
+    navigate('/Signup');
+  };
+
   return (
     <Layout>
-      <LoginPageWrapper userrole={userRole}>
+      <LoginPageWrapper userrole={userRole} issuitable={isSuitable}>
         <LogoWrapper>
           <Image width={'10rem'} height={'3rem'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
         </LogoWrapper>
         <LoginPageCenter>
-          <PersonalLogin userrole={userRole}>
+          <PersonalLogin userrole={userRole} issuitable={isSuitable}>
             <div>
               <PersonalIcon />
               <button type={'button'} onClick={() => setUserRole('user')}>
-                {'개인회원 로그인'}
+                {'개인회원 회원가입 및 로그인'}
               </button>
             </div>
             {/* <Button onClick={() => socialLogin()}>{'카카오톡으로 시작하기'}</Button> */}
@@ -76,16 +109,23 @@ const Login = () => {
               {'카카오톡으로 시작하기'}
             </button>
           </PersonalLogin>
-          <OwnerLogin userrole={userRole}>
+          <OwnerLogin userrole={userRole} issuitable={isSuitable}>
             <div>
               <StoreIcon />
-              <button type={'button'} onClick={() => setUserRole('owner')}>
+              <button type={'button'} onClick={() => setUserRole('store')}>
                 {'사업자회원 로그인'}
               </button>
             </div>
             <InputArea>
-              <input onChange={(e) => inputHandler(e)} data-type={'email'} placeholder={'Email'} type={'text'} />
               <input
+                onFocus={() => setUserRole('store')}
+                onChange={(e) => inputHandler(e)}
+                data-type={'email'}
+                placeholder={'Email'}
+                type={'text'}
+              />
+              <input
+                onFocus={() => setUserRole('store')}
                 onChange={(e) => inputHandler(e)}
                 data-type={'password'}
                 placeholder={'Password'}
@@ -104,7 +144,7 @@ const Login = () => {
         </LoginPageCenter>
         <LoginBottom>
           <span>{'다위스키 이용이 처음이신가요?'}</span>&nbsp;&nbsp;
-          <Button onClick={() => navigate('/Signup')}>{'회원가입'}</Button>
+          <Button onClick={() => signupButtonHandler()}>{'사업자 회원가입'}</Button>
         </LoginBottom>
       </LoginPageWrapper>
     </Layout>
@@ -152,7 +192,7 @@ const PersonalLogin = styled.div`
     gap: 3px;
     button {
       height: 100%;
-      width: 120px;
+      width: 100%;
       font-size: 17px;
       text-align: left;
       background-color: transparent;
@@ -195,7 +235,7 @@ const OwnerLogin = styled.div`
     align-items: center;
     margin-left: 8px;
     gap: 3px;
-    color: ${(props) => (props.userrole === 'owner' ? 'black' : '#afb1b6')};
+    color: ${(props) => (props.userrole === 'store' ? 'black' : '#afb1b6')};
     margin-bottom: 10px;
     button {
       width: 100%;
@@ -204,11 +244,11 @@ const OwnerLogin = styled.div`
       background-color: transparent;
       font-weight: 600;
       cursor: pointer;
-      color: ${(props) => (props.userrole === 'owner' ? 'black' : '#afb1b6')};
+      color: ${(props) => (props.userrole === 'store' ? 'black' : '#afb1b6')};
     }
   }
   & button:first-child {
-    background-color: ${(props) => (props.userrole !== 'user' ? '#FF8B00' : '#afb1b6')};
+    background-color: ${(props) => (props.userrole !== 'user' && props.issuitable ? '#FF8B00' : '#afb1b6')};
     color: white;
     height: 46px;
     width: 312px;
@@ -259,13 +299,9 @@ const LoginBottom = styled.div`
   button {
     transform: none;
     background-color: transparent;
-    width: 70px;
+    width: 110px;
     font-size: 16px;
     font-weight: 500;
     color: ${({ theme }) => theme.colors.orange};
   }
 `;
-
-// 개인회원 로그인, 사업자회원 로그인, 카카오톡으로 시작하기 앞에 붙는 '아이콘'
-// 개인회원 로그인이 선택돼서 활성화 됐을 때의 '카카오톡으로 시작하기' 버튼의 백그라운드 칼라, 폰트 칼라
-// 로그인에 필요한 입력값 충족되었을 때 활성화 될 로그인 버튼의 백그라운드 칼라, 폰트 칼라
