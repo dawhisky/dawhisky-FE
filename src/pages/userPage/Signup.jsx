@@ -201,7 +201,7 @@ const Signup = () => {
         </SignupMiddle>
         {isModalOpen && whichModalOpen === 'confirm' && (
           <Modal
-            message={'첨부 사진은 사업장 대표 이미지로 적용됩니다.'}
+            message={`첨부 사진은\n사업장 대표 이미지로 적용됩니다.`}
             onconfirmclick={() => setIsModalOpen(false)}
           />
         )}

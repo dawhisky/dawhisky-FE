@@ -22,12 +22,13 @@ const WhiskyComment = ({ comment }) => {
 export default WhiskyComment;
 
 const CommentDiv = styled.div`
-  margin: 0 0.625rem;
+  margin: 0 0.25rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.lightGray};
   display: flex;
   align-items: center;
 `;
 
 const CommentP = styled.p`
-  padding: ${(props) => (props.idx === 0 ? '0 1.875rem 1.875rem 1.875rem' : '1.875rem')};
+  padding: ${(props) => (props.idx === 0 ? '0 1.25rem 1.25rem 1.25rem' : '1.25rem')};
+  text-align: justify;
 `;

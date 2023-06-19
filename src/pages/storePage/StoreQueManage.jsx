@@ -15,12 +15,10 @@ const StoreQueManage = ({ storeId }) => {
     // 컴포넌트 마운트 시 소켓 연결 설정
     // 이벤트 리스너 등록 등 필요한 작업 수행
     socket.on('connect', () => {
-      console.log('이건 연결됐을 때, 쏘는 스토어아이디 : ', storeId);
       socket.emit('enter', storeId);
     });
 
     socket.on('getQueData', (response) => {
-      console.log(response);
       setQueueList(response);
     });
 
@@ -31,16 +29,14 @@ const StoreQueManage = ({ storeId }) => {
     };
   }, [storeId]);
 
-  console.log(queueList);
-
   return (
     <div>
       {queueList.map((item) => {
         return (
           <IndividualQueList key={item?.que_id}>
             <div>
-              <div>{item?.User?.name}</div>
-              <div>
+              <QueUserNamdH1>{item?.User?.name}</QueUserNamdH1>
+              <QueCommentDiv>
                 {item?.want_table === 'dontCare' ? (
                   <span>{'좌석 상관없음 / '}</span>
                 ) : (
@@ -54,11 +50,8 @@ const StoreQueManage = ({ storeId }) => {
                   {item?.head_count}
                   {'명'}
                 </span>
-                <p>
-                  {'요청사항 : '}
-                  {item.request}
-                </p>
-              </div>
+                <p>{item.request}</p>
+              </QueCommentDiv>
             </div>
             <button type={'button'}>{'입장알림'}</button>
           </IndividualQueList>
@@ -75,11 +68,13 @@ const IndividualQueList = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px;
   border: 0.5px solid #d3d3d3;
   border-radius: 10px;
-  margin: 5px 0 5px 0;
+  margin: 5px 0 20px 0;
+  padding: 20px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  text-align: justify;
+  font-size: 15px;
   & > div:first-child {
     width: 70%;
     div:first-child {
@@ -89,10 +84,35 @@ const IndividualQueList = styled.div`
   }
   button {
     width: 74px;
-    height: 24px;
+    height: 30px;
     border-radius: 14px;
     background-color: #ff8b00;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    font-weight: 500;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+  }
+`;
+
+const QueUserNamdH1 = styled.h1`
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+`;
+
+const QueCommentDiv = styled.div`
+  margin-right: 15px;
+  span:first-child {
+    /* color: red; */
     font-weight: 600;
+  }
+  span:nth-child(2) {
+    /* color: blue; */
+    font-weight: 600;
+  }
+  p {
+    margin-top: 10px;
+    /* color: green; */
   }
 `;

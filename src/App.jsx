@@ -77,7 +77,7 @@ const PrivateRoute = ({ category, element, isManagePage }) => {
 
   // 로그인 정보와 해당 페이지 진입 조건이 불일치할 경우
   if (userFlag !== '' && category && category !== userFlag) {
-    toast.error(`접근 권한이 없습니다. \n메인페이지로 이동합니다.`);
+    toast.error(`일반 유저만 사용 가능한 기능입니다. \n메인페이지로 이동합니다.`);
     return <Navigate to={'/'} replace />;
   }
 

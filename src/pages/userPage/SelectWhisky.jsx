@@ -51,11 +51,13 @@ const SelectWhisky = () => {
   };
   const onRegionClickHandler = (idx, item) => {
     setRegion(regionList[idx]);
-    if (item === '전체') setCategorization((prev) => ({ ...prev, type: '' }));
-    if (item === '버번') setCategorization((prev) => ({ ...prev, type: 'Bourbon' }));
-    if (item === '라이') setCategorization((prev) => ({ ...prev, type: 'Rye' }));
-    if (item === '테네시') setCategorization((prev) => ({ ...prev, type: 'Rye' }));
-    if (item === '그 외') setCategorization((prev) => ({ ...prev, type: 'Tennessee' }));
+    if (item === '전체') setCategorization((prev) => ({ ...prev, region: '' }));
+    if (item === '스페이사이드') setCategorization((prev) => ({ ...prev, region: 'Speyside' }));
+    if (item === '하이랜드') setCategorization((prev) => ({ ...prev, region: 'Highlands' }));
+    if (item === '로우랜드') setCategorization((prev) => ({ ...prev, region: 'Lowlands' }));
+    if (item === '캠벨타운') setCategorization((prev) => ({ ...prev, region: 'Campbeltown' }));
+    if (item === '아일라') setCategorization((prev) => ({ ...prev, region: 'Islay' }));
+    if (item === '그 외') setCategorization((prev) => ({ ...prev, region: 'etc' }));
   };
 
   return (

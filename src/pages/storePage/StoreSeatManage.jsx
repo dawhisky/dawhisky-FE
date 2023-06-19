@@ -254,13 +254,15 @@ const StoreSeatManageWrapper = styled.div`
         color: grey;
         background-color: transparent;
         margin: 0 15px 0 15px;
+        cursor: pointer;
       }
     }
     & > div:last-child {
       display: flex;
+      align-items: center;
       justify-content: center;
       width: 100%;
-      margin: 20px auto 20px auto;
+      margin: 20px auto;
 
       & > div:first-child {
         display: flex;
@@ -283,7 +285,7 @@ const StoreSeatManageWrapper = styled.div`
         }
 
         button[data-activated='true'] {
-          background-color: #6b4eff;
+          background-color: ${({ theme }) => theme.colors.orange};
         }
       }
     }
@@ -298,6 +300,7 @@ const StoreSeatManageWrapper = styled.div`
     }
     & > div:last-child {
       display: flex;
+      align-items: center;
       justify-content: center;
       width: 100%;
 
@@ -318,7 +321,7 @@ const StoreSeatManageWrapper = styled.div`
         }
 
         button[data-activated='true'] {
-          background-color: #6b4eff;
+          background-color: ${({ theme }) => theme.colors.orange};
         }
       }
     }
@@ -328,9 +331,13 @@ const StoreSeatManageWrapper = styled.div`
     height: 40px;
     border-radius: 20px;
     cursor: pointer;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.gray};
+    color: ${({ theme }) => theme.colors.white};
   }
   button[data-isDifferent='true'] {
-    background-color: #6b4eff;
+    background-color: ${({ theme }) => theme.colors.orange};
     color: white;
+    font-weight: 600;
   }
 `;

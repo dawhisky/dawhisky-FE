@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useQueryClient, useMutation } from 'react-query';
 import { styled } from 'styled-components';
 import { toast } from 'react-toastify';
+import { BsTrash3 } from 'react-icons/bs';
 import { initializeApp } from 'firebase/app';
 import { getMessaging } from 'firebase/messaging/sw';
 import { getToken, onMessage } from 'firebase/messaging';
@@ -14,6 +15,9 @@ const UserQuePage = () => {
   // useParams 호출
   const params = useParams();
   const storeId = params.id;
+
+  // navigate
+  const navigate = useNavigate();
 
   // useQueryClient 호출
   const queryClient = useQueryClient();
@@ -120,14 +124,12 @@ const UserQuePage = () => {
     }
   }, [myQueData]);
 
-  console.log(myQueData);
-
   // 줄서기 인원 핸들러
   const changePeopleNumberHandler = (e) => {
     if (e.target.dataset.button === 'plus') {
-      setEditedPeopleNumber(editedPeopleNumber + 1);
+      setEditedPeopleNumber(+editedPeopleNumber + 1);
     } else if (e.target.dataset.button === 'minus' && editedPeopleNumber > 0) {
-      setEditedPeopleNumber(editedPeopleNumber - 1);
+      setEditedPeopleNumber(+editedPeopleNumber - 1);
     }
   };
 
@@ -146,6 +148,18 @@ const UserQuePage = () => {
     }
   };
 
+  // 스토어 회원 및 로그인 여부 확인
+  useEffect(() => {
+    if (localStorage.getItem('store_id')) {
+      toast.error(`일반 유저만 사용 가능한 기능입니다. \n메인페이지로 이동합니다.`);
+      navigate('/');
+    }
+    if (!localStorage.getItem('user')) {
+      toast.error(`로그인 후 이용 가능한 기능입니다.`);
+      navigate('/Login');
+    }
+  }, []);
+
   useEffect(() => {
     const firebaseConfig = {
       apiKey: 'AIzaSyDNjGs_B7jtd-cMVORaQ0Jr7de1XTr5TdE',
@@ -163,18 +177,13 @@ const UserQuePage = () => {
     const isSupported = () => 'Notification' in window && 'serviceWorker' in navigator && 'PushManager' in window;
 
     function requestPermission() {
-      console.log('권한 요청 중...');
       if (isSupported()) {
         const messaging = getMessaging(app);
         getToken(messaging, {
           vapidKey: 'BHurO6CO7I5aITSEDN9qfNy3FzJN41n-EIzJFKRWTPK2GC28hiFMEeBXxhgZjwYp92_dL4pjIZpymrvNufrmgEc',
         }).then((token) => setDeviceToken(token));
 
-        onMessage(messaging, (payload) => {
-          console.log('push message: ', payload);
-        });
-      } else {
-        console.log('ios이용자는 해당기능을 사용할 수 없음');
+        onMessage(messaging, (payload) => {});
       }
     }
 
@@ -190,7 +199,6 @@ const UserQuePage = () => {
       request,
       device_token: deviceToken,
     };
-    console.log(editedQueue.device_token);
     postMyQueueApi.mutate({ storeId, editedQueue });
   };
 
@@ -286,8 +294,8 @@ const UserQuePage = () => {
         </div>
         <div>
           <input
-            onClick={() => setWhichButtonClicked('dontcare')}
-            checked={isRadioButtonChecked('dontcare')}
+            onClick={() => setWhichButtonClicked('dontCare')}
+            checked={isRadioButtonChecked('dontCare')}
             type={'radio'}
             id={'option3'}
             name={'myRadio'}
@@ -312,23 +320,25 @@ const UserQuePage = () => {
       <RequestArea>
         <div>
           <p>{'요청사항'}</p>
-          <span>{'선택'}</span>
+          <span>{'(선택)'}</span>
         </div>
         <input onChange={(e) => getRequest(e)} value={request} placeholder={'요청사항을 입력해주세요'} type={'text'} />
       </RequestArea>
       {queued ? (
-        <div>
+        <ButtonWrapDiv>
           <Button data-type={'edit'} onClick={() => editQueInfo()} location={'both'}>
             {'줄 서기 수정'}
           </Button>
           <Button data-type={'delete'} onClick={() => deleteQueInfo()} location={'both'}>
-            {'줄 서기 삭제'}
+            <BsTrash3 />
           </Button>
-        </div>
+        </ButtonWrapDiv>
       ) : (
-        <Button data-type={'post'} onClick={() => submitQueInfo()} location={'both'}>
-          {'줄 서기'}
-        </Button>
+        <ButtonWrapDiv>
+          <Button data-type={'post'} onClick={() => submitQueInfo()} size={'small'} location={'both'}>
+            {'줄 서기'}
+          </Button>
+        </ButtonWrapDiv>
       )}
     </UserQuePageWrapper>
   );
@@ -341,39 +351,68 @@ const UserQuePageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   & > div:nth-child(2) {
-    width: 90%;
+    width: 100%;
     border-bottom: 0.5px solid #d3d3d3;
   }
   & > div:nth-child(4) {
-    width: 90%;
+    width: 100%;
     border-bottom: 0.5px solid #d3d3d3;
   }
   p {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
   }
   & > div:last-child {
     display: flex;
     width: 100%;
+    justify-content: center;
+    gap: 20px;
 
     & > button[data-type='post'] {
       margin-top: 15px;
       background-color: #ff8b00;
     }
     & > button[data-type='edit'] {
-      margin-top: 15px;
-      background-color: #ff8b00;
+      width: 270px;
+      margin-top: 20px;
+      background-color: ${({ theme }) => theme.colors.white};
+      border: 1px solid ${({ theme }) => theme.colors.gray};
+      color: black;
+      font-weight: 600;
     }
     & > button[data-type='delete'] {
-      margin-top: 15px;
+      width: 40px;
+      height: 40px;
+      margin-top: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
     }
   }
 `;
 
 const SeatStatusArea = styled.div`
   margin-bottom: 24px;
-  input {
+  input[type='radio'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: ${({ theme }) => theme.colors.white};
+    border: 1px solid ${({ theme }) => theme.colors.gray};
+    outline: none;
+    cursor: pointer;
     margin-right: 10px;
+  }
+  input[type='radio']:checked {
+    width: 13px;
+    height: 13px;
+    border: 1px solid ${({ theme }) => theme.colors.orange};
+    background-color: #ff8b00;
     cursor: pointer;
   }
   & > div:first-child,
@@ -381,8 +420,7 @@ const SeatStatusArea = styled.div`
     & > div {
       display: flex;
       justify-content: space-between;
-      margin-top: 24px;
-
+      margin-top: 15px;
       & > span {
         font-size: 13px;
       }
@@ -433,9 +471,12 @@ const SeatStatusArea = styled.div`
         width: 24px;
         border-radius: 12px;
         margin: auto 24px auto 24px;
+        font-size: 14px;
+        background-color: ${({ theme }) => theme.colors.orange};
+        color: ${({ theme }) => theme.colors.white};
       }
       button[data-activated='true'] {
-        background-color: black;
+        background-color: ${({ theme }) => theme.colors.gray};
         color: white;
       }
     }
@@ -457,8 +498,7 @@ const PeopleNumberArea = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 328px;
-  margin: 10px 0 10px 0;
-
+  margin: 17px 0 17px 0;
   & > div {
     display: flex;
     justify-content: space-around;
@@ -482,9 +522,11 @@ const RequestArea = styled.div`
   width: 328px;
   & > div:first-child {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     & > span {
       margin-left: 10px;
+      font-size: 14px;
+      color: ${({ theme }) => theme.colors.darkGray};
     }
   }
   input {
@@ -495,4 +537,12 @@ const RequestArea = styled.div`
     border-radius: 8px;
     padding-left: 15px;
   }
+  input:focus {
+    outline: none;
+    border: 1px solid ${({ theme }) => theme.colors.orange};
+  }
+`;
+
+const ButtonWrapDiv = styled.div`
+  margin-top: 3px;
 `;

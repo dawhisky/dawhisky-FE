@@ -11,7 +11,7 @@ const NoneData = ({ children }) => {
     <InformDiv>
       <FaceIcon />
       <p>{children}</p>
-      {location.pathname === '' ? <p>로그인 하러 가기</p> : ''}
+      {location.pathname === '' ? <p>{'로그인 하러 가기'}</p> : ''}
     </InformDiv>
   );
 };
@@ -19,7 +19,7 @@ const NoneData = ({ children }) => {
 export default NoneData;
 
 const InformDiv = styled.div`
-  height: 100%;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: center;

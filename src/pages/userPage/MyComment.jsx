@@ -49,7 +49,7 @@ const MyComment = () => {
   // * [댓글 수정] useMutation
   const setEditUserCommentMutation = useMutation(setEditUserComment, {
     onSuccess: () => {
-      toast.success('댓글이 수정되었습니다.');
+      toast.success('코멘트가 수정되었습니다.');
       setEditmode(!editmode);
       refetch();
     },
@@ -59,7 +59,11 @@ const MyComment = () => {
   const onSubmitClickHandler = (flag, e) => {
     e.preventDefault();
     if (/^\s/.test(editComment) || editComment.length === 0) {
-      toast.error('댓글이 입력되지 않았습니다.');
+      toast.error('코멘트가 입력되지 않았습니다.');
+      return;
+    }
+    if (editComment.length > 200) {
+      toast.error('200자 이상 코멘트를 작성할 수 없습니다.');
       return;
     }
     const comment = { id, content: editComment };
@@ -73,7 +77,7 @@ const MyComment = () => {
   // * [댓글 삭제] useMutation
   const setDeleteUserCommentMutation = useMutation(setDeleteUserComment, {
     onSuccess: () => {
-      toast.success('댓글이 삭제되었습니다.');
+      toast.success('코멘트가 삭제되었습니다.');
       setModalToggle(!modalToggle);
       refetch();
     },
@@ -171,7 +175,18 @@ const ImageDiv = styled.div`
 
 const CommentP = styled.p`
   padding: 1.875rem 1.25rem;
+  height: 220px;
+  overflow-y: auto;
   text-align: ${(props) => (props.data === 'none' ? 'center' : 'none')};
+  &::-webkit-scrollbar {
+    width: 0.125rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.gray};
+  }
+  &::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.colors.lightGray};
+  }
 `;
 
 const CommentTextarea = styled.textarea`
@@ -181,6 +196,15 @@ const CommentTextarea = styled.textarea`
   &:focus {
     outline-color: ${({ theme }) => theme.colors.orange};
     border-radius: 0.625rem;
+  }
+  &::-webkit-scrollbar {
+    width: 0.125rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.gray};
+  }
+  &::-webkit-scrollbar-track {
+    background-color: ${({ theme }) => theme.colors.lightGray};
   }
 `;
 

@@ -59,6 +59,7 @@ const MessageP = styled.p`
   justify-content: center;
   align-items: center;
   font-weight: 500;
+  white-space: pre-line;
 `;
 
 const ButtonDiv = styled.div`
