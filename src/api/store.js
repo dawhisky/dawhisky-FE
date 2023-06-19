@@ -19,3 +19,13 @@ export const getStoreWhiskyList = (storeId) => {
       throw error;
     });
 };
+
+// * 스토어 보유 위스키 등록
+export const setStoreWhisky = (whiskyId) => {
+  return api
+    .post(`/api/mypage/store/whisky`, whiskyId)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};

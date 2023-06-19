@@ -190,6 +190,10 @@ const GlobalStyle = createGlobalStyle`
   textarea {
     resize: none;
   }
+
+  a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+  }
 `;
 
 export default GlobalStyle;
