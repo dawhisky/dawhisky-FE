@@ -8,5 +8,18 @@ import whiskyColor from './whiskyColor.svg';
 import whiskyGray from './whiskyGray.svg';
 import defaultImage from './defaultImage.png';
 import edit from './edit.svg';
+import bottle from './bottle.svg';
 
-export { bgFram, logo, barColor, barGray, mypageColor, mypageGray, whiskyColor, whiskyGray, defaultImage, edit };
+export {
+  bgFram,
+  logo,
+  barColor,
+  barGray,
+  mypageColor,
+  mypageGray,
+  whiskyColor,
+  whiskyGray,
+  defaultImage,
+  edit,
+  bottle,
+};
