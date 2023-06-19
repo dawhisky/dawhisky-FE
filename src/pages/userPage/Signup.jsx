@@ -143,14 +143,14 @@ const Signup = () => {
       storeInfo.email === '' ||
       storeInfo.store === '' ||
       storeInfo.password === '' ||
-      storeInfo.biz_number === '' ||
+      // storeInfo.biz_number === '' ||
       uploadImage === null
     ) {
       toast.error('입력되지 않은 입력칸이 있습니다.');
     } else if (storeInfo.password !== storeInfo.passwordConfirm) {
       toast.error('비밀번호가 일치하지 않습니다.');
-    } else if (isBizNumberPassed !== true) {
-      toast.error('유효하지 않은 사업자번호입니다.');
+      // } else if (isBizNumberPassed !== true) {
+      //   toast.error('유효하지 않은 사업자번호입니다.');
     } else {
       const formData = new FormData();
       formData.append('email', storeInfo.email);
