@@ -92,11 +92,12 @@ const StoreList = () => {
         toast.error('현재 위스키바 조회는 서울시만 가능합니다.\n지도 위치를 서울시 강남구로 이동합니다.');
         setCoords({ lat: statusOptions[0].value.lat, lon: statusOptions[0].value.lon });
         setSelectStatus(statusOptions[0]);
-      } else {
-        const userLoacation = statusOptions.find((option) => option.label === getAddressName.region_2depth_name);
-        setSelectStatus(userLoacation);
-        setCoords({ lat: position.coords.latitude, lon: position.coords.longitude });
       }
+      // else {
+      //   const userLoacation = statusOptions.find((option) => option.label === getAddressName.region_2depth_name);
+      //   setSelectStatus(userLoacation);
+      //   setCoords({ lat: position.coords.latitude, lon: position.coords.longitude });
+      // }
     });
   };
 
@@ -232,6 +233,7 @@ const ButtonWrapDiv = styled.div`
     font-size: 1.438rem;
     border-radius: 50%;
     cursor: pointer;
+    display: none;
   }
 `;
 
