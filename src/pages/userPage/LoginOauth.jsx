@@ -4,6 +4,7 @@ import axios from 'axios';
 import { styled } from 'styled-components';
 import { toast } from 'react-toastify';
 import { Layout } from '../../components';
+import { Loading } from '../statusPage';
 
 const LoginOauth = () => {
   const navigate = useNavigate();
@@ -26,11 +27,9 @@ const LoginOauth = () => {
 
   return (
     <Layout>
-      <EmptyDiv>{''}</EmptyDiv>
+      <Loading />
     </Layout>
   );
 };
 
 export default LoginOauth;
-
-const EmptyDiv = styled.div``;
