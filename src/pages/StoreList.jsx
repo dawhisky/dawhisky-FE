@@ -93,6 +93,8 @@ const StoreList = () => {
         setCoords({ lat: statusOptions[0].value.lat, lon: statusOptions[0].value.lon });
         setSelectStatus(statusOptions[0]);
       } else {
+        console.log('구 이름은?', getAddressName.region_2depth_name);
+
         setCoords({ lat: position.coords.latitude, lon: position.coords.longitude });
       }
     });
