@@ -96,14 +96,14 @@ const StoreQueManage = ({ storeId }) => {
                 <p>{item.request}</p>
               </QueCommentDiv>
             </div>
-            <div>
+            <ButtonWrapDiv>
               <button onClick={(e) => notifyEntranceHandler(e)} data-queId={item?.que_id} type={'button'}>
                 {'입장알림'}
               </button>
               <button onClick={(e) => rejectEntranceHandler(e)} data-queId={item?.que_id} type={'button'}>
                 {'입장거절'}
               </button>
-            </div>
+            </ButtonWrapDiv>
           </IndividualQueList>
         );
       })}
@@ -137,11 +137,9 @@ const IndividualQueList = styled.div`
       width: 74px;
       height: 30px;
       border-radius: 14px;
-      background-color: #ff8b00;
       box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-      font-weight: 500;
-      font-size: 14px;
-      color: white;
+      font-weight: 600;
+      font-size: 13px;
       cursor: pointer;
     }
   }
@@ -156,15 +154,31 @@ const QueUserNamdH1 = styled.h1`
 const QueCommentDiv = styled.div`
   margin-right: 15px;
   span:first-child {
-    /* color: red; */
     font-weight: 600;
   }
   span:nth-child(2) {
-    /* color: blue; */
+    height: 100%;
     font-weight: 600;
   }
   p {
     margin-top: 10px;
-    /* color: green; */
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    word-break: break-word;
+  }
+`;
+
+const ButtonWrapDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  :first-child {
+    background-color: ${({ theme }) => theme.colors.orange};
+    color: white;
+  }
+  :last-child {
+    background-color: ${({ theme }) => theme.colors.lightGray};
+    color: black;
   }
 `;
