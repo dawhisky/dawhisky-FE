@@ -21,6 +21,8 @@ const DetailList = ({ type, list }) => {
       navigate(`/StoreDetail/${id}`);
     } else if (url.includes('/StoreDetail')) {
       navigate(`/WhiskyDetail/${id}`);
+    } else if (url.includes('/ManagePage/store')) {
+      navigate(`/WhiskyDetail/${id}`);
     }
   };
 
@@ -37,8 +39,12 @@ const DetailList = ({ type, list }) => {
 
           return (
             <ListDiv
-              key={item.store_id || item.whisky_id}
-              onClick={() => onListClickHandler(item.store_id ? item.store_id : item.whisky_id)}
+              key={item.whisky_id || item.store_id}
+              onClick={() =>
+                onListClickHandler(
+                  url.includes('/ManagePage/store') ? item.whisky_id : item.store_id ? item.store_id : item.whisky_id,
+                )
+              }
             >
               {url.includes('/ManagePage') && (
                 <ImageWrapDiv>
