@@ -4,7 +4,7 @@ import { GrSearch } from 'react-icons/gr';
 import { toast } from 'react-toastify';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Button, Modal, DetailList } from '../../components';
-import { getStoreWhiskyList, setStoreWhisky, deleteStoreWhisky } from '../../api/store';
+import { getStoreWhiskyList, setStoreWhisky } from '../../api/store';
 import { getKeywordList } from '../../api/whisky';
 import { NoneData } from '../statusPage';
 
