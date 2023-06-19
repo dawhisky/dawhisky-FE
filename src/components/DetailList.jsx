@@ -76,7 +76,7 @@ const DetailList = ({ type, list }) => {
                   ) : (
                     <WhiskyInfoDiv>
                       <h2>{`${item.whisky_abv} vol`}</h2>
-                      <button type={'button'}>{url.includes('/ManagePage/store') && '삭제'}</button>
+                      {/* <button type={'button'}>{url.includes('/ManagePage/store') && '삭제'}</button> */}
                     </WhiskyInfoDiv>
                   )}
                 </TotalInfoDiv>
