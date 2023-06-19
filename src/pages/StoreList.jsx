@@ -88,15 +88,13 @@ const StoreList = () => {
     geocoder.coord2Address(position.coords.longitude, position.coords.latitude, (address) => {
       // 사용자의 위치가 서울시가 아닐 경우 default 강남구로 설정
       const getAddressName = address[0];
-      console.log('position >>>>>>>>>>', position);
-      console.log('getAddressName >>>>>>>>>>>>', getAddressName);
       if (getAddressName.region_1depth_name !== '서울') {
         toast.error('현재 위스키바 조회는 서울시만 가능합니다.\n지도 위치를 서울시 강남구로 이동합니다.');
         setCoords({ lat: statusOptions[0].value.lat, lon: statusOptions[0].value.lon });
         setSelectStatus(statusOptions[0]);
       } else {
-        console.log('구 이름은?', getAddressName.region_2depth_name);
-
+        const userLoacation = statusOptions.find((option) => option.label === getAddressName.region_2depth_name);
+        setSelectStatus(userLoacation);
         setCoords({ lat: position.coords.latitude, lon: position.coords.longitude });
       }
     });
