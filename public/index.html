@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="keyword" content="whisky, whiskey, whisky bar, dawhisky, 위스키, 위스키바, 다위스키" />
-    <meta name="description" content="위스키 체험을 위한 온라인 플랫폼" />
-    <meta name="author" content="Team Spirits" />
-    <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.ico" />
-    <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAOMAP_KEY%&libraries=services,clusterer"
-    ></script>
 
-    <title>DA WHISKY</title>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keyword" content="whisky, whiskey, whisky bar, dawhisky, 위스키, 위스키바, 다위스키" />
+  <meta name="description" content="위스키 체험을 위한 온라인 플랫폼" />
+  <meta name="author" content="Team Spirits" />
+  <link rel="icon" type="image/png" href="%PUBLIC_URL%/favicon.ico" />
+  <script type="text/javascript">
+    (function (w, d, a) {
+      w.__beusablerumclient__ = {
+        load: function (src) {
+          var b = d.createElement("script");
+          b.src = src; b.async = true; b.type = "text/javascript";
+          d.getElementsByTagName("head")[0].appendChild(b);
+        }
+      }; w.__beusablerumclient__.load(a + "?url=" + encodeURIComponent(d.URL));
+    })(window, document, "//rum.beusable.net/load/b230615e150313u998");
+  </script>
+  <script type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAOMAP_KEY%&libraries=services,clusterer"></script>
+  <title>DA WHISKY</title>
+</head>
 
-  <body>
-    <div id="root"></div>
-    <div id="modal"></div>
-  </body>
+<body>
+  <div id="root"></div>
+  <div id="modal"></div>
+</body>
+
 </html>
