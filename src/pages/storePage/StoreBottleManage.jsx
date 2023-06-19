@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { GrSearch } from 'react-icons/gr';
 import { toast } from 'react-toastify';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Button, Modal, DetailList } from '../../components';
-import { getStoreWhiskyList, setStoreWhisky } from '../../api/store';
+import { getStoreWhiskyList, setStoreWhisky, deleteStoreWhisky } from '../../api/store';
 import { getKeywordList } from '../../api/whisky';
 import { NoneData } from '../statusPage';
 
@@ -14,6 +14,8 @@ const StoreBottleManage = ({ id }) => {
   const [userInput, setUserInput] = useState('');
   const [keyword, setKeyword] = useState('');
   const [recommendList, setRecommedList] = useState(null);
+
+  const queryClient = useQueryClient();
 
   // * [위스키 리스트 조회] 업장에 등록된 주류 내역
   useQuery('getStoreWhiskyList', () => getStoreWhiskyList(id), {
@@ -84,6 +86,7 @@ const StoreBottleManage = ({ id }) => {
       toast.success('보유 중인 위스키 목록이 추가되었습니다.');
       setUserInput('');
       setKeywordData('');
+      queryClient.invalidateQueries('getStoreWhiskyList', getStoreWhiskyList(id));
     },
     onError: (error) => {
       if (error.response.status === 412) {
@@ -100,14 +103,16 @@ const StoreBottleManage = ({ id }) => {
 
   return (
     <>
-      <DetailList list={whiskyList} />
-      {/* // TODO 버튼 상대위치 걸기 */}
       <ButtonWrapDiv>
         <Button onClick={modalToggleHandler}>{'주류 등록'}</Button>
       </ButtonWrapDiv>
+      <ListWrapDiv>
+        {whiskyList && <DetailList list={whiskyList} />}
+        {!whiskyList && <NoneData>{'등록된 주류가 없어요'}</NoneData>}
+      </ListWrapDiv>
 
       {modalToggle && (
-        <Modal height={'400px'} both={'true'} oncancelclick={() => setModalToggle(false)}>
+        <Modal height={'400px'} onconfirmclick={() => setModalToggle(false)}>
           <ModalInnerDiv>
             <WhiskyInput
               type={'text'}
@@ -143,17 +148,18 @@ const StoreBottleManage = ({ id }) => {
 export default StoreBottleManage;
 
 const ButtonWrapDiv = styled.div`
-  border: 1px solid red;
-  height: 4.375rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
   button {
-    position: absolute;
-    bottom: 20px;
+    position: fixed;
     z-index: 1;
     font-weight: 600;
   }
+`;
+
+const ListWrapDiv = styled.div`
+  padding-bottom: 50px;
 `;
 
 const ModalInnerDiv = styled.div`
