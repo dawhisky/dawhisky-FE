@@ -13,7 +13,7 @@ import {
   StoreManagePage,
   LikeList,
   UserManagePage,
-  MyComment,
+  UserComment,
   SelectWhisky,
   SearchPage,
   ManagePage,
@@ -97,7 +97,7 @@ const App = () => {
           </Route>
           <Route path={'/LikeList'} element={<PrivateRoute category={'user'} element={<LikeList />} />} />
           <Route path={'/SelectWhisky'} element={<PrivateRoute category={'user'} element={<SelectWhisky />} />} />
-          <Route path={'/MyComment/:id'} element={<PrivateRoute category={'user'} element={<MyComment />} />} />
+          <Route path={'/UserComment/:id'} element={<PrivateRoute category={'user'} element={<UserComment />} />} />
 
           {/* PublicRoute */}
           <Route path={'/'} element={<WhiskyList />} />

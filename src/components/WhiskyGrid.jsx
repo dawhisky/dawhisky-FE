@@ -14,7 +14,7 @@ const WhiskyGrid = ({ list }) => {
 
   const onWhiskyClickHandler = (id) => {
     if (url.includes('/ManagePage')) {
-      navigate(`/MyComment/${id}`);
+      navigate(`/UserComment/${id}`);
     } else if (url === `/` || url.includes('/LikeList')) {
       navigate(`/WhiskyDetail/${id}`);
     }
