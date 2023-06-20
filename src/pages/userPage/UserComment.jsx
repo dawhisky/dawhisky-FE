@@ -15,6 +15,7 @@ const UserComment = () => {
   const [bottomToggle, setBottomToggle] = useState(false);
   const [managementChosen, setManagementChosen] = useState(null);
   const [modalToggle, setModalToggle] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => /Mobi/i.test(window.navigator.userAgent));
   const managementList = ['수정하기', '삭제하기'];
 
   const navigate = useNavigate();
@@ -157,6 +158,7 @@ const UserComment = () => {
           value={editComment || myCommentData.content}
           onChange={onCommentChangeHandler}
           placeholder={'코멘트를 입력해주세요!'}
+          ismobile={isMobile ? 'true' : 'false'}
         />
       )}
       {bottomToggle && (
@@ -213,7 +215,7 @@ const Header = styled.header`
 `;
 
 const NameDiv = styled.div`
-  width: 230px;
+  width: 14.375rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -244,7 +246,7 @@ const LeftIcon = styled(BsChevronLeft)`
 
 const CommentP = styled.p`
   padding: 1.875rem 1.25rem;
-  height: 220px;
+  height: 13.75rem;
   overflow-y: auto;
   text-align: ${(props) => (props.data === 'none' ? 'center' : 'none')};
   &::-webkit-scrollbar {
@@ -339,7 +341,7 @@ const ImageDiv = styled.div`
 
 const CommentTextarea = styled.textarea`
   width: 100%;
-  height: 40vh;
+  height: ${(props) => (props.ismobile === 'true' ? '6.8rem' : '40vh')};
   margin: 1.25rem 0;
   padding: 1.25rem;
   &:focus {
