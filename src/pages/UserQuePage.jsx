@@ -150,13 +150,12 @@ const UserQuePage = () => {
 
   // 스토어 회원 및 로그인 여부 확인
   useEffect(() => {
-    if (localStorage.getItem('store_id')) {
-      toast.error(`일반 유저만 사용 가능한 기능입니다. \n메인페이지로 이동합니다.`);
-      navigate('/');
-    }
-    if (!localStorage.getItem('user')) {
+    if (!localStorage.getItem('user') && !localStorage.getItem('store_id')) {
       toast.error(`로그인 후 이용 가능한 기능입니다.`);
       navigate('/Login');
+    } else if (localStorage.getItem('store_id')) {
+      toast.error(`일반 유저만 사용 가능한 기능입니다. \n메인페이지로 이동합니다.`);
+      navigate('/');
     }
   }, []);
 
