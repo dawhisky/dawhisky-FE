@@ -1,0 +1,23 @@
+{
+  "version": "1.00",
+  "short_name": "DA WHISKY",
+  "name": "DA WHISKY",
+  "icons": [
+    {
+      "src": "logo72.png",
+      "type": "image/png",
+      "sizes": "72x72",
+      "purpose": "any"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
