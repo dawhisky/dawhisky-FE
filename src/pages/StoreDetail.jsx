@@ -66,7 +66,7 @@ const StoreDetail = () => {
     <Layout>
       {data && (
         <>
-          <DetailHeader korname={data.store} like={data.slikes === 1} />
+          <DetailHeader korname={data.store} like={data.liked} />
           <ImageDiv>
             <Image width={'22.5rem'} height={'22.5rem'} src={data.biz_photo} alt={`${data.store} 대표 이미지`} />
           </ImageDiv>

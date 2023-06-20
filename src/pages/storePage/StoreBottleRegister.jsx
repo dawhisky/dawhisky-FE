@@ -103,45 +103,4 @@ const StoreBottleRegisterWrapper = styled.div`
   }
 `;
 
-const IndividualWhisky = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-top: 32px;
-  align-items: flex-end;
-
-  & > div:first-child {
-    display: flex;
-    div:first-child {
-      height: 72px;
-      width: 72px;
-      background-color: #ececec;
-      color: grey;
-      margin-right: 10px;
-    }
-    div:nth-child(2) {
-      display: flex;
-      flex-direction: column;
-      p:first-child {
-        font-weight: 600;
-      }
-      p:nth-child(2) {
-        font-weight: 400;
-        font-size: 11px;
-        color: #818181;
-      }
-      p:last-child {
-        font-size: 11px;
-      }
-    }
-  }
-  button {
-    display: flex;
-    width: 30px;
-    height: 20px;
-    background-color: transparent;
-    color: #979c9e;
-    font-size: 14px;
-  }
-`;
-
 // 검색 시스템 디테일하게

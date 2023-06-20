@@ -187,7 +187,7 @@ const BackgroundDiv = styled.div`
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 2;
 `;
 
 const ListUl = styled.ul`
@@ -198,7 +198,7 @@ const ListUl = styled.ul`
   transform: translateX(-50%);
   border-radius: 0.75rem 0.75rem 0 0;
   background-color: ${({ theme }) => theme.colors.white};
-  z-index: 1;
+  z-index: 2;
   overflow-y: auto;
   animation: fadeInUp 0.7s;
   & span {

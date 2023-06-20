@@ -42,7 +42,11 @@ const DetailList = ({ type, list }) => {
               key={item.whisky_id || item.store_id}
               onClick={() =>
                 onListClickHandler(
-                  url.includes('/ManagePage/store') ? item.whisky_id : item.store_id ? item.store_id : item.whisky_id,
+                  url.includes('/ManagePage/store') || url.includes('/StoreDetail')
+                    ? item.whisky_id
+                    : item.store_id
+                    ? item.store_id
+                    : item.whisky_id,
                 )
               }
             >
@@ -66,7 +70,7 @@ const DetailList = ({ type, list }) => {
                   alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
                 />
               )}
-              {url.includes('/LikeList') ? (
+              {url.includes('/LikeList') || url.includes('/WhiskyDetail') ? (
                 <StoreInfoDiv>
                   <TextH1>{item.store}</TextH1>
                   <TextH2>{item.address}</TextH2>

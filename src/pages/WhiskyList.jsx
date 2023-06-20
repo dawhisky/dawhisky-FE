@@ -46,9 +46,19 @@ const WhiskyList = () => {
   const onTabClickHandler = (type) => {
     setTabChosen(type);
     if (type === 'all') {
-      setCategorization((prev) => ({ ...prev, country: '', type: '', region: '' }));
+      setCategorization((prev) => ({
+        ...prev,
+        country: '',
+        type: '',
+        region: '',
+      }));
     } else {
-      setCategorization((prev) => ({ ...prev, country: type, type: '', region: '' }));
+      setCategorization((prev) => ({
+        ...prev,
+        country: type,
+        type: '',
+        region: '',
+      }));
     }
     setRegion(regionList[0]);
     setBlend(typeList[0]);
@@ -82,8 +92,8 @@ const WhiskyList = () => {
     if (item === '전체') setCategorization((prev) => ({ ...prev, type: '' }));
     if (item === '버번') setCategorization((prev) => ({ ...prev, type: 'Bourbon' }));
     if (item === '라이') setCategorization((prev) => ({ ...prev, type: 'Rye' }));
-    if (item === '테네시') setCategorization((prev) => ({ ...prev, type: 'Rye' }));
-    if (item === '그 외') setCategorization((prev) => ({ ...prev, type: 'Tennessee' }));
+    if (item === '테네시') setCategorization((prev) => ({ ...prev, type: 'Tennessee' }));
+    if (item === '그 외') setCategorization((prev) => ({ ...prev, type: 'etc' }));
   };
 
   // * 위스키 리스트 조회

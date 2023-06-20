@@ -59,11 +59,16 @@ const StoreSeatManage = () => {
   useEffect(() => {
     if (!isLoading && !isError) {
       if (data === null) {
-        createTableApi.mutate({ editedSeatData: { hall_table: '[]', bar_table: '[]' } });
+        createTableApi.mutate({
+          editedSeatData: { hall_table: '[]', bar_table: '[]' },
+        });
       }
       // 서버 데이터 반영
       if (data && data.bar_table && data.hall_table) {
-        setEntireSeatData({ bar_table: data.bar_table, hall_table: data.hall_table });
+        setEntireSeatData({
+          bar_table: data.bar_table,
+          hall_table: data.hall_table,
+        });
         const barSeatInfo = JSON.parse(data.bar_table);
         const hallSeatInfo = JSON.parse(data.hall_table);
         const convertedBarSeatInfo = makeSeatInfo(barSeatInfo);
@@ -97,14 +102,20 @@ const StoreSeatManage = () => {
       setBarSeatData(editedBarSeatData);
       const finalBarSeatData = [];
       editedBarSeatData.map((item) => (item.activated ? finalBarSeatData.push(1) : finalBarSeatData.push(0)));
-      setEntireSeatData({ bar_table: JSON.stringify(finalBarSeatData), hall_table: entireSeatData.hall_table });
+      setEntireSeatData({
+        bar_table: JSON.stringify(finalBarSeatData),
+        hall_table: entireSeatData.hall_table,
+      });
     } else {
       const editedHallSeatData = [...hallSeatData];
       editedHallSeatData[e.target.id - 1].activated = !editedHallSeatData[e.target.id - 1].activated;
       setHallSeatData(editedHallSeatData);
       const finalHallSeatData = [];
       editedHallSeatData.map((item) => (item.activated ? finalHallSeatData.push(1) : finalHallSeatData.push(0)));
-      setEntireSeatData({ bar_table: entireSeatData.bar_table, hall_table: JSON.stringify(finalHallSeatData) });
+      setEntireSeatData({
+        bar_table: entireSeatData.bar_table,
+        hall_table: JSON.stringify(finalHallSeatData),
+      });
     }
   };
 
@@ -119,7 +130,10 @@ const StoreSeatManage = () => {
   };
 
   // 각 테이블 입력값 상태관리
-  const [editedSeatData, setEditedSeatData] = useState({ bar_table: [], hall_table: [] });
+  const [editedSeatData, setEditedSeatData] = useState({
+    bar_table: [],
+    hall_table: [],
+  });
 
   // '+','-'버튼 클릭에 따라 상태관리 변경
   const changeSeatNumberHandler = (e) => {
@@ -162,6 +176,7 @@ const StoreSeatManage = () => {
         <div>
           <div>
             <span>{'바 좌석'}</span>
+            <BarInfoSpan>{'고객이 착석한 좌석을 클릭해주세요!'}</BarInfoSpan>
             <button onClick={() => setModalToggle(true)} type={'button'}>
               {'수정'}
             </button>
@@ -188,7 +203,8 @@ const StoreSeatManage = () => {
           </div>
         </div>
         <div>
-          <span>{'홀 좌석'}</span>
+          <HallSpan>{'홀 좌석'}</HallSpan>
+          <HallInfoSpan>{'고객이 착석한 좌석을 클릭해주세요!'}</HallInfoSpan>
           <div>
             <div>
               {hallSeatData.length !== 0 ? (
@@ -244,7 +260,7 @@ const StoreSeatManageWrapper = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      & > span {
+      & > span:first-child {
         margin: 0 15px 0 15px;
         font-weight: 800;
         font-size: 20px;
@@ -293,11 +309,6 @@ const StoreSeatManageWrapper = styled.div`
   & > div:nth-child(2) {
     margin: 20px auto 20px auto;
     width: 100%;
-    span {
-      margin: 0 15px 0 15px;
-      font-weight: 800;
-      font-size: 20px;
-    }
     & > div:last-child {
       display: flex;
       align-items: center;
@@ -340,4 +351,23 @@ const StoreSeatManageWrapper = styled.div`
     color: white;
     font-weight: 600;
   }
+`;
+
+const BarInfoSpan = styled.span`
+  color: grey;
+  font-size: 12px;
+  margin-left: -18px;
+  padding-top: 6px;
+`;
+
+const HallSpan = styled.span`
+  margin: 0 15px 0 15px;
+  font-weight: 800;
+  font-size: 20px;
+`;
+
+const HallInfoSpan = styled.span`
+  color: grey;
+  font-size: 12px;
+  padding-top: 6px;
 `;

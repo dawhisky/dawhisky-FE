@@ -67,7 +67,7 @@ const KakaoMap = ({ coords, storelist }) => {
         }}
         style={{
           width: '100%',
-          height: '94%',
+          height: '100vh',
         }}
         level={5}
       >
