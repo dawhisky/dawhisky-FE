@@ -4,8 +4,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from './style';
-import reportWebVitals from './reportWebVitals';
 import App from './App';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,5 +16,7 @@ root.render(
     <App />
   </ThemeProvider>,
 );
+
+serviceWorkerRegistration.register();
 
 reportWebVitals();
