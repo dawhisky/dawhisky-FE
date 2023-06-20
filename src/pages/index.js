@@ -15,6 +15,7 @@ import MyComment from './userPage/MyComment';
 import SelectWhisky from './userPage/SelectWhisky';
 import SearchPage from './SearchPage';
 import ManagePage from './ManagePage';
+import AdminLogin from './AdminLogin';
 
 export {
   Error,
@@ -34,4 +35,5 @@ export {
   SelectWhisky,
   SearchPage,
   ManagePage,
+  AdminLogin,
 };

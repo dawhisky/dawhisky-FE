@@ -29,3 +29,13 @@ export const setSignout = (userFlag) => {
       throw error;
     });
 };
+
+// * 테스트 유저 계정 로컬 로그인
+export const userLogin = (email) => {
+  return api
+    .post(`/api/auth/login/localUser`, email)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
