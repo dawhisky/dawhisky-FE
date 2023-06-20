@@ -89,20 +89,40 @@ const StoreList = () => {
       // 사용자의 위치가 서울시가 아닐 경우 default 강남구로 설정
       const getAddressName = address[0];
       if (getAddressName.region_1depth_name !== '서울') {
-        toast.error('현재 위스키바 조회는 서울시만 가능합니다.\n지도 위치를 서울시 강남구로 이동합니다.');
-        setCoords({ lat: statusOptions[0].value.lat, lon: statusOptions[0].value.lon });
-        setSelectStatus(statusOptions[0]);
+        setCoords({
+          lat: statusOptions[0].value.lat,
+          lon: statusOptions[0].value.lon,
+        });
+        if (!sessionStorage.getItem('mapSelectIdx')) {
+          setSelectStatus(statusOptions[0]);
+          setCoords({
+            lat: statusOptions[0].value.lat,
+            lon: statusOptions[0].value.lon,
+          });
+        } else {
+          setSelectStatus(statusOptions[sessionStorage.getItem('mapSelectIdx')]);
+          setCoords({
+            lat: statusOptions[sessionStorage.getItem('mapSelectIdx')].value.lat,
+            lon: statusOptions[sessionStorage.getItem('mapSelectIdx')].value.lon,
+          });
+        }
+      } else {
+        const userLoacation = statusOptions.find((option) => option.label === getAddressName.region_2depth_name);
+        setSelectStatus(userLoacation);
+        setCoords({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        });
       }
-      // else {
-      //   const userLoacation = statusOptions.find((option) => option.label === getAddressName.region_2depth_name);
-      //   setSelectStatus(userLoacation);
-      //   setCoords({ lat: position.coords.latitude, lon: position.coords.longitude });
-      // }
     });
   };
 
   // * [위치 동의] 사용자 위치정보 거절하거나 오류일 경우 default 위도/경도 설정
-  const reject = () => setCoords({ lat: statusOptions[0].value.lat, lon: statusOptions[0].value.lon });
+  const reject = () =>
+    setCoords({
+      lat: statusOptions[0].value.lat,
+      lon: statusOptions[0].value.lon,
+    });
 
   // * [스토어 리스트] 위스키바 목록 보기 toggle
   const isShowListHandler = () => setNearbyToggle(!nearbyToggle);
@@ -153,14 +173,15 @@ const StoreList = () => {
             defaultValue={selectStatus}
             onChange={setSelectStatus}
             options={statusOptions}
+            isSearchable={false}
             styles={selectStyle}
           />
+          <button type={'button'} size={'small'} onClick={isShowListHandler}>
+            {'목록 보기'}
+          </button>
         </SelectWrapDiv>
         <KakaoMap coords={coords} storelist={storeList} />
         <ButtonWrapDiv>
-          <Button size={'small'} onClick={isShowListHandler}>
-            {'목록 보기'}
-          </Button>
           <button type={'button'} onClick={onCurrentLocationClickHandler}>
             <UserGpsIcon gpsstatus={currentLocationToggle ? 'true' : ''} />
           </button>
@@ -199,18 +220,29 @@ const SelectWrapDiv = styled.div`
   width: 100%;
   margin-top: 1.25rem;
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 20px;
   z-index: 3;
+  button {
+    width: 100px;
+    height: 38px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color: ${({ theme }) => theme.colors.orange};
+    color: ${({ theme }) => theme.colors.white};
+    cursor: pointer;
+    box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const StyledSelect = styled(Select)`
-  width: 12.5rem;
+  width: 150px;
   text-align: center;
   font-size: 0.875rem;
   cursor: pointer;
-  option:focus {
-    background-color: blue;
-  }
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 `;
 
 const ButtonWrapDiv = styled.div`

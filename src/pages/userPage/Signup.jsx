@@ -12,11 +12,27 @@ const Signup = () => {
   // map함수 돌릴 form
   const signupForm = [
     { name: '이메일', type: 'email', placeholder: '이메일을 입력해주세요' },
-    { name: '이메일 인증번호', type: 'authCode', placeholder: '이메일 인증번호를 입력해주세요' },
-    { name: '비밀번호', type: 'password', placeholder: '비밀번호를 입력해주세요' },
-    { name: '비밀번호 확인', type: 'passwordConfirm', placeholder: '비밀번호를 입력해주세요' },
+    {
+      name: '이메일 인증번호',
+      type: 'authCode',
+      placeholder: '이메일 인증번호를 입력해주세요',
+    },
+    {
+      name: '비밀번호',
+      type: 'password',
+      placeholder: '비밀번호를 입력해주세요',
+    },
+    {
+      name: '비밀번호 확인',
+      type: 'passwordConfirm',
+      placeholder: '비밀번호를 입력해주세요',
+    },
     { name: '상호명', type: 'store', placeholder: '상호명을 입력해주세요' },
-    { name: '사업자번호', type: 'biz_number', placeholder: '사업자 번호를 입력해주세요' },
+    {
+      name: '사업자번호',
+      type: 'biz_number',
+      placeholder: '사업자 번호를 입력해주세요',
+    },
   ];
 
   // 모달 화면 열림 여부
@@ -26,7 +42,14 @@ const Signup = () => {
   const [whichModalOpen, setWhichModalOpen] = useState('pictureUpload');
 
   // storeInfo 초기값
-  const initialStoreInfo = { email: '', store: '', biz_number: '', password: '', passwordConfirm: '', authCode: '' };
+  const initialStoreInfo = {
+    email: '',
+    store: '',
+    biz_number: '',
+    password: '',
+    passwordConfirm: '',
+    authCode: '',
+  };
 
   // 회원 정보 상태관리
   const [storeInfo, setStoreInfo] = useState(initialStoreInfo);
@@ -143,12 +166,14 @@ const Signup = () => {
       storeInfo.email === '' ||
       storeInfo.store === '' ||
       storeInfo.password === '' ||
+      // 테스트 기간동안 사업자등록번호 검증 임시 비활성화
       // storeInfo.biz_number === '' ||
       uploadImage === null
     ) {
       toast.error('입력되지 않은 입력칸이 있습니다.');
     } else if (storeInfo.password !== storeInfo.passwordConfirm) {
       toast.error('비밀번호가 일치하지 않습니다.');
+      // 테스트 기간동안 사업자등록번호 검증 임시 비활성화
       // } else if (isBizNumberPassed !== true) {
       //   toast.error('유효하지 않은 사업자번호입니다.');
     } else {

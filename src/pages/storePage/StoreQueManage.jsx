@@ -74,44 +74,62 @@ const StoreQueManage = ({ storeId }) => {
 
   return (
     <div>
-      {queueList.map((item) => {
-        return (
-          <IndividualQueList key={item?.que_id}>
-            <div>
-              <QueUserNamdH1>{item?.user_name}</QueUserNamdH1>
-              <QueCommentDiv>
-                {item?.want_table === 'dontCare' ? (
-                  <span>{'좌석 상관없음 / '}</span>
-                ) : (
-                  <span>
-                    {item?.want_table}
-                    {' 좌석 / '}
-                  </span>
-                )}
+      {queueList.length === 0 && (
+        <NullDiv>
+          <p>유저의 줄서기 내역이 이곳에 표시됩니다.</p>
+        </NullDiv>
+      )}
+      {queueList.length !== 0 &&
+        queueList.map((item) => {
+          return (
+            <IndividualQueList key={item?.que_id}>
+              <div>
+                <QueUserNamdH1>{item?.user_name}</QueUserNamdH1>
+                <QueCommentDiv>
+                  {item?.want_table === 'dontCare' ? (
+                    <span>{'좌석 상관없음 / '}</span>
+                  ) : (
+                    <span>
+                      {item?.want_table}
+                      {' 좌석 / '}
+                    </span>
+                  )}
 
-                <span>
-                  {item?.head_count}
-                  {'명'}
-                </span>
-                <p>{item.request}</p>
-              </QueCommentDiv>
-            </div>
-            <ButtonWrapDiv>
-              <button onClick={(e) => notifyEntranceHandler(e)} data-queId={item?.que_id} type={'button'}>
-                {'입장알림'}
-              </button>
-              <button onClick={(e) => rejectEntranceHandler(e)} data-queId={item?.que_id} type={'button'}>
-                {'입장거절'}
-              </button>
-            </ButtonWrapDiv>
-          </IndividualQueList>
-        );
-      })}
+                  <span>
+                    {item?.head_count}
+                    {'명'}
+                  </span>
+                  <p>{item.request}</p>
+                </QueCommentDiv>
+              </div>
+              <ButtonWrapDiv>
+                <button onClick={(e) => notifyEntranceHandler(e)} data-queId={item?.que_id} type={'button'}>
+                  {'입장알림'}
+                </button>
+                <button onClick={(e) => rejectEntranceHandler(e)} data-queId={item?.que_id} type={'button'}>
+                  {'입장거절'}
+                </button>
+              </ButtonWrapDiv>
+            </IndividualQueList>
+          );
+        })}
     </div>
   );
 };
 
 export default StoreQueManage;
+
+const NullDiv = styled.div`
+  border: 1px solid lightgrey;
+  min-height: 200px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  p {
+    color: lightgrey;
+  }
+`;
 
 const IndividualQueList = styled.div`
   display: flex;
