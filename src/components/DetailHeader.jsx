@@ -3,9 +3,10 @@ import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { BsChevronLeft } from 'react-icons/bs';
+import { BsChevronLeft, BsThreeDots, BsCheck2 } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { isWhiskyLike, isStoreLike } from '../api/like';
+import Button from './Button';
 
 // ! [props]
 // * 상세페이지에서 보이는 뒤로가기, 아이템명, 좋아요 버튼을 모아둔 Header
@@ -13,11 +14,12 @@ import { isWhiskyLike, isStoreLike } from '../api/like';
 // * engname : 화면에서 보일 아이템의 영문명, 없으면 props 아예 안내려도 됨
 
 const DetailHeader = ({ korname, engname, like }) => {
+  const [likeStatus, setLikeStatus] = useState(false);
+  const [userFlag, setUserFlag] = useState(localStorage.getItem('user'));
+
   const navigate = useNavigate();
   const location = useLocation();
-  const [likeStatus, setLikeStatus] = useState(false);
   const url = location.pathname;
-  const [userFlag, setUserFlag] = useState(localStorage.getItem('user'));
   const { id } = useParams();
 
   // * 설정되어있는 좋아요가 있다면 세팅
@@ -44,7 +46,7 @@ const DetailHeader = ({ korname, engname, like }) => {
       toast.error(`로그인 후 좋아요 등록이 가능합니다.`);
       navigate(`/Login`);
     }
-    if (url.includes('/WhiskyDetail') || url.includes('/MyComment')) {
+    if (url.includes('/WhiskyDetail')) {
       isWhiskyLikeMutation.mutate(id);
     } else if (url.includes('/StoreDetail')) {
       isStoreLikeMutation.mutate(id);
@@ -53,12 +55,8 @@ const DetailHeader = ({ korname, engname, like }) => {
 
   return (
     <Header
-      color={
-        url.includes('/WhiskyDetail') || url.includes('/LikeList') || url.includes('/MyComment') ? 'black' : 'white'
-      }
-      flag={
-        url.includes('/WhiskyDetail') || url.includes('/LikeList') || url.includes('/MyComment') ? 'whisky' : 'store'
-      }
+      color={url.includes('/WhiskyDetail') || url.includes('/LikeList') ? 'black' : 'white'}
+      flag={url.includes('/WhiskyDetail') || url.includes('/LikeList') ? 'whisky' : 'store'}
     >
       <LeftIcon onClick={onBeforeClickHandler} />
       <NameDiv flag={userFlag ? 'user' : 'store'}>

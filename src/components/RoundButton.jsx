@@ -8,7 +8,7 @@ const RoundButton = ({ rest }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const onWriteButtonClickHandler = () => navigate(`/MyComment/${id}`);
+  const onWriteButtonClickHandler = () => navigate(`/UserComment/${id}`);
 
   return (
     <NullDiv>

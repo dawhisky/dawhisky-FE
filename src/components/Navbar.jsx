@@ -68,7 +68,7 @@ const Navbar = () => {
         )}
       </NavButton>
       <NavButton onClick={onMagagePageClickHandler}>
-        {url.includes('/UserManagePage') || url.includes('/StoreManagePage') || url.includes('/MyComment') ? (
+        {url.includes('/ManagePage') || url.includes('/UserComment') ? (
           <>
             <Image
               width={'1.8rem'}

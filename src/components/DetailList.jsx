@@ -16,7 +16,7 @@ const DetailList = ({ type, list }) => {
 
   const onListClickHandler = (id) => {
     if (url.includes('/ManagePage/user')) {
-      navigate(`/MyComment/${id}`);
+      navigate(`/UserComment/${id}`);
     } else if (url.includes('/LikeList') || url.includes('/StoreList') || url.includes('/WhiskyDetail')) {
       navigate(`/StoreDetail/${id}`);
     } else if (url.includes('/StoreDetail')) {
