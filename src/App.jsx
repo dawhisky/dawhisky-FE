@@ -17,6 +17,7 @@ import {
   SelectWhisky,
   SearchPage,
   ManagePage,
+  AdminLogin,
 } from './pages/index';
 import { NoMatch } from './pages/statusPage';
 
@@ -107,6 +108,9 @@ const App = () => {
           <Route path={'/WhiskyDetail/:id'} element={<WhiskyDetail />} />
           <Route path={'/StoreList'} element={<StoreList />} />
           <Route path={'/StoreDetail/:id'} element={<StoreDetail />} />
+
+          {/* Temporary */}
+          <Route path={'/AdminLogin'} element={<AdminLogin />} />
 
           {/* route error */}
           <Route path={'*'} element={<NoMatch />} />
