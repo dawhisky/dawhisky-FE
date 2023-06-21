@@ -52,7 +52,7 @@ const TabMenu = ({ tabgroup, tabchosen, ontabclickhandler }) => {
     }
   };
 
-  // ! test
+  // * tab menu 우측 추가메뉴 인지할 수 있도록 아이콘 추가
   useEffect(() => {
     if (scrollRef.current.scrollLeft === 0) {
       setRightIcon(true);
