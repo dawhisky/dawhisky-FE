@@ -10,10 +10,20 @@ export const getQueueList = () => {
     });
 };
 
-// 내 줄서기 조회api, method : get, url : /api/que/:store_id
+// 해당 스토어에 대한 내 줄서기 조회api, method : get, url : /api/que/:store_id
 export const getMyQueue = (storeId) => {
   return api
     .get(`/api/que/${storeId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
+// 모든 스토어에 대한 내 줄서기 조회api, method : get, url : /api/mypage/que
+export const getMyQueueList = () => {
+  return api
+    .get(`/api/mypage/user/que`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;

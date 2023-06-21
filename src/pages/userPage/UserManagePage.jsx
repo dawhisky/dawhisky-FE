@@ -5,14 +5,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { BsThreeDots, BsCheck2 } from 'react-icons/bs';
 import { useMutation, useQuery } from 'react-query';
 import { TabMenu, Button, Modal, WhiskyGrid } from '../../components';
+import UserQueueList from './UserQueueList';
 import SelectWhisky from './SelectWhisky';
 import { getUserInfo } from '../../api/user';
 import { setLogout, setSignout } from '../../api/login';
+import { getMyQueueList } from '../../api/queue';
 
 const UserManagePage = () => {
   const tabGroup = [
     { name: '코멘트 관리', type: 'getComment' },
     { name: '코멘트 등록', type: 'setComment' },
+    { name: '줄서기 현황', type: 'getMyQueueList' },
   ];
   const managementList = ['로그아웃', '회원탈퇴'];
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
@@ -124,6 +127,7 @@ const UserManagePage = () => {
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
       {tabChosen === 'getComment' && <WhiskyGrid list={commentList} />}
       {tabChosen === 'setComment' && <SelectWhisky />}
+      {tabChosen === 'getMyQueueList' && <UserQueueList />}
     </>
   );
 };
