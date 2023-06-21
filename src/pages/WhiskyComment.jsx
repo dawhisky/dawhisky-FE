@@ -31,4 +31,6 @@ const CommentDiv = styled.div`
 const CommentP = styled.p`
   padding: ${(props) => (props.idx === 0 ? '0 1.25rem 1.25rem 1.25rem' : '1.25rem')};
   text-align: justify;
+  word-break: break-all;
+  white-space: pre-wrap;
 `;
