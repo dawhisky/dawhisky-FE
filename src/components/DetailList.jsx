@@ -14,6 +14,8 @@ const DetailList = ({ type, list }) => {
   const location = useLocation();
   const url = location.pathname;
 
+  console.log(list);
+
   const onListClickHandler = (id) => {
     if (url.includes('/ManagePage/user')) {
       navigate(`/UserComment/${id}`);
@@ -62,18 +64,20 @@ const DetailList = ({ type, list }) => {
                 </ImageWrapDiv>
               )}
               {!url.includes('/ManagePage') && (
-                <Image
-                  width={'5rem'}
-                  height={'5rem'}
-                  borderradius={'0.313rem'}
-                  src={type === 'store' ? item.biz_photo : item.whisky_photo}
-                  alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
-                />
+                <ImageWrapDiv>
+                  <Image
+                    width={'5rem'}
+                    height={'5rem'}
+                    borderradius={'0.313rem'}
+                    src={type === 'store' ? item.biz_photo : item.whisky_photo}
+                    alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
+                  />
+                </ImageWrapDiv>
               )}
               {url.includes('/LikeList') || url.includes('/WhiskyDetail') ? (
                 <StoreInfoDiv>
                   <TextH1>{item.store}</TextH1>
-                  <TextH2>{item.address}</TextH2>
+                  <TextH2>{item.address !== 'null' ? item.address : '입력된 주소가 없습니다'}</TextH2>
                 </StoreInfoDiv>
               ) : (
                 <TotalInfoDiv>
@@ -116,9 +120,8 @@ const ListDiv = styled.div`
 `;
 
 const ImageWrapDiv = styled.div`
-  border: 1px solid blue;
-  width: 5.2rem;
-  height: 5.2rem;
+  width: 5rem;
+  height: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
