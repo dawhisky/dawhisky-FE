@@ -9,6 +9,7 @@ const { kakao } = window;
 
 const KakaoMap = ({ coords, storelist }) => {
   const [markers, setMarkers] = useState([]);
+  const [mapMarkerId, setMapMarkerId] = useState(null);
 
   // * 상세 페이지로 이동
   const navigate = useNavigate();
@@ -50,16 +51,32 @@ const KakaoMap = ({ coords, storelist }) => {
 
   // * 업장 아이콘 클릭 시 overlay visible true/false
   const onMarkerClickHandler = (markerId) => {
-    setMarkers((prevMarkers) =>
-      prevMarkers.map((marker) =>
-        marker.id === markerId ? { ...marker, isOverlayVisible: !marker.isOverlayVisible } : marker,
-      ),
-    );
+    if (mapMarkerId !== markerId) {
+      setMarkers((prevMarkers) =>
+        prevMarkers.map((marker) =>
+          marker.id === mapMarkerId && marker.isOverlayVisible
+            ? { ...marker, isOverlayVisible: !marker.isOverlayVisible }
+            : marker,
+        ),
+      );
+      setMarkers((prevMarkers) =>
+        prevMarkers.map((marker) =>
+          marker.id === markerId ? { ...marker, isOverlayVisible: !marker.isOverlayVisible } : marker,
+        ),
+      );
+      setMapMarkerId(markerId);
+    } else {
+      setMarkers((prevMarkers) =>
+        prevMarkers.map((marker) =>
+          marker.id === markerId ? { ...marker, isOverlayVisible: !marker.isOverlayVisible } : marker,
+        ),
+      );
+      setMapMarkerId(markerId);
+    }
   };
 
   return (
     <MapSection>
-      {/* 지도를 표시할 Container */}
       <Map
         center={{
           lat: coords.lat,
