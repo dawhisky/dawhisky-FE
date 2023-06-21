@@ -1,6 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import { BsChevronCompactRight } from 'react-icons/bs';
+import { AiOutlineCaretRight } from 'react-icons/ai';
 import throttle from '../hooks/throttle';
 
 // ! [props]
@@ -17,9 +19,12 @@ const TabMenu = ({ tabgroup, tabchosen, ontabclickhandler }) => {
   const url = location.pathname;
 
   // scrollLeft값을 얻기 위해 useRef를 사용하여 DOM에 접근
-  const scrollRef = useRef(null);
+  const scrollRef = useRef(0);
   const [isDrag, setIsDrag] = useState(false);
   const [startX, setStartX] = useState();
+
+  // 캐러셀 아이콘
+  const [rightIcon, setRightIcon] = useState(true);
 
   const onDragStartHandler = (e) => {
     e.preventDefault();
@@ -47,6 +52,15 @@ const TabMenu = ({ tabgroup, tabchosen, ontabclickhandler }) => {
     }
   };
 
+  // ! test
+  useEffect(() => {
+    if (scrollRef.current.scrollLeft === 0) {
+      setRightIcon(true);
+    } else if (scrollRef.current.scrollLeft > 0) {
+      setRightIcon(false);
+    }
+  }, [scrollRef.current.scrollLeft]);
+
   const onThrottleMoveHandler = throttle(onDragMoveHandler, 100);
 
   return (
@@ -72,6 +86,7 @@ const TabMenu = ({ tabgroup, tabchosen, ontabclickhandler }) => {
             </TabMenuButton>
           );
         })}
+      {rightIcon && <TabRightIcon />}
     </TabSection>
   );
 };
@@ -86,6 +101,7 @@ const TabSection = styled.section`
   padding: 0.3rem 1rem 0 1rem;
   display: flex;
   gap: 0.625rem;
+  position: relative;
   background-color: ${({ theme, url }) => (url === '/' ? theme.colors.darkBrown : 'transperant')};
   white-space: nowrap;
   overflow-x: scroll;
@@ -114,7 +130,15 @@ const TabMenuButton = styled.button`
       : active === 'true'
       ? theme.colors.orange
       : url === '/'
-      ? '#947A6B'
+      ? theme.colors.brown
       : theme.colors.darkGray};
   cursor: pointer;
+`;
+
+const TabRightIcon = styled(AiOutlineCaretRight)`
+  position: absolute;
+  font-size: 1.125rem;
+  top: 0.875rem;
+  right: 0.125rem;
+  color: ${({ theme }) => theme.colors.white};
 `;

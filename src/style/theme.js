@@ -6,6 +6,7 @@ const theme = {
     mediumOrange: '#EDCDA7',
     orange: '#FF8B00',
     lightBrown: '#7B3400',
+    brown: '#947A6B',
     darkBrown: '#2D1800',
     lightGray: '#EAEAEA',
     gray: '#BBBBBB',
