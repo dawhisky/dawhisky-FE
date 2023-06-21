@@ -33,13 +33,13 @@ const AdminLogin = () => {
     <Layout>
       <WrapDiv>
         <button type={'button'} onClick={() => onLocalLoginHandler('user1')}>
-          {'USER 1'}
+          DEV 1
         </button>
         <button type={'button'} onClick={() => onLocalLoginHandler('user2')}>
-          {'USER 2'}
+          DEV 2
         </button>
         <button type={'button'} onClick={() => onLocalLoginHandler('user3')}>
-          {'USER 3'}
+          DEV 3
         </button>
       </WrapDiv>
     </Layout>

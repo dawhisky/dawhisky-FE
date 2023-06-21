@@ -114,6 +114,10 @@ const UserQuePage = () => {
       setQueued(false);
     }
     setMyQueData(myQueInfo);
+
+    return () => {
+      setQueued(false); // 페이지를 떠날 때 queued 값을 초기화
+    };
   }, [myQueInfo]);
 
   useEffect(() => {
