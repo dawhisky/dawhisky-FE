@@ -14,8 +14,6 @@ const DetailList = ({ type, list }) => {
   const location = useLocation();
   const url = location.pathname;
 
-  console.log(list);
-
   const onListClickHandler = (id) => {
     if (url.includes('/ManagePage/user')) {
       navigate(`/UserComment/${id}`);
