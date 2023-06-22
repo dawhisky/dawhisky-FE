@@ -20,7 +20,8 @@ const StoreDetail = () => {
     { name: '보유 위스키', type: 'getWhisky' },
     { name: '줄서기', type: 'que' },
   ];
-  const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+
+  const [tabChosen, setTabChosen] = useState(location.state ? tabGroup[location.state.idx].type : tabGroup[0].type);
 
   // * [상세 정보 tab] 해당 스토어 테이블 정보
   const { isLoading, isError, data } = useQuery('getStoreInfo', () => getStoreInfo(storeId));
