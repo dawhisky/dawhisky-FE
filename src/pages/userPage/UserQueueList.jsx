@@ -37,6 +37,10 @@ const UserQueueList = () => {
   //   });
   // };
 
+  const editButtonHandler = (storeId) => {
+    navigate(`/StoreDetail/${storeId}`, { state: { idx: 2 } });
+  };
+
   return (
     <UserQueueListWrapper>
       {userQueueData.map((item) => (
@@ -59,9 +63,9 @@ const UserQueueList = () => {
           </div>
           <div>
             <Button onClick={() => deleteMyQueueApi.mutate(item.que_id)}>{'줄서기 취소'}</Button>
-            {/* <Button onClick={() => editButtonHandler(item.store_id)} size={'medium'} location={'both'}>
+            <Button onClick={() => editButtonHandler(item.store_id)} size={'medium'} location={'both'}>
               {'수정'}
-            </Button> */}
+            </Button>
           </div>
         </IndividualQueue>
       ))}
