@@ -5,6 +5,7 @@ import { styled } from 'styled-components';
 import { toast } from 'react-toastify';
 import { getMyQueueList, deleteMyQueue } from '../../api/queue';
 import { Button } from '../../components';
+import { NoneData } from '../statusPage';
 
 const UserQueueList = () => {
   // * useNavigate hook
@@ -43,32 +44,36 @@ const UserQueueList = () => {
 
   return (
     <UserQueueListWrapper>
-      {userQueueData.map((item) => (
-        <IndividualQueue key={item.que_id}>
-          <button type={'button'} onClick={() => navigate(`/StoreDetail/${item.store_id}`)}>
-            {item.store}
-            {' >'}
-          </button>
-          <div>
-            <span>{'좌석'}</span>
-            <span>{item.want_table === 'bar' ? '바' : item.want_table === 'hall' ? '홀' : '상관없음'}</span>
-          </div>
-          <div>
-            <span>{'인원'}</span>
-            <span>{item.head_count}</span>
-          </div>
-          <div>
-            <span>{'요청사항'}</span>
-            <span>{item.request}</span>
-          </div>
-          <div>
-            <Button onClick={() => deleteMyQueueApi.mutate(item.que_id)}>{'줄서기 취소'}</Button>
-            <Button onClick={() => editButtonHandler(item.store_id)} size={'medium'} location={'both'}>
-              {'수정'}
-            </Button>
-          </div>
-        </IndividualQueue>
-      ))}
+      {userQueueData.length > 0 ? (
+        userQueueData.map((item) => (
+          <IndividualQueue key={item.que_id}>
+            <button type={'button'} onClick={() => navigate(`/StoreDetail/${item.store_id}`)}>
+              {item.store}
+              {' >'}
+            </button>
+            <div>
+              <span>{'좌석'}</span>
+              <span>{item.want_table === 'bar' ? '바' : item.want_table === 'hall' ? '홀' : '상관없음'}</span>
+            </div>
+            <div>
+              <span>{'인원'}</span>
+              <span>{item.head_count}</span>
+            </div>
+            <div>
+              <span>{'요청사항'}</span>
+              <span>{item.request}</span>
+            </div>
+            <div>
+              <Button onClick={() => deleteMyQueueApi.mutate(item.que_id)}>{'줄서기 취소'}</Button>
+              <Button onClick={() => editButtonHandler(item.store_id)} size={'medium'} location={'both'}>
+                {'수정'}
+              </Button>
+            </div>
+          </IndividualQueue>
+        ))
+      ) : (
+        <NoneData>{'나의 줄서기 현황이 없습니다.'}</NoneData>
+      )}
     </UserQueueListWrapper>
   );
 };
@@ -78,7 +83,7 @@ export default UserQueueList;
 const UserQueueListWrapper = styled.div`
   border: 0.5px solid #c6c3c3;
   border-radius: 8px;
-  min-height: 300px;
+  min-height: 220px;
   padding: 5px 5px 15px 5px;
 `;
 
@@ -108,15 +113,20 @@ const IndividualQueue = styled.div`
   }
   & div:last-child {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 20px;
 
     & button {
       border-radius: 8px;
-      width: 100%;
+      width: 48%;
       font-weight: 400;
       font-size: 18px;
       transform: none;
+    }
+    & button:first-child {
+      background-color: transparent;
+      color: black;
+      border: 1px solid #c6c3c3;
     }
   }
 `;
