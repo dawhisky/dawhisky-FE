@@ -83,7 +83,7 @@ const DetailList = ({ type, list }) => {
                   <TextH2>{type === 'store' ? item.address : item.whisky_eng}</TextH2>
                   {type === 'store' ? (
                     <BarInfoDiv>
-                      <button type={'button'}>{`바 ${filteredBarTables}석 | 홀 ${filteredHallTables}석`}</button>
+                      <button type={'button'}>{`잔여 바 ${filteredBarTables}석 | 홀 ${filteredHallTables}석`}</button>
                     </BarInfoDiv>
                   ) : (
                     <WhiskyInfoDiv>
