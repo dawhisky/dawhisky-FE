@@ -1,5 +1,6 @@
 import bgFram from './bgFrame.svg';
 import logo from './logo.svg';
+import bgLogo from './bgLogo.svg';
 import barColor from './barColor.svg';
 import barGray from './barGray.svg';
 import mypageColor from './mypageColor.svg';
@@ -13,6 +14,7 @@ import bottle from './bottle.svg';
 export {
   bgFram,
   logo,
+  bgLogo,
   barColor,
   barGray,
   mypageColor,
