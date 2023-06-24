@@ -52,7 +52,6 @@ const UserManagePage = () => {
   const setLogoutMutation = useMutation(setLogout, {
     onSuccess: () => {
       localStorage.clear();
-      sessionStorage.clear();
       toast.success('로그아웃이 완료되었습니다.');
       navigate(`/`, { replace: true });
     },
@@ -72,7 +71,6 @@ const UserManagePage = () => {
   const setSignoutMutation = useMutation(setSignout, {
     onSuccess: () => {
       localStorage.clear();
-      sessionStorage.clear();
       toast.success('회원탈퇴가 완료되었습니다.');
       navigate(`/`, { replace: true });
     },
