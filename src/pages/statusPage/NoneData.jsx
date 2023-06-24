@@ -3,12 +3,12 @@ import { styled } from 'styled-components';
 import { CiFaceMeh } from 'react-icons/ci';
 import { useLocation } from 'react-router-dom';
 
-const NoneData = ({ children }) => {
+const NoneData = ({ height, children }) => {
   const location = useLocation();
 
   // * 로그인 하러 가기는 pathname으로 구분하여 show or hide
   return (
-    <InformDiv>
+    <InformDiv height={height}>
       <FaceIcon />
       <p>{children}</p>
       {location.pathname === '' ? <p>{'로그인 하러 가기'}</p> : ''}
@@ -19,7 +19,7 @@ const NoneData = ({ children }) => {
 export default NoneData;
 
 const InformDiv = styled.div`
-  height: 200px;
+  height: ${({ height }) => (!height ? '200px' : height)};
   display: flex;
   flex-direction: column;
   justify-content: center;
