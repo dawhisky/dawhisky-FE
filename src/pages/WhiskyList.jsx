@@ -32,16 +32,19 @@ const WhiskyList = () => {
   ];
 
   // * 상세 카테고리
+  const likeList = ['기본순', '좋아요순'];
   const typeList = ['전체', '싱글 몰트', '싱글 그레인', '블렌디드 몰트', '블렌디드', '그 외'];
   const regionList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '그 외'];
   const americantList = ['전체', '버번', '라이', '테네시', '그 외'];
 
   const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+  const [like, setLike] = useState(likeList[0]);
   const [region, setRegion] = useState(regionList[0]);
   const [blend, setBlend] = useState(typeList[0]);
   const [american, setAmerican] = useState(americantList[0]);
   const [whiskyList, setWhiskyList] = useState([]);
   const [observerRef, inView] = useInView();
+  const [lastPage, setLastPage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -51,6 +54,8 @@ const WhiskyList = () => {
     if (type === 'all') {
       setCategorization((prev) => ({
         ...prev,
+        page: '1',
+        like: 'n',
         country: '',
         type: '',
         region: '',
@@ -58,17 +63,27 @@ const WhiskyList = () => {
     } else {
       setCategorization((prev) => ({
         ...prev,
+        page: '1',
+        like: 'n',
         country: type,
         type: '',
         region: '',
       }));
     }
+    setWhiskyList([]);
+    setLike(likeList[0]);
     setRegion(regionList[0]);
     setBlend(typeList[0]);
     setAmerican(americantList[0]);
   };
 
   // * [상세 type] click 이벤트
+  const onLikeClickHandler = (idx, item) => {
+    setLike(likeList[idx]);
+    if (item === '기본순') setCategorization((prev) => ({ ...prev, like: 'n' }));
+    if (item === '좋아요순') setCategorization((prev) => ({ ...prev, like: 'y' }));
+  };
+
   const onTypeClickHandler = (idx, item) => {
     setBlend(typeList[idx]);
     if (item === '전체') setCategorization((prev) => ({ ...prev, type: '' }));
@@ -109,7 +124,10 @@ const WhiskyList = () => {
   const getInfiniteData = {
     fetchWithScroll: async (pageParam, category) => {
       const list = await getWhiskyList(category);
-      return { list, nextPage: +pageParam + 1 };
+      const listData = list.filter((_, idx) => idx <= list.length - 2);
+      const getLastPage = list[list.length - 1];
+      setLastPage(getLastPage);
+      return { list: listData, nextPage: +pageParam + 1, lastPage: getLastPage };
     },
   };
 
@@ -119,7 +137,7 @@ const WhiskyList = () => {
     {
       onSuccess: (response) => {
         const currentPage = response.pages[0];
-        if (currentPage && inView) {
+        if (inView && currentPage && lastPage !== 0) {
           setWhiskyList((prev) => [...prev, ...currentPage.list]);
           setCategorization((prev) => ({ ...prev, page: currentPage.nextPage }));
         }
@@ -129,10 +147,10 @@ const WhiskyList = () => {
   );
 
   useEffect(() => {
-    if (inView && !isFetchingNextPage) {
+    if (inView && !isFetchingNextPage && lastPage !== 0 && categorization.page <= lastPage) {
       fetchNextPage();
     }
-  }, [inView, isFetchingNextPage]);
+  }, [inView, isFetchingNextPage, categorization.page, lastPage]);
 
   return (
     <Layout>
@@ -145,6 +163,11 @@ const WhiskyList = () => {
       </Header>
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
 
+      {tabChosen === 'all' && (
+        <CategorySection>
+          <CategorySelect category={like} list={likeList} categorychosen={like} onclickhandler={onLikeClickHandler} />
+        </CategorySection>
+      )}
       {tabChosen === 'Scotland' && (
         <CategorySection>
           <CategorySelect
@@ -181,9 +204,7 @@ const WhiskyList = () => {
           />
         </CategorySection>
       )}
-      {whiskyList && (!whiskyList || whiskyList.length === 0) && (
-        <NoneData>{'카테고리에 일치하는 위스키가 없어요'}</NoneData>
-      )}
+      {whiskyList.length === 0 && <NoneData height={'50vh'}>{'카테고리에 일치하는 위스키가 없어요'}</NoneData>}
       <WhiskyListSection>
         {whiskyList &&
           whiskyList.length !== 0 &&
