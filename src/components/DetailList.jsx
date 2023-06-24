@@ -96,7 +96,7 @@ const DetailList = ({ type, list }) => {
             </ListDiv>
           );
         })}
-      {(!list || list.length === 0) && type === 'store' && <NoneData>{'위스키 바가 없어요'}</NoneData>}
+      {(!list || list.length === 0) && type === 'store' && <NoneData>{'조회된 위스키 바가 없어요'}</NoneData>}
       {(!list || list.length === 0) && type !== 'store' && <NoneData>{'위스키 데이터가 존재하지 않아요'}</NoneData>}
     </StockListDiv>
   );

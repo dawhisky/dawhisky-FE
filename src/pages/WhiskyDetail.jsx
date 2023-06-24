@@ -16,7 +16,7 @@ const WhiskyDetail = () => {
   const location = useLocation();
   const whiskyId = location.pathname.slice(14);
 
-  const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+  const [tabChosen, setTabChosen] = useState(location.state ? tabGroup[location.state.idx].type : tabGroup[0].type);
   const [isWhiskyLike, setIsWhiskyLike] = useState(false);
   const [whiskyDetail, setWhiskyDetail] = useState(null);
   const [whiskyInfo, setWhiskyInfo] = useState(null);
@@ -45,6 +45,7 @@ const WhiskyDetail = () => {
 
   // * [위스키 코멘트] 조회 useMutation
   const getWhiskyCommentMutation = useMutation(getWhiskyComment, {
+    // ! test
     onSuccess: (response) => setWhiskyComment(response),
   });
 

@@ -8,13 +8,14 @@ import { NoneData } from './statusPage';
 const WhiskyComment = ({ comment }) => {
   return (
     <>
+      {comment.length === 0 && <NoneData>{'등록된 코멘트가 없어요'}</NoneData>}
       {comment &&
         comment.map((item, idx) => (
           <CommentDiv key={item.review_id}>
             <CommentP idx={idx}>{item.content}</CommentP>
+            <TimeStampP>{item.createdAt.slice(0, 10).replace(/-/g, '.')}</TimeStampP>
           </CommentDiv>
         ))}
-      {!comment && <NoneData>{'등록된 코멘트가 없어요'}</NoneData>}
     </>
   );
 };
@@ -22,15 +23,21 @@ const WhiskyComment = ({ comment }) => {
 export default WhiskyComment;
 
 const CommentDiv = styled.div`
-  margin: 0 0.25rem;
+  margin: 0 15px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.lightGray};
   display: flex;
-  align-items: center;
+  flex-direction: column;
 `;
 
 const CommentP = styled.p`
-  padding: ${(props) => (props.idx === 0 ? '0 1.25rem 1.25rem 1.25rem' : '1.25rem')};
+  padding: ${(props) => (props.idx === 0 ? '0 4px 5px 10px' : '20px 4px 5px 10px')};
   text-align: justify;
   word-break: break-all;
   white-space: pre-wrap;
+`;
+
+const TimeStampP = styled.p`
+  padding: 0 20px 20px 10px;
+  color: ${({ theme }) => theme.colors.gray};
+  font-size: 11px;
 `;
