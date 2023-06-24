@@ -10,6 +10,8 @@ import whiskyGray from './whiskyGray.svg';
 import defaultImage from './defaultImage.png';
 import edit from './edit.svg';
 import bottle from './bottle.svg';
+import mapPoint from './mapPoint.svg';
+import mapLikePoint from './mapLikePoint.svg';
 
 export {
   bgFram,
@@ -24,4 +26,6 @@ export {
   defaultImage,
   edit,
   bottle,
+  mapPoint,
+  mapLikePoint,
 };

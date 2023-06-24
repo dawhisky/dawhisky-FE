@@ -3,6 +3,7 @@ import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { styled } from 'styled-components';
 import { BiChevronRight } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import { mapPoint } from '../assets';
 
 // window.kakao 객체를 가져옴
 const { kakao } = window;
@@ -94,10 +95,10 @@ const KakaoMap = ({ coords, storelist }) => {
               <MapMarker
                 position={marker.position}
                 image={{
-                  src: 'https://cdn-icons-png.flaticon.com/512/2722/2722538.png',
+                  src: mapPoint,
                   size: {
-                    width: 24,
-                    height: 35,
+                    width: 27,
+                    height: 27,
                   },
                   options: {
                     offset: {
