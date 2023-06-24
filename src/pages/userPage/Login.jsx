@@ -71,7 +71,7 @@ const Login = () => {
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('store_id', store);
       toast.success(message);
-      navigate('/', { replace: true });
+      navigate('/ManagePage', { replace: true });
     },
     onError: (error) => {
       toast.error(error.response.data.errorMessage);
