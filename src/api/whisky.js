@@ -1,9 +1,9 @@
 import api from './interceptor';
 
 // * 위스키 리스트 전체 조회
-export const getWhiskyList = ({ page, pageSize, country, type, region }) => {
+export const getWhiskyList = ({ page, pageSize, like, country, type, region }) => {
   return api
-    .get(`/api/whisky/?page=${page}&pageSize=${pageSize}&country=${country}&type=${type}&region=${region}`)
+    .get(`/api/whisky/?page=${page}&pageSize=${pageSize}&like=${like}&country=${country}&type=${type}&region=${region}`)
     .then((response) => response.data)
     .catch((error) => {
       throw error;
