@@ -50,7 +50,7 @@ const UserComment = () => {
     onSuccess: () => {
       toast.success('코멘트 등록이 완료되었습니다.');
       setEditmode(false);
-      refetch();
+      navigate(`/WhiskyDetail/${id}`, { state: { idx: 2 } });
     },
   });
 
@@ -59,7 +59,7 @@ const UserComment = () => {
     onSuccess: () => {
       toast.success('코멘트가 수정되었습니다.');
       setEditmode(false);
-      refetch();
+      navigate(`/WhiskyDetail/${id}`, { state: { idx: 2 } });
     },
   });
 

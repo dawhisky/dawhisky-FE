@@ -21,7 +21,7 @@ const DetailList = ({ type, list }) => {
       navigate(`/StoreDetail/${id}`);
     } else if (url.includes('/StoreDetail')) {
       navigate(`/WhiskyDetail/${id}`);
-    } else if (url.includes('/ManagePage/store')) {
+    } else if (url.includes('/ManagePage/store') || url.includes('/SearchPage')) {
       navigate(`/WhiskyDetail/${id}`);
     }
   };
@@ -96,8 +96,10 @@ const DetailList = ({ type, list }) => {
             </ListDiv>
           );
         })}
-      {(!list || list.length === 0) && type === 'store' && <NoneData>{'위스키 바가 없어요'}</NoneData>}
-      {(!list || list.length === 0) && type !== 'store' && <NoneData>{'위스키 데이터가 존재하지 않아요'}</NoneData>}
+      {(!list || list.length === 0) && type === 'store' && <NoneData>{'조회된 위스키 바가 없어요'}</NoneData>}
+      {(!list || list.length === 0) && type !== 'store' && (
+        <NoneData height={url.includes('/SearchPage') ? '70vh' : ''}>{'위스키 데이터가 존재하지 않아요'}</NoneData>
+      )}
     </StockListDiv>
   );
 };
