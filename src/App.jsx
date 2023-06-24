@@ -47,7 +47,6 @@ const isAuthenticated = () => {
   // 로그인 관련 데이터가 하나라도 없을 경우 기존 로그인 정보 삭제, 재로그인 진행
   if ((!result.userFlag && authorization && refreshToken) || (result.userFlag && (!authorization || !refreshToken))) {
     localStorage.clear();
-    sessionStorage.clear();
     const updatedResult = { ...result };
     updatedResult.msg = '로그인 정보가 유효하지 않습니다. \n다시 로그인을 진행해주세요.';
     return updatedResult;
