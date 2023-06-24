@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { styled, useTheme } from 'styled-components';
-import { toast } from 'react-toastify';
 import Select from 'react-select';
 import { MdOutlineGpsFixed } from 'react-icons/md';
 import { Layout, Button, DetailList } from '../components';
@@ -63,6 +62,7 @@ const StoreList = () => {
     }),
     menuList: (styles) => ({
       ...styles,
+      padding: '0',
       '&::-webkit-scrollbar': {
         width: '0.125rem',
       },

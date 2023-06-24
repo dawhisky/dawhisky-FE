@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { useInfiniteQuery } from 'react-query';
+import { useInView } from 'react-intersection-observer';
 import { getWhiskyList } from '../api/whisky';
-import { Layout, Image, TabMenu, SearchInput, CategorySelect, WhiskyGrid } from '../components';
+import { Layout, Image, TabMenu, SearchInput, CategorySelect } from '../components';
 import { NoneData } from './statusPage';
 import { logo } from '../assets';
 
@@ -12,7 +13,8 @@ const WhiskyList = () => {
   // * 나라별 탭 + 상세 카테고리
   const [categorization, setCategorization] = useState({
     page: '1',
-    pageSize: '700',
+    pageSize: '10',
+    like: 'n',
     country: '',
     type: '',
     region: '',
@@ -38,7 +40,8 @@ const WhiskyList = () => {
   const [region, setRegion] = useState(regionList[0]);
   const [blend, setBlend] = useState(typeList[0]);
   const [american, setAmerican] = useState(americantList[0]);
-  const [whiskyList, setWhiskyList] = useState(null);
+  const [whiskyList, setWhiskyList] = useState([]);
+  const [observerRef, inView] = useInView();
 
   const navigate = useNavigate();
 
@@ -96,17 +99,40 @@ const WhiskyList = () => {
     if (item === '그 외') setCategorization((prev) => ({ ...prev, type: 'etc' }));
   };
 
-  // * 위스키 리스트 조회
-  useQuery(['getStoreWhiskyList', categorization], () => getWhiskyList(categorization), {
-    onSuccess: (response) => {
-      setWhiskyList(response);
-    },
-  });
+  // * [좋아요 내역] click 이벤트
+  const onLikeListClickHandler = () => navigate(`/LikeList`);
 
-  // * 좋아요 리스트 버튼 클릭
-  const onLikeListClickHandler = () => {
-    navigate(`/LikeList`);
+  // * [위스키 디테일] click 이벤트
+  const onWhiskyClickHandler = (id) => navigate(`/WhiskyDetail/${id}`);
+
+  // * [위스키 리스트] 조회 & 무한 스크롤
+  const getInfiniteData = {
+    fetchWithScroll: async (pageParam, category) => {
+      const list = await getWhiskyList(category);
+      return { list, nextPage: +pageParam + 1 };
+    },
   };
+
+  const { fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    ['getStoreWhiskyList', categorization],
+    ({ pageParam = categorization.page }) => getInfiniteData.fetchWithScroll(pageParam, categorization),
+    {
+      onSuccess: (response) => {
+        const currentPage = response.pages[0];
+        if (currentPage && inView) {
+          setWhiskyList((prev) => [...prev, ...currentPage.list]);
+          setCategorization((prev) => ({ ...prev, page: currentPage.nextPage }));
+        }
+      },
+      retry: false,
+    },
+  );
+
+  useEffect(() => {
+    if (inView && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, isFetchingNextPage]);
 
   return (
     <Layout>
@@ -158,7 +184,29 @@ const WhiskyList = () => {
       {whiskyList && (!whiskyList || whiskyList.length === 0) && (
         <NoneData>{'카테고리에 일치하는 위스키가 없어요'}</NoneData>
       )}
-      {whiskyList && whiskyList.length !== 0 && <WhiskyGrid list={whiskyList} />}
+      <WhiskyListSection>
+        {whiskyList &&
+          whiskyList.length !== 0 &&
+          whiskyList.map((item) => (
+            <WhiskyDataDiv key={item.whisky_id} onClick={() => onWhiskyClickHandler(item.whisky_id)}>
+              <ImageWrapDiv>
+                <Image
+                  width={'9.5rem'}
+                  height={'9.5rem'}
+                  borderradius={'0.313rem'}
+                  src={item.whisky_photo}
+                  alt={`${item.whisky_kor} 사진`}
+                />
+              </ImageWrapDiv>
+              <h1>{item.whisky_kor}</h1>
+              <div>
+                <h2>{item.whisky_eng}</h2>
+                <h3>{`${item.whisky_abv} vol`}</h3>
+              </div>
+            </WhiskyDataDiv>
+          ))}
+      </WhiskyListSection>
+      <div ref={observerRef} />
     </Layout>
   );
 };
@@ -194,4 +242,62 @@ const CategorySection = styled.section`
   margin-bottom: 1.875rem;
   display: flex;
   gap: 0.5rem;
+`;
+
+const WhiskyListSection = styled.section`
+  height: 100%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: minmax(0, auto);
+  grid-gap: 1.8rem 1.4rem;
+`;
+
+const WhiskyDataDiv = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.13rem;
+  cursor: pointer;
+  & div:last-child {
+    display: flex;
+    justify-content: space-between;
+  }
+  & h1 {
+    width: 9.688rem;
+    margin-top: 0.5rem;
+    font-size: 0.938rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  & h2 {
+    width: 6.2rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: ${({ theme }) => theme.colors.darkGray};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  & h3 {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1rem;
+    color: ${({ theme }) => theme.colors.orange};
+  }
+`;
+
+const ImageWrapDiv = styled.div`
+  width: 9.65rem;
+  height: 9.65rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid ${({ theme }) => theme.colors.lightGray};
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 4px -5px;
 `;
