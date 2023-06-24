@@ -1,19 +1,13 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
-import { GrSearch } from 'react-icons/gr';
 import { toast } from 'react-toastify';
 import { getKeywordList } from '../api/whisky';
-import { Layout, SearchInput } from '../components';
-import { NoneData } from './statusPage';
+import { Layout, SearchInput, DetailList } from '../components';
 
 const SearchPage = () => {
   const [userInput, setUserInput] = useState('');
   const [keyword, setKeyword] = useState('');
   const [recommendList, setRecommedList] = useState(null);
-
-  const navigate = useNavigate();
 
   // * [추천검색어] 커스텀 디바운스 함수
   const debounce = (callback, delay) => {
@@ -58,9 +52,6 @@ const SearchPage = () => {
     searchKeywordHandler();
   }, [keyword]);
 
-  // * 추천검색어 click : 해당 위스키 상세 페이지로 이동
-  const onRecommendClickHandler = (id) => navigate(`/WhiskyDetail/${id}`);
-
   // * [키워드 검색]
   const onSearchClickHandler = () => searchKeywordMutation.mutate(userInput);
 
@@ -73,32 +64,9 @@ const SearchPage = () => {
         onclick={onSearchClickHandler}
         placeholder={'위스키를 검색해보세요!'}
       />
-      <RecommendUl>
-        {recommendList && recommendList.length === 0 && <NoneData>일치하는 검색어가 없어요</NoneData>}
-        {recommendList &&
-          recommendList.length !== 0 &&
-          recommendList.map((item) => (
-            <RecommendLi key={item.whisky_id} onClick={() => onRecommendClickHandler(item.whisky_id)}>
-              <GrSearch />
-              <p>{item.whisky_eng ? item.whisky_eng : item.whisky_kor}</p>
-            </RecommendLi>
-          ))}
-      </RecommendUl>
+      {recommendList && <DetailList list={recommendList} />}
     </Layout>
   );
 };
 
 export default SearchPage;
-
-const RecommendUl = styled.ul`
-  margin-top: 30px;
-  margin-left: 5px;
-`;
-
-const RecommendLi = styled.li`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 20px;
-  cursor: pointer;
-`;
