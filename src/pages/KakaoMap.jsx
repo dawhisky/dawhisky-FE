@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { styled } from 'styled-components';
 import { BiChevronRight } from 'react-icons/bi';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { setAddressSelect } from '../selectors/mapSelectSelector';
 import { mapPoint } from '../assets';
 
 // window.kakao 객체를 가져옴
@@ -11,6 +14,7 @@ const { kakao } = window;
 const KakaoMap = ({ coords, storelist }) => {
   const [markers, setMarkers] = useState([]);
   const [mapMarkerId, setMapMarkerId] = useState(null);
+  const setAddressValue = useSetRecoilState(setAddressSelect);
 
   // * 상세 페이지로 이동
   const navigate = useNavigate();
@@ -76,6 +80,19 @@ const KakaoMap = ({ coords, storelist }) => {
     }
   };
 
+  // * 지도의 중심 위치를 변경했을 경우 해당 구 위스키바 조회
+  const onIdleHandler = (map) => {
+    const latlng = map.getCenter();
+    geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (address) => {
+      const getAddressName = address[0].address;
+      if (getAddressName.region_1depth_name === '서울') {
+        setAddressValue(getAddressName.region_2depth_name);
+      } else {
+        toast.error('현재 위스키바는 서울시 내 업장만 조회 가능합니다.');
+      }
+    });
+  };
+
   return (
     <MapSection>
       <Map
@@ -88,6 +105,7 @@ const KakaoMap = ({ coords, storelist }) => {
           height: '100vh',
         }}
         level={5}
+        onIdle={(map) => onIdleHandler(map)}
       >
         {markers &&
           markers.map((marker) => (

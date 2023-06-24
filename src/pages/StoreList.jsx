@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { styled, useTheme } from 'styled-components';
+import { toast } from 'react-toastify';
 import Select from 'react-select';
 import { MdOutlineGpsFixed } from 'react-icons/md';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { setMapSelect, getMapSelect, getAddressSelect } from '../selectors/mapSelectSelector';
 import { Layout, Button, DetailList } from '../components';
 import KakaoMap from './KakaoMap';
 import { getStoreList } from '../api/store';
@@ -72,9 +75,10 @@ const StoreList = () => {
     }),
   };
 
-  const sessionIdx = sessionStorage.getItem('mapSelectIdx');
-  const [selectStatus, setSelectStatus] = useState(sessionIdx ? statusOptions[sessionIdx] : statusOptions[0]);
-
+  const getMapValue = useRecoilValue(getMapSelect);
+  const getAddressValue = useRecoilValue(getAddressSelect);
+  const setMapValue = useSetRecoilState(setMapSelect);
+  const [selectStatus, setSelectStatus] = useState(statusOptions[getMapValue]);
   const [coords, setCoords] = useState({ lat: 0, lon: 0 });
   const [currentLocationToggle, setCurrentLocationToggle] = useState(false);
   const [toggleId, setToggleId] = useState(0);
@@ -89,23 +93,11 @@ const StoreList = () => {
       // 사용자의 위치가 서울시가 아닐 경우 default 강남구로 설정
       const getAddressName = address[0];
       if (getAddressName.region_1depth_name !== '서울') {
+        setSelectStatus(statusOptions[getMapValue]);
         setCoords({
-          lat: statusOptions[0].value.lat,
-          lon: statusOptions[0].value.lon,
+          lat: statusOptions[getMapValue].value.lat,
+          lon: statusOptions[getMapValue].value.lon,
         });
-        if (!sessionStorage.getItem('mapSelectIdx')) {
-          setSelectStatus(statusOptions[0]);
-          setCoords({
-            lat: statusOptions[0].value.lat,
-            lon: statusOptions[0].value.lon,
-          });
-        } else {
-          setSelectStatus(statusOptions[sessionStorage.getItem('mapSelectIdx')]);
-          setCoords({
-            lat: statusOptions[sessionStorage.getItem('mapSelectIdx')].value.lat,
-            lon: statusOptions[sessionStorage.getItem('mapSelectIdx')].value.lon,
-          });
-        }
       } else {
         const userLoacation = statusOptions.find((option) => option.label === getAddressName.region_2depth_name);
         setSelectStatus(userLoacation);
@@ -118,11 +110,12 @@ const StoreList = () => {
   };
 
   // * [위치 동의] 사용자 위치정보 거절하거나 오류일 경우 default 위도/경도 설정
-  const reject = () =>
+  const reject = () => {
     setCoords({
-      lat: statusOptions[0].value.lat,
-      lon: statusOptions[0].value.lon,
+      lat: statusOptions[getMapValue].value.lat,
+      lon: statusOptions[getMapValue].value.lon,
     });
+  };
 
   // * [스토어 리스트] 위스키바 목록 보기 toggle
   const isShowListHandler = () => setNearbyToggle(!nearbyToggle);
@@ -135,13 +128,19 @@ const StoreList = () => {
     },
   });
 
-  // * [스토어 리스트] select의 값이 바뀔때마다 위스키바 리스트 재조회
+  // * [스토어 리스트] 지도 이동해 구가 바뀔때마다 재조회
   useEffect(() => {
-    // 현재 선택한 select를 기억하기 위해 sessionStorage에 해당 idx값 저장
-    sessionStorage.setItem(
-      'mapSelectIdx',
-      statusOptions.findIndex((i) => i.label === selectStatus.label),
-    );
+    if (getAddressValue) {
+      const addressIdx = statusOptions.findIndex((i) => i.label === getAddressValue);
+      setMapValue(addressIdx);
+      setSelectStatus(statusOptions[addressIdx]);
+      toast.success(`중심 위치를 ${getAddressValue}로 변경합니다.`);
+    }
+  }, [getAddressValue]);
+
+  // * [스토어 리스트] select의 값이 바뀔때마다 재조회
+  useEffect(() => {
+    setMapValue(statusOptions.findIndex((i) => i.label === selectStatus.label));
     refetch();
   }, [selectStatus, currentLocationToggle]);
 
@@ -171,6 +170,7 @@ const StoreList = () => {
         <SelectWrapDiv>
           <StyledSelect
             defaultValue={selectStatus}
+            value={selectStatus}
             onChange={setSelectStatus}
             options={statusOptions}
             isSearchable={false}
