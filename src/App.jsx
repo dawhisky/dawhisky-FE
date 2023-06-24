@@ -60,6 +60,12 @@ const isAuthenticated = () => {
 const PrivateRoute = ({ category, element, isManagePage }) => {
   const { userFlag, msg } = isAuthenticated();
 
+  // userFlag가 없을 경우
+  if (!userFlag) {
+    toast.error(`로그인 후 이용 가능합니다.`);
+    return <Navigate to={'/Login'} replace />;
+  }
+
   // ManagePage 진입할 경우
   if (userFlag !== '' && msg === '' && isManagePage === 'true') {
     return element;
