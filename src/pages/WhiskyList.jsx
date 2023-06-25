@@ -240,7 +240,7 @@ const WhiskyList = () => {
           ))}
       </WhiskyListSection>
       <div ref={observerRef} />
-      <ToTheTopButton onClick={() => toTheTopEvent()}>
+      <ToTheTopButton button={'button'} onClick={() => toTheTopEvent()}>
         <FiArrowUp />
       </ToTheTopButton>
     </Layout>
