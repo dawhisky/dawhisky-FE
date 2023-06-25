@@ -230,7 +230,7 @@ const StoreSeatManage = () => {
         </button>
       </StoreSeatManageWrapper>
       {modalToggle && (
-        <Modal height={'18rem'} onconfirmclick={submitTableInfo} oncancelclick={() => setModalToggle(false)}>
+        <Modal height={'288px'} onconfirmclick={submitTableInfo} oncancelclick={() => setModalToggle(false)}>
           <StoreSeatEditPage
             editedSeatData={editedSeatData}
             setEditedSeatData={setEditedSeatData}

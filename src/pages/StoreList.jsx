@@ -67,7 +67,7 @@ const StoreList = () => {
       ...styles,
       padding: '0',
       '&::-webkit-scrollbar': {
-        width: '0.125rem',
+        width: '2px',
       },
       '&::-webkit-scrollbar-thumb': {
         backgroundColor: `${theme.colors.gray}`,
@@ -240,7 +240,7 @@ const SelectWrapDiv = styled.div`
 const StyledSelect = styled(Select)`
   width: 150px;
   text-align: center;
-  font-size: 0.875rem;
+  font-size: 14px;
   cursor: pointer;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 `;

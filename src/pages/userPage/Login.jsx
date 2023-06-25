@@ -93,7 +93,7 @@ const Login = () => {
     <Layout>
       <LoginPageWrapper userrole={userRole} issuitable={isSuitable}>
         <LogoWrapper>
-          <Image width={'10rem'} height={'3rem'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
+          <Image width={'160px'} height={'48px'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
         </LogoWrapper>
         <LoginPageCenter>
           <PersonalLogin userrole={userRole} issuitable={isSuitable}>
