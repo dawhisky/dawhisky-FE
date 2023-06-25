@@ -9,7 +9,6 @@ import UserQueueList from './UserQueueList';
 import SelectWhisky from './SelectWhisky';
 import { getUserInfo } from '../../api/user';
 import { setLogout, setSignout } from '../../api/login';
-import { getMyQueueList } from '../../api/queue';
 
 const UserManagePage = () => {
   const tabGroup = [
@@ -93,7 +92,7 @@ const UserManagePage = () => {
         <>
           <BackgroundDiv onClick={onToggleClickHandler} />
           <ListUl>
-            <span>로그인 관리</span>
+            <span>{'로그인 관리'}</span>
             {managementList.map((item, idx) => {
               return (
                 <ListLi
@@ -108,7 +107,7 @@ const UserManagePage = () => {
             })}
             <ButtonWrapDiv>
               <Button location={'both'} onClick={onToggleClickHandler}>
-                닫기
+                {'닫기'}
               </Button>
             </ButtonWrapDiv>
           </ListUl>
@@ -133,19 +132,19 @@ const UserManagePage = () => {
 export default UserManagePage;
 
 const Header = styled.header`
-  padding: 2.5rem 0.625rem 0.938rem 0.625rem;
+  padding: 40px 10px 15px 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 const UserNameH1 = styled.h1`
-  font-size: 1.25rem;
+  font-size: 20px;
   font-weight: 700;
 `;
 
 const SignoutSpan = styled.span`
-  font-size: 1.25;
+  font-size: 20px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -162,18 +161,18 @@ const BackgroundDiv = styled.div`
 `;
 
 const ListUl = styled.ul`
-  width: 22.5rem;
+  width: 360px;
   position: fixed;
-  bottom: 3.75rem;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 0.75rem 0.75rem 0 0;
+  border-radius: 12px 12px 0 0;
   background-color: ${({ theme }) => theme.colors.white};
   z-index: 1;
   overflow-y: auto;
   animation: fadeInUp 0.7s;
   & span {
-    height: 3.75rem;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -192,23 +191,23 @@ const ListUl = styled.ul`
 `;
 
 const ListLi = styled.li`
-  margin: 1rem 1.25rem;
+  margin: 16px 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   cursor: pointer;
   :first-child {
     font-weight: ${({ active }) => (active === 'true' ? '700' : '400')};
-    width: 18.75rem;
+    width: 300px;
   }
   :last-child {
-    font-size: 1.25rem;
+    font-size: 20px;
     color: ${({ theme, active }) => (active === 'true' ? theme.colors.orange : 'transparent')};
   }
 `;
 
 const ButtonWrapDiv = styled.div`
-  height: 4.375rem;
+  height: 70px;
   display: flex;
   justify-content: space-around;
   align-items: center;

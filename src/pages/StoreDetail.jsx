@@ -69,7 +69,7 @@ const StoreDetail = () => {
         <>
           <DetailHeader korname={data.store} like={data.liked} />
           <ImageDiv>
-            <Image width={'22.5rem'} height={'22.5rem'} src={data.biz_photo} alt={`${data.store} 대표 이미지`} />
+            <Image width={'360px'} height={'360px'} src={data.biz_photo} alt={`${data.store} 대표 이미지`} />
           </ImageDiv>
           <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
 
@@ -90,9 +90,9 @@ const ImageDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20.5rem;
-  width: 22.5rem;
-  margin-left: -1.063rem;
+  height: 330px;
+  width: 360px;
+  margin-left: -17px;
   overflow: hidden;
   & > img {
     object-fit: cover;

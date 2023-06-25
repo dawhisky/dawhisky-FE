@@ -216,9 +216,9 @@ const ListSection = styled.section`
 `;
 
 const SelectWrapDiv = styled.div`
-  top: 1.875rem;
+  top: 30px;
   width: 100%;
-  margin-top: 1.25rem;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -247,7 +247,7 @@ const StyledSelect = styled(Select)`
 
 const ButtonWrapDiv = styled.div`
   width: 100%;
-  height: 6.25rem;
+  height: 100px;
   bottom: 0;
   display: flex;
   z-index: 2;
@@ -256,13 +256,13 @@ const ButtonWrapDiv = styled.div`
     font-weight: 600;
   }
   & button:last-child {
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0.438rem;
-    bottom: 6.25rem;
-    right: 0.625rem;
+    width: 40px;
+    height: 40px;
+    padding: 7px;
+    bottom: 100px;
+    right: 10px;
     background-color: ${({ theme }) => theme.colors.white};
-    font-size: 1.438rem;
+    font-size: 23px;
     border-radius: 50%;
     cursor: pointer;
     display: none;
@@ -284,10 +284,10 @@ const BackgroundDiv = styled.div`
 `;
 
 const NearbyListDiv = styled.div`
-  width: 22.5rem;
-  max-height: 25rem;
+  width: 360px;
+  max-height: 400px;
   position: fixed;
-  bottom: 3.75rem;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 12px 12px 0 0;
@@ -297,20 +297,20 @@ const NearbyListDiv = styled.div`
   overflow-y: auto;
   animation: fadeInUp 0.7s;
   & p {
-    height: 3.75rem;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
   }
   & > div {
-    padding: 0.625rem;
+    padding: 10px;
   }
   & > div > div {
     cursor: pointer;
   }
   & > div:last-child {
-    height: 3.75rem;
+    height: 60px;
     position: relative;
   }
   & > div:last-child > button {
@@ -318,7 +318,7 @@ const NearbyListDiv = styled.div`
     bottom: 0;
   }
   &::-webkit-scrollbar {
-    width: 0.125rem;
+    width: 2px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: #ccc;

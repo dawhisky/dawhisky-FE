@@ -166,16 +166,14 @@ const Signup = () => {
       storeInfo.email === '' ||
       storeInfo.store === '' ||
       storeInfo.password === '' ||
-      // 테스트 기간동안 사업자등록번호 검증 임시 비활성화
-      // storeInfo.biz_number === '' ||
+      storeInfo.biz_number === '' ||
       uploadImage === null
     ) {
       toast.error('입력되지 않은 입력칸이 있습니다.');
     } else if (storeInfo.password !== storeInfo.passwordConfirm) {
       toast.error('비밀번호가 일치하지 않습니다.');
-      // 테스트 기간동안 사업자등록번호 검증 임시 비활성화
-      // } else if (isBizNumberPassed !== true) {
-      //   toast.error('유효하지 않은 사업자번호입니다.');
+    } else if (isBizNumberPassed !== true) {
+      toast.error('유효하지 않은 사업자번호입니다.');
     } else {
       const formData = new FormData();
       formData.append('email', storeInfo.email);
@@ -376,7 +374,7 @@ const InputAreaWrapper = styled.div`
     margin-top: 12px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     &:focus {
-      outline: 0.07rem solid ${({ theme }) => theme.colors.orange};
+      outline: 1px solid ${({ theme }) => theme.colors.orange};
     }
   }
   button {

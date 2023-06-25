@@ -150,19 +150,19 @@ const KakaoMap = ({ coords, storelist }) => {
 export default KakaoMap;
 
 const MapSection = styled.section`
-  width: 22.5rem;
+  width: 360px;
   height: 100vh;
-  margin-left: -1.063rem;
+  margin-left: -17px;
 `;
 
 const OverlayDiv = styled.div`
-  padding: 0.313rem;
+  padding: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.813rem;
+  font-size: 13px;
   border: 1px solid #ececec;
-  border-radius: 0.313rem;
-  background-color: white;
+  border-radius: 5px;
+  background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
 `;

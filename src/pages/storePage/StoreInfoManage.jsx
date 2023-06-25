@@ -102,7 +102,7 @@ const StoreInfoManage = ({ storeInfo }) => {
     <>
       <div>
         <ImageDiv>
-          <Image width={'22.5rem'} height={'22.5rem'} src={imageUrl} alt={`${storeInfo.store} 사진`} />
+          <Image width={'360px'} height={'360px'} src={imageUrl} alt={`${storeInfo.store} 사진`} />
         </ImageDiv>
         <DetailInfo info={storeInfoList} />
         <ButtonWrapDiv>
@@ -110,12 +110,7 @@ const StoreInfoManage = ({ storeInfo }) => {
         </ButtonWrapDiv>
       </div>
       {modalToggle && (
-        <Modal
-          height={'32.5rem'}
-          both={'true'}
-          oncancelclick={modalToggleHandler}
-          onconfirmclick={submitEditedStoreInfo}
-        >
+        <Modal height={'520px'} both={'true'} oncancelclick={modalToggleHandler} onconfirmclick={submitEditedStoreInfo}>
           <ModalChildSection>
             <IndividualInputArea>
               <span>{'대표사진'}</span>
@@ -159,9 +154,9 @@ const StoreInfoManage = ({ storeInfo }) => {
 export default StoreInfoManage;
 
 const ImageDiv = styled.div`
-  width: 22.5rem;
-  height: 22.5rem;
-  margin: -1.25rem 0 1.875rem -1.063rem;
+  width: 360px;
+  height: 360px;
+  margin: -20px 0 30px -17px;
   & > img {
     width: 100%;
     height: 100%;
@@ -170,7 +165,7 @@ const ImageDiv = styled.div`
 `;
 
 const ButtonWrapDiv = styled.div`
-  height: 4.375rem;
+  height: 70px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -182,27 +177,27 @@ const ButtonWrapDiv = styled.div`
 const ModalChildSection = styled.section`
   height: 100%;
   display: flex;
-  padding: 1.875rem 0.938rem;
+  padding: 30px 15px;
   flex-direction: column;
   span {
     font-weight: 700;
-    font-size: 1.063rem;
+    font-size: 17px;
   }
   input {
-    height: 2.188rem;
+    height: 35px;
     width: 100%;
-    margin-top: 0.5rem;
-    padding: 0.625rem;
-    border: 0.07rem solid ${({ theme }) => theme.colors.lightGray};
-    border-radius: 0.625rem;
+    margin-top: 8px;
+    padding: 10px;
+    border: 16px solid ${({ theme }) => theme.colors.lightGray};
+    border-radius: 10px;
     box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
     &:focus {
-      outline: 0.07rem solid ${({ theme }) => theme.colors.orange};
+      outline: 1px solid ${({ theme }) => theme.colors.orange};
     }
   }
   label {
-    margin-left: 3.125rem;
-    font-size: 1.063rem;
+    margin-left: 50px;
+    font-size: 17px;
     cursor: pointer;
     input {
       display: none;
@@ -211,5 +206,5 @@ const ModalChildSection = styled.section`
 `;
 
 const IndividualInputArea = styled.div`
-  margin: 0 0.625rem 0.938rem 0.625rem;
+  margin: 0 10px 15px 10px;
 `;
