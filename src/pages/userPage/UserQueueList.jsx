@@ -60,6 +60,10 @@ const UserQueueList = () => {
               <span>{item.head_count}</span>
             </div>
             <div>
+              <span>{'대기 순서'}</span>
+              <span>{item.myTurn}</span>
+            </div>
+            <div>
               <span>{'요청사항'}</span>
               <span>{item.request}</span>
             </div>
@@ -100,7 +104,8 @@ const IndividualQueue = styled.div`
   }
   & div:nth-child(2),
   & div:nth-child(3),
-  & div:nth-child(4) {
+  & div:nth-child(4),
+  & div:nth-child(5) {
     display: flex;
     margin-top: 6px;
     justify-content: space-between;

@@ -10,6 +10,16 @@ export const getWhiskyList = ({ page, pageSize, like, country, type, region }) =
     });
 };
 
+// * 위스키 입문자 추천 리스트 전체 조회
+export const getBeginnerWhiskyList = () => {
+  return api
+    .get(`/api/whisky/beginner`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
 // * 위스키 키워드 검색
 export const getKeywordList = (keyword) => {
   return api

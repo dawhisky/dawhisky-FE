@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import { getWhiskyList } from '../api/whisky';
 import { Layout, Image, TabMenu, SearchInput, CategorySelect } from '../components';
 import { NoneData } from './statusPage';
+import BeginnerPage from './BeginnerPage';
 import { logo } from '../assets';
 
 const WhiskyList = () => {
@@ -23,6 +24,7 @@ const WhiskyList = () => {
   // * 나라별 탭
   const tabGroup = [
     { name: '전체', type: 'all' },
+    { name: '입문자 추천', type: 'beginner' },
     { name: '스카치', type: 'Scotland' },
     { name: '아메리칸', type: 'usa' },
     { name: '아이리쉬', type: 'Ireland' },
@@ -204,7 +206,10 @@ const WhiskyList = () => {
           />
         </CategorySection>
       )}
-      {whiskyList.length === 0 && <NoneData height={'50vh'}>{'카테고리에 일치하는 위스키가 없어요'}</NoneData>}
+      {tabChosen === 'beginner' && <BeginnerPage>{'gg'}</BeginnerPage>}
+      {whiskyList.length === 0 && tabChosen !== 'beginner' && (
+        <NoneData height={'50vh'}>{'카테고리에 일치하는 위스키가 없어요'}</NoneData>
+      )}
       <WhiskyListSection>
         {whiskyList &&
           whiskyList.length !== 0 &&

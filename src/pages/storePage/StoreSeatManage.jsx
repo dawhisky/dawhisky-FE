@@ -171,7 +171,6 @@ const StoreSeatManage = () => {
 
   return (
     <>
-      {' '}
       <StoreSeatManageWrapper>
         <div>
           <div>

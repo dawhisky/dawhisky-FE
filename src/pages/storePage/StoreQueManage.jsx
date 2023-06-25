@@ -22,7 +22,12 @@ const StoreQueManage = ({ storeId }) => {
     });
 
     socket.on('getQueData', (response) => {
-      setQueueList(response);
+      if (JSON.stringify(queueList) !== JSON.stringify(response)) {
+        console.log(JSON.stringify(queueList));
+        console.log(JSON.stringify(response));
+        setQueueList(response);
+        toast.info('새로운 줄서기 요청이 있습니다.');
+      }
     });
 
     // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리 작업
