@@ -73,7 +73,7 @@ const WhiskyDataDiv = styled.div`
   }
   & h1 {
     width: 155px;
-    margin-top: 8pxm;
+    margin-top: 8px;
     font-size: 15px;
     font-weight: 600;
     white-space: nowrap;
