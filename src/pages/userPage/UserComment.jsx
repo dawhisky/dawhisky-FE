@@ -143,8 +143,8 @@ const UserComment = () => {
       </Header>
       <ImageDiv>
         <Image
-          width={'22.5rem'}
-          height={'22.5rem'}
+          width={'360px'}
+          height={'360px'}
           src={myCommentData.whisky_photo}
           alt={`${myCommentData.whisky_kor} 사진`}
         />
@@ -203,10 +203,10 @@ export default UserComment;
 const Header = styled.header`
   color: black;
   background: linear-gradient(rgba(200, 200, 200, 0.5), rgba(200, 200, 200, 0.3), transparent);
-  width: 22.5rem;
-  height: 4.375rem;
-  padding: 0.625rem 1.25rem;
-  margin-left: -1.063rem;
+  width: 360px;
+  height: 70px;
+  padding: 10px 20px;
+  margin-left: -17px;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -215,13 +215,13 @@ const Header = styled.header`
 `;
 
 const NameDiv = styled.div`
-  width: 14.375rem;
+  width: 230px;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 5px;
   & p {
     width: 100%;
-    font-size: 1.125rem;
+    font-size: 18px;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
@@ -231,7 +231,7 @@ const NameDiv = styled.div`
   & span {
     width: 100%;
     display: block;
-    font-size: 0.875rem;
+    font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -240,17 +240,17 @@ const NameDiv = styled.div`
 `;
 
 const LeftIcon = styled(BsChevronLeft)`
-  font-size: 1.25rem;
+  font-size: 20px;
   cursor: pointer;
 `;
 
 const CommentP = styled.p`
-  padding: 1.875rem 1.25rem;
-  height: 13.75rem;
+  padding: 30px 20px;
+  height: 220px;
   overflow-y: auto;
   text-align: ${(props) => (props.data === 'none' ? 'center' : 'none')};
   &::-webkit-scrollbar {
-    width: 0.125rem;
+    width: 2px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.colors.gray};
@@ -264,7 +264,7 @@ const CommentSpan = styled.span`
   display: flex;
   align-items: center;
   color: ${({ theme, type }) => (type === 'submit' ? theme.colors.orange : '')};
-  font-size: ${(props) => (props.type === 'submit' ? '1.05rem' : '')};
+  font-size: ${(props) => (props.type === 'submit' ? '16px' : '')};
   font-weight: ${(props) => (props.type === 'submit' ? '600' : '')};
   cursor: pointer;
 `;
@@ -280,18 +280,18 @@ const BackgroundDiv = styled.div`
 `;
 
 const ListUl = styled.ul`
-  width: 22.5rem;
+  width: 360px;
   position: fixed;
-  bottom: 3.75rem;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 0.75rem 0.75rem 0 0;
+  border-radius: 12px 12px 0 0;
   background-color: ${({ theme }) => theme.colors.white};
   z-index: 1;
   overflow-y: auto;
   animation: fadeInUp 0.7s;
   & span {
-    height: 3.75rem;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -310,46 +310,46 @@ const ListUl = styled.ul`
 `;
 
 const ListLi = styled.li`
-  margin: 1rem 1.25rem;
+  margin: 16px 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   cursor: pointer;
   :first-child {
     font-weight: ${({ active }) => (active === 'true' ? '700' : '400')};
-    width: 18.75rem;
+    width: 300px;
   }
   :last-child {
-    font-size: 1.25rem;
+    font-size: 20px;
     color: ${({ theme, active }) => (active === 'true' ? theme.colors.orange : 'transparent')};
   }
 `;
 
 const ButtonWrapDiv = styled.div`
-  height: 4.375rem;
+  height: 70px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 `;
 
 const ImageDiv = styled.div`
-  width: 22.5rem;
-  padding-top: 4.688rem;
-  margin-left: -1.063rem;
+  width: 360px;
+  padding-top: 75px;
+  margin-left: -17px;
   position: relative;
 `;
 
 const CommentTextarea = styled.textarea`
   width: 100%;
-  height: ${(props) => (props.ismobile === 'true' ? '6.8rem' : '40vh')};
-  margin: 1.25rem 0;
-  padding: 1.25rem;
+  height: ${(props) => (props.ismobile === 'true' ? '105px' : '40vh')};
+  margin: 20px 0;
+  padding: 20px;
   &:focus {
     outline-color: ${({ theme }) => theme.colors.orange};
-    border-radius: 0.625rem;
+    border-radius: 10px;
   }
   &::-webkit-scrollbar {
-    width: 0.125rem;
+    width: 2px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.colors.gray};

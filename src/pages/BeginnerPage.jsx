@@ -56,48 +56,48 @@ const WhiskyListSection = styled.section`
   align-items: center;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: minmax(0, auto);
-  grid-gap: 1.8rem 1.4rem;
+  grid-gap: 28px 22px;
 `;
 
 const WhiskyDataDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.13rem;
+  gap: 2px;
   cursor: pointer;
   & div:last-child {
     display: flex;
     justify-content: space-between;
   }
   & h1 {
-    width: 9.688rem;
-    margin-top: 0.5rem;
-    font-size: 0.938rem;
+    width: 155px;
+    margin-top: 8px;
+    font-size: 15px;
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   & h2 {
-    width: 6.2rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
+    width: 100px;
+    font-size: 12px;
+    line-height: 16px;
     color: ${({ theme }) => theme.colors.darkGray};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   & h3 {
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 500;
-    line-height: 1rem;
+    line-height: 16px;
     color: ${({ theme }) => theme.colors.orange};
   }
 `;
 
 const ImageWrapDiv = styled.div`
-  width: 9.65rem;
-  height: 9.65rem;
+  width: 155px;
+  height: 155px;
   display: flex;
   justify-content: center;
   align-items: center;

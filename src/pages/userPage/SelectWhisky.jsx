@@ -15,7 +15,7 @@ const SelectWhisky = () => {
   const [type, setType] = useState(typeList[0]);
   const [categorization, setCategorization] = useState({
     page: '1',
-    pageSize: '700',
+    pageSize: '10',
     country: '',
     type: '',
     region: '',
@@ -91,7 +91,7 @@ const SelectWhisky = () => {
 export default SelectWhisky;
 
 const CategorySection = styled.section`
-  margin-bottom: 1.875rem;
+  margin-bottom: 30px;
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
 `;

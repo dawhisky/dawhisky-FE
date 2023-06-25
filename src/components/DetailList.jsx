@@ -53,9 +53,9 @@ const DetailList = ({ type, list }) => {
               {url.includes('/ManagePage') && (
                 <ImageWrapDiv>
                   <Image
-                    width={'5rem'}
-                    height={'5rem'}
-                    borderradius={'0.313rem'}
+                    width={'80px'}
+                    height={'80px'}
+                    borderradius={'5px'}
                     src={type === 'store' ? item.biz_photo : item.whisky_photo}
                     alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
                   />
@@ -64,9 +64,9 @@ const DetailList = ({ type, list }) => {
               {!url.includes('/ManagePage') && (
                 <ImageWrapDiv>
                   <Image
-                    width={'5rem'}
-                    height={'5rem'}
-                    borderradius={'0.313rem'}
+                    width={'80px'}
+                    height={'80px'}
+                    borderradius={'5px'}
                     src={type === 'store' ? item.biz_photo : item.whisky_photo}
                     alt={`${type === 'store' ? item.store : item.whisky_kor} 대표 사진`}
                   />
@@ -88,7 +88,6 @@ const DetailList = ({ type, list }) => {
                   ) : (
                     <WhiskyInfoDiv>
                       <h2>{`${item.whisky_abv} vol`}</h2>
-                      {/* <button type={'button'}>{url.includes('/ManagePage/store') && '삭제'}</button> */}
                     </WhiskyInfoDiv>
                   )}
                 </TotalInfoDiv>
@@ -107,21 +106,21 @@ const DetailList = ({ type, list }) => {
 export default DetailList;
 
 const StockListDiv = styled.div`
-  margin-top: -0.625rem;
-  margin-bottom: 1.875rem;
+  margin-top: -10px;
+  margin-bottom: 30px;
 `;
 
 const ListDiv = styled.div`
-  margin: 0.313rem 0;
-  padding: 0.625rem;
+  margin: 5px 0;
+  padding: 10px;
   display: flex;
   flex-direction: row;
   cursor: pointer;
 `;
 
 const ImageWrapDiv = styled.div`
-  width: 5rem;
-  height: 5rem;
+  width: 80px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,23 +130,23 @@ const ImageWrapDiv = styled.div`
 `;
 
 const StoreInfoDiv = styled.div`
-  margin-left: 0.938rem;
+  margin-left: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
 const TotalInfoDiv = styled.div`
-  margin-left: 0.938rem;
+  margin-left: 15px;
   & h3 {
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 600;
   }
 `;
 
 const TextH1 = styled.h1`
-  width: 14rem;
-  margin-top: 0.3rem;
+  width: 224px;
+  margin-top: 4.8px;
   font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
@@ -155,9 +154,9 @@ const TextH1 = styled.h1`
 `;
 
 const TextH2 = styled.h2`
-  width: 14rem;
-  margin: 0.313rem 0 0.75rem 0;
-  font-size: 0.75rem;
+  width: 224px;
+  margin: 5px 0 12px 0;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -169,9 +168,9 @@ const BarInfoDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   & button {
-    padding: 0.2rem 0.625rem;
-    font-size: 0.75rem;
-    border-radius: 0.75rem;
+    padding: 3px 10px;
+    font-size: 12px;
+    border-radius: 12px;
     background-color: ${({ theme }) => theme.colors.orange};
     color: ${({ theme }) => theme.colors.white};
   }
@@ -182,14 +181,14 @@ const WhiskyInfoDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   & h2 {
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 600;
     color: ${({ theme }) => theme.colors.orange};
   }
   & button {
-    padding: 0.313rem 0.625rem;
+    padding: 5px 10px;
     background-color: transparent;
-    font-size: 0.75rem;
+    font-size: 12px;
     color: ${({ theme }) => theme.colors.darkGray};
     cursor: pointer;
   }

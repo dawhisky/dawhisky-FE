@@ -45,7 +45,6 @@ const WhiskyDetail = () => {
 
   // * [위스키 코멘트] 조회 useMutation
   const getWhiskyCommentMutation = useMutation(getWhiskyComment, {
-    // ! test
     onSuccess: (response) => setWhiskyComment(response),
   });
 
@@ -100,11 +99,11 @@ const WhiskyDetail = () => {
 export default WhiskyDetail;
 
 const ImageDiv = styled.div`
-  width: 22.5rem;
-  padding-top: 4.688rem;
-  margin-left: -1.063rem;
+  width: 360px;
+  padding-top: 75px;
+  margin-left: -17px;
 `;
 
 const TabSection = styled.section`
-  padding: 0.938rem 0;
+  padding: 15px 0;
 `;

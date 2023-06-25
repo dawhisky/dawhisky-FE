@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { FiArrowUp } from 'react-icons/fi';
 import { useInfiniteQuery } from 'react-query';
 import { useInView } from 'react-intersection-observer';
 import { getWhiskyList } from '../api/whisky';
@@ -49,6 +50,10 @@ const WhiskyList = () => {
   const [lastPage, setLastPage] = useState(null);
 
   const navigate = useNavigate();
+  const whiskyListSection = useRef(null);
+
+  // * [to the top] click 이벤트
+  const toTheTopEvent = () => whiskyListSection.current.scrollIntoView({ top: 0, behavior: 'smooth' });
 
   // * [나라별 tab] click 이벤트
   const onTabClickHandler = (type) => {
@@ -148,17 +153,20 @@ const WhiskyList = () => {
     },
   );
 
+  // ! categoryzation 값 바뀌는지 확인
+  const fetchData = () => fetchNextPage();
+  useEffect(() => {
+    setWhiskyList([]);
+    // setCategorization((prev) => ({ ...prev, page: '1' }));
+    fetchData();
+  }, [categorization.like, categorization.country, categorization.type, categorization.region]);
+
   useEffect(() => {
     if (inView && !isFetchingNextPage && lastPage !== 0 && categorization.page <= lastPage) {
-      fetchNextPage();
+      fetchData();
     }
-  }, [inView, isFetchingNextPage, categorization.page, lastPage]);
-
-  const whiskyListSection = useRef(null);
-
-  const toTheTopEvent = () => {
-    whiskyListSection.current.scrollIntoView({ top: 0, behavior: 'smooth' });
-  };
+    // }, [inView, isFetchingNextPage, categorization.page, lastPage]);
+  }, [inView, isFetchingNextPage, categorization, lastPage]);
 
   return (
     <Layout>
@@ -224,9 +232,9 @@ const WhiskyList = () => {
             <WhiskyDataDiv key={item.whisky_id} onClick={() => onWhiskyClickHandler(item.whisky_id)}>
               <ImageWrapDiv>
                 <Image
-                  width={'9.5rem'}
-                  height={'9.5rem'}
-                  borderradius={'0.313rem'}
+                  width={'150px'}
+                  height={'150px'}
+                  borderradius={'5px'}
                   src={item.whisky_photo}
                   alt={`${item.whisky_kor} 사진`}
                 />
@@ -240,7 +248,9 @@ const WhiskyList = () => {
           ))}
       </WhiskyListSection>
       <div ref={observerRef} />
-      <ToTheTopButton onClick={() => toTheTopEvent()}>{'^'}</ToTheTopButton>
+      <ToTheTopButton onClick={() => toTheTopEvent()}>
+        <FiArrowUp />
+      </ToTheTopButton>
     </Layout>
   );
 };
@@ -248,9 +258,9 @@ const WhiskyList = () => {
 export default WhiskyList;
 
 const Header = styled.header`
-  width: 22.5rem;
-  margin-left: -1rem;
-  padding: 2.188rem 1rem 0 1rem;
+  width: 360px;
+  margin-left: -16px;
+  padding: 35px 16px 0 16px;
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.darkBrown};
@@ -261,21 +271,21 @@ const Header = styled.header`
     align-items: center;
   }
   & div:first-child {
-    padding-bottom: 0.3rem;
-    padding-left: 0.188rem;
+    padding-bottom: 5px;
+    padding-left: 3px;
   }
 `;
 
 const LikeListIcon = styled(AiOutlineHeart)`
-  font-size: 1.5rem;
-  color: white;
+  font-size: 24px;
+  color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
 `;
 
 const CategorySection = styled.section`
-  margin-bottom: 1.875rem;
+  margin-bottom: 30px;
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
 `;
 
 const WhiskyListSection = styled.section`
@@ -285,48 +295,48 @@ const WhiskyListSection = styled.section`
   align-items: center;
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: minmax(0, auto);
-  grid-gap: 1.8rem 1.4rem;
+  grid-gap: 30px 22px;
 `;
 
 const WhiskyDataDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.13rem;
+  gap: 2px;
   cursor: pointer;
   & div:last-child {
     display: flex;
     justify-content: space-between;
   }
   & h1 {
-    width: 9.688rem;
-    margin-top: 0.5rem;
-    font-size: 0.938rem;
+    width: 155px;
+    margin-top: 8px;
+    font-size: 15px;
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   & h2 {
-    width: 6.2rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
+    width: 100px;
+    font-size: 12px;
+    line-height: 16px;
     color: ${({ theme }) => theme.colors.darkGray};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   & h3 {
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 500;
-    line-height: 1rem;
+    line-height: 16px;
     color: ${({ theme }) => theme.colors.orange};
   }
 `;
 
 const ImageWrapDiv = styled.div`
-  width: 9.65rem;
-  height: 9.65rem;
+  width: 155px;
+  height: 155px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -337,16 +347,18 @@ const ImageWrapDiv = styled.div`
 `;
 
 const ToTheTopButton = styled.button`
-  position: fixed;
-  padding-top: 5.5px;
-  right: 50%;
-  transform: translateX(calc(21rem / 2));
-  border-radius: 13px;
-  bottom: 10%;
-  height: 50px;
   width: 50px;
-  opacity: 0.6;
+  height: 50px;
+  padding-top: 5.5px;
+  position: fixed;
+  right: 50%;
+  bottom: 10%;
+  border-radius: 13px;
   background-color: rgba(144, 126, 11, 0.2);
-  font-size: 40px;
-  z-index: 9999;
+  transform: translateX(calc(21rem / 2));
+  opacity: 0.6;
+  cursor: pointer;
+  & {
+    font-size: 30px;
+  }
 `;

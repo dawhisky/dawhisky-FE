@@ -54,7 +54,7 @@ const InfoDiv = styled.div`
 
 const MessageP = styled.p`
   height: 100%;
-  padding: 1.25rem 2.5rem 0.625rem 2.5rem;
+  padding: 20px 40px 10px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,7 +68,7 @@ const ButtonDiv = styled.div`
   justify-content: space-around;
   align-items: center;
   & > button {
-    padding-bottom: 1.563rem;
+    padding-bottom: 25px;
     background-color: transparent;
     font-weight: 600;
     cursor: pointer;

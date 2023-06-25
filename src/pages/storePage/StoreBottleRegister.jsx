@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { useQuery } from 'react-query';
-import { Layout, CategorySelect, DetailList } from '../../components';
+import { CategorySelect, DetailList } from '../../components';
 import { getWhiskyList } from '../../api/whisky';
 
 const StoreBottleRegister = ({ setIsRegisterMode }) => {
@@ -102,5 +102,3 @@ const StoreBottleRegisterWrapper = styled.div`
     width: 328px;
   }
 `;
-
-// 검색 시스템 디테일하게

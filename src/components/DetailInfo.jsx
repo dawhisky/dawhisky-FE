@@ -67,22 +67,22 @@ export default DetailInfo;
 const InfoDiv = styled.div`
   display: flex;
   padding: 0 10px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 20px;
 `;
 
 const InfoKeyDt = styled.dt`
-  width: 5rem;
+  width: 80px;
   font-weight: 600;
 `;
 
 const InfoLine = styled.dd`
-  width: 0.625rem;
-  margin-right: 0.625rem;
+  width: 10px;
+  margin-right: 10px;
   font-weight: 500;
 `;
 
 const InfoValueDd = styled.dd`
-  width: calc(100% - 5.625rem);
+  width: calc(100% - 90px);
   white-space: wrap;
   text-align: justify;
 `;
