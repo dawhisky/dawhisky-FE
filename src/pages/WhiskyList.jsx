@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
@@ -154,8 +154,15 @@ const WhiskyList = () => {
     }
   }, [inView, isFetchingNextPage, categorization.page, lastPage]);
 
+  const whiskyListSection = useRef(null);
+
+  const toTheTopEvent = () => {
+    whiskyListSection.current.scrollIntoView({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <Layout>
+      <div ref={whiskyListSection}>{''}</div>
       <Header>
         <div>
           <Image width={'8.125rem'} height={'2.188rem'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
@@ -233,6 +240,7 @@ const WhiskyList = () => {
           ))}
       </WhiskyListSection>
       <div ref={observerRef} />
+      <ToTheTopButton onClick={() => toTheTopEvent()}>{'^'}</ToTheTopButton>
     </Layout>
   );
 };
@@ -326,4 +334,19 @@ const ImageWrapDiv = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.lightGray};
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 4px -5px;
+`;
+
+const ToTheTopButton = styled.button`
+  position: fixed;
+  padding-top: 5.5px;
+  right: 50%;
+  transform: translateX(calc(21rem / 2));
+  border-radius: 13px;
+  bottom: 10%;
+  height: 50px;
+  width: 50px;
+  opacity: 0.6;
+  background-color: rgba(144, 126, 11, 0.2);
+  font-size: 40px;
+  z-index: 9999;
 `;
