@@ -29,9 +29,9 @@ const BeginnerPage = () => {
           <WhiskyDataDiv key={item.whisky_id} onClick={() => onWhiskyClickHandler(item.whisky_id)}>
             <ImageWrapDiv>
               <Image
-                width={'9.5rem'}
-                height={'9.5rem'}
-                borderradius={'0.313rem'}
+                width={'152px'}
+                height={'152px'}
+                borderradius={'5px'}
                 src={item.whisky_photo}
                 alt={`${item.whisky_kor} 사진`}
               />

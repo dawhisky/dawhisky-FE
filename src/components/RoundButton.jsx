@@ -14,8 +14,8 @@ const RoundButton = ({ rest }) => {
     <NullDiv>
       <RoundedButton>
         <Image
-          width={'1.563rem'}
-          height={'1.563rem'}
+          width={'25px'}
+          height={'25px'}
           src={edit || defaultImage}
           alt={'작성 버튼'}
           onClick={onWriteButtonClickHandler}

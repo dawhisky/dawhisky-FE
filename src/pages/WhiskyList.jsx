@@ -87,8 +87,8 @@ const WhiskyList = () => {
   // * [상세 type] click 이벤트
   const onLikeClickHandler = (idx, item) => {
     setLike(likeList[idx]);
-    if (item === '기본순') setCategorization((prev) => ({ ...prev, like: 'n' }));
-    if (item === '좋아요순') setCategorization((prev) => ({ ...prev, like: 'y' }));
+    if (item === '기본순') setCategorization((prev) => ({ ...prev, like: 'n', page: '1' }));
+    if (item === '좋아요순') setCategorization((prev) => ({ ...prev, like: 'y', page: '1' }));
   };
 
   const onTypeClickHandler = (idx, item) => {
@@ -153,34 +153,26 @@ const WhiskyList = () => {
     },
   );
 
-  // ! categoryzation 값 바뀌는지 확인
-  const fetchData = () => fetchNextPage();
-  useEffect(() => {
-    setWhiskyList([]);
-    // setCategorization((prev) => ({ ...prev, page: '1' }));
-    fetchData();
-  }, [categorization.like, categorization.country, categorization.type, categorization.region]);
-
   useEffect(() => {
     if (inView && !isFetchingNextPage && lastPage !== 0 && categorization.page <= lastPage) {
-      fetchData();
+      fetchNextPage();
     }
-    // }, [inView, isFetchingNextPage, categorization.page, lastPage]);
-  }, [inView, isFetchingNextPage, categorization, lastPage]);
+  }, [inView, isFetchingNextPage, categorization.page, lastPage]);
 
   return (
     <Layout>
       <div ref={whiskyListSection}>{''}</div>
       <Header>
         <div>
-          <Image width={'8.125rem'} height={'2.188rem'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
+          <Image width={'130px'} height={'35px'} borderradius={'none'} src={logo} alt={'DAWHISKY LOGO'} />
           <LikeListIcon onClick={onLikeListClickHandler} />
         </div>
         <SearchInput searchtype={'before'} placeholder={'위스키를 검색해보세요!'} />
       </Header>
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
 
-      {tabChosen === 'all' && (
+      {/* // ! 06-26 무한스크롤 + 카테고리 중복 적용 시 api 이중 호출 오류로 임시 주석 처리 */}
+      {/* {tabChosen === 'all' && (
         <CategorySection>
           <CategorySelect category={like} list={likeList} categorychosen={like} onclickhandler={onLikeClickHandler} />
         </CategorySection>
@@ -220,7 +212,7 @@ const WhiskyList = () => {
             onclickhandler={onTypeClickHandler}
           />
         </CategorySection>
-      )}
+      )} */}
       {tabChosen === 'beginner' && <BeginnerPage>{'gg'}</BeginnerPage>}
       {whiskyList.length === 0 && tabChosen !== 'beginner' && (
         <NoneData height={'50vh'}>{'카테고리에 일치하는 위스키가 없어요'}</NoneData>
@@ -355,7 +347,7 @@ const ToTheTopButton = styled.button`
   bottom: 10%;
   border-radius: 13px;
   background-color: rgba(144, 126, 11, 0.2);
-  transform: translateX(calc(21rem / 2));
+  transform: translateX(calc(336px / 2));
   opacity: 0.6;
   cursor: pointer;
   & {
