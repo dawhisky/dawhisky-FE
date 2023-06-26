@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { styled } from 'styled-components';
 import { getTableInfo, editTableInfo } from '../../api/table';

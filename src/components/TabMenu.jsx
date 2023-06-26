@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import { BsChevronCompactRight } from 'react-icons/bs';
 import { AiOutlineCaretRight } from 'react-icons/ai';
 import throttle from '../hooks/throttle';
 
@@ -94,13 +93,13 @@ const TabMenu = ({ tabgroup, tabchosen, ontabclickhandler }) => {
 export default TabMenu;
 
 const TabSection = styled.section`
-  width: 22.5rem;
-  margin-left: -1rem;
-  margin-bottom: 1.25rem;
+  width: 360px;
+  margin-left: -16px;
+  margin-bottom: 20px;
   justify-content: ${({ url }) => (url === '/' ? 'none' : 'space-around')};
-  padding: 0.3rem 1rem 0 1rem;
+  padding: 5px 16px 0 16px;
   display: flex;
-  gap: 0.625rem;
+  gap: 10px;
   position: relative;
   background-color: ${({ theme, url }) => (url === '/' ? theme.colors.darkBrown : 'transperant')};
   white-space: nowrap;
@@ -113,15 +112,15 @@ const TabSection = styled.section`
 `;
 
 const TabMenuButton = styled.button`
-  padding: 0.5rem 0.313rem;
+  padding: 8px 5px;
   background-color: transparent;
   border-bottom: ${({ theme, active, url }) =>
     active === 'true' && url === '/'
-      ? `0.125rem solid ${theme.colors.white}`
+      ? `2px solid ${theme.colors.white}`
       : active === 'true'
-      ? `0.125rem solid ${theme.colors.orange}`
+      ? `2px solid ${theme.colors.orange}`
       : url === '/'
-      ? '0.125rem solid transparent'
+      ? '2px solid transparent'
       : ''};
   font-weight: ${({ active }) => (active === 'true' ? '700' : '500')};
   color: ${({ theme, active, url }) =>
@@ -137,8 +136,8 @@ const TabMenuButton = styled.button`
 
 const TabRightIcon = styled(AiOutlineCaretRight)`
   position: absolute;
-  font-size: 1.125rem;
-  top: 0.875rem;
-  right: 0.125rem;
+  font-size: 18px;
+  top: 14px;
+  right: 2px;
   color: ${({ theme }) => theme.colors.white};
 `;

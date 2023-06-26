@@ -78,7 +78,7 @@ const StoreQueManage = ({ storeId }) => {
     <div>
       {queueList.length === 0 && (
         <NullDiv>
-          <p>유저의 줄서기 내역이 이곳에 표시됩니다.</p>
+          <p>{'유저의 줄서기 내역이 이곳에 표시됩니다.'}</p>
         </NullDiv>
       )}
       {queueList.length !== 0 &&

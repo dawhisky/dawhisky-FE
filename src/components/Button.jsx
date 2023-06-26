@@ -19,11 +19,11 @@ const Button = ({ children, size, color, location, ...rest }) => {
 const sizeHandler = (size) => {
   switch (size) {
     case 'small':
-      return 'width: 6.25rem;';
+      return 'width: 100px;';
     case 'medium':
-      return 'width: 9.688rem;';
+      return 'width: 155px;';
     default:
-      return 'width: 20.313rem;';
+      return 'width: 320px;';
   }
 };
 
@@ -32,7 +32,7 @@ const locationHandler = (location) => {
     case 'both':
       return '';
     default:
-      return 'bottom: 5rem; left: 50%; transform: translate(-50%, -50%); z-index: 1;';
+      return 'bottom: 80px; left: 50%; transform: translate(-50%, -50%); z-index: 1;';
   }
 };
 
@@ -41,8 +41,8 @@ export default Button;
 const CommonButton = styled.button`
   ${(props) => sizeHandler(props.size)};
   ${(props) => locationHandler(props.location)};
-  height: 2.5rem;
-  border-radius: 1.25rem;
+  height: 40px;
+  border-radius: 20px;
   background-color: ${({ theme, color }) => (color === 'white' ? theme.colors.white : theme.colors.orange)};
   color: ${({ theme, color }) => (color === 'white' ? theme.colors.darkGray : theme.colors.white)};
   cursor: pointer;

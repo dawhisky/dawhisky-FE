@@ -14,8 +14,8 @@ const RoundButton = ({ rest }) => {
     <NullDiv>
       <RoundedButton>
         <Image
-          width={'1.563rem'}
-          height={'1.563rem'}
+          width={'25px'}
+          height={'25px'}
           src={edit || defaultImage}
           alt={'작성 버튼'}
           onClick={onWriteButtonClickHandler}
@@ -29,16 +29,16 @@ const RoundButton = ({ rest }) => {
 export default RoundButton;
 
 const NullDiv = styled.div`
-  width: 20rem;
-  height: 1.25rem;
+  width: 320px;
+  height: 20px;
   position: relative;
   display: flex;
   justify-content: flex-end;
 `;
 
 const RoundedButton = styled.button`
-  width: 3.125rem;
-  height: 3.125rem;
+  width: 50px;
+  height: 50px;
   position: fixed;
   bottom: 80px;
   border-radius: 50%;

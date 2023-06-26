@@ -61,34 +61,34 @@ const BackgroundDiv = styled.div`
 `;
 
 const SelectButton = styled.button`
-  padding: 0.5rem 0.75rem;
+  padding: 8px 12px;
   display: flex;
   flex-direction: center;
   justify-content: center;
   align-items: center;
-  gap: 0.313rem;
-  font-size: 0.813rem;
+  gap: 5px;
+  font-size: 13px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.lightBrown};
   background-color: ${({ theme }) => theme.colors.lightOrange};
   border: 0.5px solid ${({ theme }) => theme.colors.mediumOrange};
-  border-radius: 1rem;
+  border-radius: 16px;
   cursor: pointer;
 `;
 
 const ListUl = styled.ul`
-  width: 22.5rem;
+  width: 360px;
   position: fixed;
-  bottom: 3.75rem;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 0.75rem 0.75rem 0 0;
+  border-radius: 12px 12px 0 0;
   background-color: ${({ theme }) => theme.colors.white};
   z-index: 1;
   overflow-y: auto;
   animation: fadeInUp 0.7s;
   & span {
-    height: 3.75rem;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,23 +107,23 @@ const ListUl = styled.ul`
 `;
 
 const ListLi = styled.li`
-  margin: 1rem 1.25rem;
+  margin: 16px 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   cursor: pointer;
   :first-child {
     font-weight: ${({ active }) => (active === 'true' ? '700' : '400')};
-    width: 18.75rem;
+    width: 300px;
   }
   :last-child {
-    font-size: 1.25rem;
+    font-size: 20px;
     color: ${({ theme, active }) => (active === 'true' ? theme.colors.orange : 'transparent')};
   }
 `;
 
 const ButtonWrapDiv = styled.div`
-  height: 4.375rem;
+  height: 70px;
   display: flex;
   justify-content: space-around;
   align-items: center;

@@ -3,10 +3,9 @@ import { useMutation } from 'react-query';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { BsChevronLeft, BsThreeDots, BsCheck2 } from 'react-icons/bs';
+import { BsChevronLeft } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { isWhiskyLike, isStoreLike } from '../api/like';
-import Button from './Button';
 
 // ! [props]
 // * 상세페이지에서 보이는 뒤로가기, 아이템명, 좋아요 버튼을 모아둔 Header
@@ -82,10 +81,10 @@ const Header = styled.header`
     props.flag === 'store'
       ? 'linear-gradient(rgba(75, 74, 74, 0.9), transparent)'
       : 'linear-gradient(rgba(200, 200, 200, 0.5), rgba(200, 200, 200, 0.3), transparent)'};
-  width: 22.5rem;
-  height: 4.375rem;
-  padding: 0.625rem 1.25rem;
-  margin-left: -1.063rem;
+  width: 360px;
+  height: 70px;
+  padding: 10px 20px;
+  margin-left: -17px;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -98,10 +97,10 @@ const NameDiv = styled.div`
   padding-left: ${(props) => (props.flag === 'store' ? '20px' : '0px')};
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 4px;
   & p {
     width: 100%;
-    font-size: 1.125rem;
+    font-size: 18px;
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
@@ -111,7 +110,7 @@ const NameDiv = styled.div`
   & span {
     width: 100%;
     display: block;
-    font-size: 0.875rem;
+    font-size: 14px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -120,22 +119,22 @@ const NameDiv = styled.div`
 `;
 
 const LeftIcon = styled(BsChevronLeft)`
-  font-size: 1.25rem;
+  font-size: 20px;
   cursor: pointer;
 `;
 
 const NullDiv = styled.div`
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 20px;
+  height: 20px;
 `;
 
 const OutlineHeartIcon = styled(AiOutlineHeart)`
-  font-size: 1.5rem;
+  font-size: 24px;
   cursor: pointer;
 `;
 
 const FillHeartIcon = styled(AiFillHeart)`
-  font-size: 1.5rem;
+  font-size: 24px;
   color: ${({ theme }) => theme.colors.orange};
   cursor: pointer;
 `;

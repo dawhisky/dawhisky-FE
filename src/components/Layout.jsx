@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { bgFram, bgLogo } from '../assets';
@@ -52,7 +52,7 @@ const LogoImg = styled.img`
 `;
 
 const ContainerDiv = styled.div`
-  width: 22.5rem;
+  width: 360px;
   height: ${window.innerHeight}px;
   margin: auto;
   position: relative;
@@ -60,7 +60,7 @@ const ContainerDiv = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 18px -7px;
   &::-webkit-scrollbar {
-    width: 0.125rem;
+    width: 2px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.colors.gray};
@@ -71,6 +71,6 @@ const ContainerDiv = styled.div`
 `;
 
 const WrapMain = styled.main`
-  padding: 0 1rem 1.875rem 1rem;
-  margin-bottom: 2.5rem;
+  padding: 0 16px 30px 16px;
+  margin-bottom: 40px;
 `;

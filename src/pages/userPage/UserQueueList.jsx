@@ -15,7 +15,7 @@ const UserQueueList = () => {
   // * 유저 본인의 줄서기 데이터 상태관리
   const [userQueueData, setUserQueueData] = useState([]);
   // * [마이페이지] 유저 본인의 줄서기 데이터 조회
-  const { myQueueList } = useQuery('getMyQueueList', () => getMyQueueList(), {
+  useQuery('getMyQueueList', () => getMyQueueList(), {
     onSuccess: (response) => setUserQueueData(response),
   });
 
@@ -29,14 +29,6 @@ const UserQueueList = () => {
       console.log(error);
     },
   });
-
-  // const editButtonHandler = (storeId) => {
-  //   navigate(`/StoreDetail/${storeId}`, {
-  //     onCompleted: () => {
-  //       // setTabChosen('que');
-  //     },
-  //   });
-  // };
 
   const editButtonHandler = (storeId) => {
     navigate(`/StoreDetail/${storeId}`, { state: { idx: 2 } });
@@ -57,15 +49,15 @@ const UserQueueList = () => {
             </div>
             <div>
               <span>{'인원'}</span>
-              <span>{item.head_count}</span>
+              <span>{`${item.head_count}명`}</span>
             </div>
             <div>
               <span>{'대기 순서'}</span>
-              <span>{item.myTurn}</span>
+              <span>{`${item.myTurn}번째`}</span>
             </div>
             <div>
               <span>{'요청사항'}</span>
-              <span>{item.request}</span>
+              <span>{item.request ? item.request : '없음'}</span>
             </div>
             <div>
               <Button onClick={() => deleteMyQueueApi.mutate(item.que_id)}>{'줄서기 취소'}</Button>
@@ -76,7 +68,7 @@ const UserQueueList = () => {
           </IndividualQueue>
         ))
       ) : (
-        <NoneData>{'나의 줄서기 현황이 없습니다.'}</NoneData>
+        <NoneData height={'50vh'}>{'나의 줄서기 현황이 없습니다.'}</NoneData>
       )}
     </UserQueueListWrapper>
   );
@@ -85,22 +77,20 @@ const UserQueueList = () => {
 export default UserQueueList;
 
 const UserQueueListWrapper = styled.div`
-  border: 0.5px solid #c6c3c3;
-  border-radius: 8px;
   min-height: 220px;
-  padding: 5px 5px 15px 5px;
 `;
 
 const IndividualQueue = styled.div`
   border: 0.5px solid #c6c3c3;
   border-radius: 8px;
-  padding: 10px 10px;
+  padding: 20px;
   margin-top: 10px;
   & > button:first-child {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     margin-bottom: 10px;
     background-color: transparent;
+    cursor: pointer;
   }
   & div:nth-child(2),
   & div:nth-child(3),
@@ -109,6 +99,7 @@ const IndividualQueue = styled.div`
     display: flex;
     margin-top: 6px;
     justify-content: space-between;
+    font-size: 15px;
     & span:first-child {
       font-weight: 500;
     }
@@ -124,8 +115,8 @@ const IndividualQueue = styled.div`
     & button {
       border-radius: 8px;
       width: 48%;
-      font-weight: 400;
-      font-size: 18px;
+      font-weight: 500;
+      font-size: 15px;
       transform: none;
     }
     & button:first-child {

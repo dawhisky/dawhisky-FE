@@ -187,7 +187,7 @@ const RecommendUl = styled.ul`
   padding: 3px 10px;
   overflow-y: auto;
   &::-webkit-scrollbar {
-    width: 0.125rem;
+    width: 2px;
   }
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.colors.gray};
