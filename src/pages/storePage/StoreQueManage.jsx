@@ -23,10 +23,7 @@ const StoreQueManage = ({ storeId }) => {
 
     socket.on('getQueData', (response) => {
       if (JSON.stringify(queueList) !== JSON.stringify(response)) {
-        console.log(JSON.stringify(queueList));
-        console.log(JSON.stringify(response));
         setQueueList(response);
-        toast.info('새로운 줄서기 요청이 있습니다.');
       }
     });
 
