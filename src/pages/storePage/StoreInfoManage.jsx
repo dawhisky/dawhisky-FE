@@ -193,11 +193,11 @@ const ModalChildSection = styled.section`
     width: 100%;
     margin-top: 0.5rem;
     padding: 0.625rem;
-    border: 0.07rem solid ${({ theme }) => theme.colors.lightGray};
+    border: 1px solid ${({ theme }) => theme.colors.lightGray};
     border-radius: 0.625rem;
     box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
     &:focus {
-      outline: 0.07rem solid ${({ theme }) => theme.colors.orange};
+      outline: 1px solid ${({ theme }) => theme.colors.orange};
     }
   }
   label {
