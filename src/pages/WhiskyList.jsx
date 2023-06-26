@@ -29,7 +29,7 @@ const WhiskyList = () => {
     { name: '스카치', type: 'Scotland' },
     { name: '아메리칸', type: 'usa' },
     { name: '아이리쉬', type: 'Ireland' },
-    { name: '캐내디언', type: 'Canadian' },
+    { name: '캐내디언', type: 'Canada' },
     { name: '재패니스', type: 'Japan' },
     { name: '그 외', type: 'etc' },
   ];
