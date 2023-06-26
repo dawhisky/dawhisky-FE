@@ -188,7 +188,7 @@ const ModalChildSection = styled.section`
     width: 100%;
     margin-top: 8px;
     padding: 10px;
-    border: 16px solid ${({ theme }) => theme.colors.lightGray};
+    border: 1px solid ${({ theme }) => theme.colors.lightGray};
     border-radius: 10px;
     box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
     &:focus {
