@@ -31,6 +31,11 @@ const SearchPage = () => {
 
   // * [추천검색어] 1. input 값이 바뀔 때 userInput과 디바운스 함수에 해당 값 전달
   const onUserInputChangeHandler = (e) => {
+    if (e.target.value.length === 0) {
+      setUserInput('');
+      setKeywordData('');
+      setRecommedList(null);
+    }
     setUserInput(e.target.value);
     setKeywordData(e.target.value);
   };

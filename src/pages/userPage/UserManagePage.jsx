@@ -122,7 +122,7 @@ const UserManagePage = () => {
         />
       )}
       <TabMenu tabgroup={tabGroup} tabchosen={tabChosen} ontabclickhandler={onTabClickHandler} />
-      {tabChosen === 'getComment' && <WhiskyGrid list={commentList} />}
+      {tabChosen === 'getComment' && <WhiskyGrid list={commentList} link={'comment'} />}
       {tabChosen === 'getLike' && <LikeList />}
       {tabChosen === 'getMyQueueList' && <UserQueueList />}
     </>
