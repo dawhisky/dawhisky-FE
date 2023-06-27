@@ -119,8 +119,8 @@ const ListDiv = styled.div`
 `;
 
 const ImageWrapDiv = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 82px;
+  height: 82px;
   display: flex;
   justify-content: center;
   align-items: center;

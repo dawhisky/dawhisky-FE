@@ -20,6 +20,16 @@ export const getBeginnerWhiskyList = () => {
     });
 };
 
+// * 위스키 인기검색 조회
+export const getTrendingList = () => {
+  return api
+    .get(`/api/whisky/trending`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
+
 // * 위스키 키워드 검색
 export const getKeywordList = (keyword) => {
   return api
