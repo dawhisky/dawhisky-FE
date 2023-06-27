@@ -1,13 +1,28 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { useMutation } from 'react-query';
+import { styled } from 'styled-components';
+import { useMutation, useQuery } from 'react-query';
 import { toast } from 'react-toastify';
-import { getKeywordList } from '../api/whisky';
+import { useLocation } from 'react-router-dom';
+import { getKeywordList, getTrendingList } from '../api/whisky';
 import { Layout, SearchInput, DetailList } from '../components';
 
 const SearchPage = () => {
   const [userInput, setUserInput] = useState('');
   const [keyword, setKeyword] = useState('');
   const [recommendList, setRecommedList] = useState(null);
+  const [trendingList, setTrendingList] = useState(null);
+
+  // * [인기검색어] 조회
+  const { data } = useQuery('getTrendingList', () => getTrendingList());
+
+  const location = useLocation();
+  const url = location.pathname;
+
+  useEffect(() => {
+    if (url === '/SearchPage' && data) {
+      setTrendingList(data);
+    }
+  }, [data]);
 
   // * [추천검색어] 커스텀 디바운스 함수
   const debounce = (callback, delay) => {
@@ -69,9 +84,21 @@ const SearchPage = () => {
         onclick={onSearchClickHandler}
         placeholder={'위스키를 검색해보세요!'}
       />
+      {((trendingList && !recommendList) || !userInput) && (
+        <>
+          <TrendingH1>{'인기검색어 Top 10'}</TrendingH1>
+          <DetailList list={trendingList} />
+        </>
+      )}
       {recommendList && <DetailList list={recommendList} />}
     </Layout>
   );
 };
 
 export default SearchPage;
+
+const TrendingH1 = styled.h1`
+  margin: 20px 0 15px 10px;
+  font-size: 20px;
+  font-weight: 700;
+`;
