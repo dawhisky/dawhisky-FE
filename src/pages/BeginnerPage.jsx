@@ -6,13 +6,13 @@ import { Image } from '../components';
 import { getBeginnerWhiskyList } from '../api/whisky';
 
 const BeginnerPage = () => {
-  //* useNavigate
+  // * useNavigate
   const navigate = useNavigate();
 
-  //* whiskyList 상태관리
+  // * whiskyList 상태관리
   const [whiskyList, setWhiskyList] = useState([]);
 
-  //* 입문자용 위스키 조회
+  // * 입문자용 위스키 조회
   const { isLoading, isError, data } = useQuery('getBeginnerWhiskyList', () => getBeginnerWhiskyList());
   useEffect(() => {
     setWhiskyList(data);
@@ -22,32 +22,52 @@ const BeginnerPage = () => {
   const onWhiskyClickHandler = (id) => navigate(`/WhiskyDetail/${id}`);
 
   return (
-    <WhiskyListSection>
-      {whiskyList &&
-        whiskyList.length !== 0 &&
-        whiskyList.map((item) => (
-          <WhiskyDataDiv key={item.whisky_id} onClick={() => onWhiskyClickHandler(item.whisky_id)}>
-            <ImageWrapDiv>
-              <Image
-                width={'152px'}
-                height={'152px'}
-                borderradius={'5px'}
-                src={item.whisky_photo}
-                alt={`${item.whisky_kor} 사진`}
-              />
-            </ImageWrapDiv>
-            <h1>{item.whisky_kor}</h1>
-            <div>
-              <h2>{item.whisky_eng}</h2>
-              <h3>{`${item.whisky_abv} vol`}</h3>
-            </div>
-          </WhiskyDataDiv>
-        ))}
-    </WhiskyListSection>
+    <>
+      <GuideH1>
+        {'위스키 입문자라면,'}
+        <br />
+        {'이런 위스키는 어떠세요?'}
+      </GuideH1>
+      {whiskyList && whiskyList.length !== 0 && (
+        <GuideH2>{`입문자를 위해 선정한 ${whiskyList.length}개의 위스키를 소개합니다!`}</GuideH2>
+      )}
+      <WhiskyListSection>
+        {whiskyList &&
+          whiskyList.length !== 0 &&
+          whiskyList.map((item) => (
+            <WhiskyDataDiv key={item.whisky_id} onClick={() => onWhiskyClickHandler(item.whisky_id)}>
+              <ImageWrapDiv>
+                <Image
+                  width={'152px'}
+                  height={'152px'}
+                  borderradius={'5px'}
+                  src={item.whisky_photo}
+                  alt={`${item.whisky_kor} 사진`}
+                />
+              </ImageWrapDiv>
+              <h1>{item.whisky_kor}</h1>
+              <div>
+                <h2>{item.whisky_eng}</h2>
+                <h3>{`${item.whisky_abv} vol`}</h3>
+              </div>
+            </WhiskyDataDiv>
+          ))}
+      </WhiskyListSection>
+    </>
   );
 };
 
 export default BeginnerPage;
+
+const GuideH1 = styled.h1`
+  font-size: 20px;
+  font-weight: 800;
+`;
+
+const GuideH2 = styled.h2`
+  margin: 5px 0 20px 0;
+  font-size: 14px;
+`;
 
 const WhiskyListSection = styled.section`
   height: 100%;
