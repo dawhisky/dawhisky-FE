@@ -15,9 +15,12 @@ const DetailList = ({ type, list }) => {
   const url = location.pathname;
 
   const onListClickHandler = (id) => {
-    if (url.includes('/ManagePage/user')) {
-      navigate(`/UserComment/${id}`);
-    } else if (url.includes('/LikeList') || url.includes('/StoreList') || url.includes('/WhiskyDetail')) {
+    if (
+      url.includes('/ManagePage/user') ||
+      url.includes('/LikeList') ||
+      url.includes('/StoreList') ||
+      url.includes('/WhiskyDetail')
+    ) {
       navigate(`/StoreDetail/${id}`);
     } else if (url.includes('/StoreDetail')) {
       navigate(`/WhiskyDetail/${id}`);
@@ -186,7 +189,7 @@ const WhiskyInfoDiv = styled.div`
     color: ${({ theme }) => theme.colors.orange};
   }
   & button {
-    padding: 5px 10px;
+    padding-right: 10px;
     background-color: transparent;
     font-size: 12px;
     color: ${({ theme }) => theme.colors.darkGray};

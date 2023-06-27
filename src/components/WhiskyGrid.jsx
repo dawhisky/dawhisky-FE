@@ -7,15 +7,15 @@ import Image from './Image';
 // ! [props]
 // * list : map으로 표현할 list data
 
-const WhiskyGrid = ({ list }) => {
+const WhiskyGrid = ({ list, link }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const url = location.pathname;
 
   const onWhiskyClickHandler = (id) => {
-    if (url.includes('/ManagePage')) {
+    if (url.includes('/ManagePage') && link === 'comment') {
       navigate(`/UserComment/${id}`);
-    } else if (url === `/` || url.includes('/LikeList')) {
+    } else if (url === `/` || url.includes('/LikeList') || (url.includes('/ManagePage') && link === 'whisky')) {
       navigate(`/WhiskyDetail/${id}`);
     }
   };

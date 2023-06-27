@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { Layout, DetailHeader, TabMenu, WhiskyGrid, DetailList, Button } from '../../components';
+import { Layout, DetailHeader, TabMenu, WhiskyGrid, DetailList } from '../../components';
 import { getUserInfo } from '../../api/user';
 
 const LikeList = () => {
@@ -49,7 +49,7 @@ const LikeList = () => {
         </LikeListButton>
       </ButtonWrapDiv>
       {!tabChosen && <NoneDataDiv>{'버튼을 클릭해주세요'}</NoneDataDiv>}
-      {tabChosen === 'whisky' && likeWhisky && <WhiskyGrid list={likeWhisky} />}
+      {tabChosen === 'whisky' && likeWhisky && <WhiskyGrid list={likeWhisky} link={'whisky'} />}
       {tabChosen === 'store' && <DetailList type={'store'} list={likeStore} />}
     </>
   );
