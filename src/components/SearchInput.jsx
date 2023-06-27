@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 import { GrSearch } from 'react-icons/gr';
 import { BsChevronLeft } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // ! [props]
 // * placeholder : input에 넣을 placeholder
@@ -10,15 +10,26 @@ import { useNavigate } from 'react-router-dom';
 
 const SearchInput = ({ searchtype, value, color, onchange, onclick, placeholder, ...rest }) => {
   const navigate = useNavigate();
+  const focusSearch = useRef(null);
+  const location = useLocation();
+  const url = location.pathname;
 
   const onSearchClickHandler = () => navigate(`/SearchPage`);
   const onBeforeClickHandler = () => navigate(-1);
+
+  // * 페이지 진입 시 input에 포커싱
+  useEffect(() => {
+    if (url !== '/' && focusSearch.current) {
+      focusSearch.current.focus();
+    }
+  }, []);
 
   return (
     <InputWrapDiv onClick={onSearchClickHandler}>
       {searchtype === 'after' ? <LeftIcon onClick={onBeforeClickHandler} /> : ''}
       <CommonInput
         searchtype={searchtype}
+        ref={focusSearch}
         value={value}
         color={color}
         onChange={onchange}
