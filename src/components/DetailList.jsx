@@ -1,15 +1,17 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from 'react-query';
 import { NoneData } from '../pages/statusPage';
 import Image from './Image';
+import { getStoreWhiskyList, deleteStoreWhisky } from '../api/store';
 
 // ! [props]
 // * 가로로 긴 리스트로 위스키 또는 위스키바 리스트를 보여주는 컴포넌트
 // * type : 보여주고 싶은 리스트가 위스키바 일 경우 type={'store'}로 설정, 위스키바 리스트 출력
 // *        props를 따로 내려주지 않으면 위스키 리스트를 출력함
 
-const DetailList = ({ type, list }) => {
+const DetailList = ({ type, list, storeid }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const url = location.pathname;
@@ -27,6 +29,18 @@ const DetailList = ({ type, list }) => {
     } else if (url.includes('/ManagePage/store') || url.includes('/SearchPage')) {
       navigate(`/WhiskyDetail/${id}`);
     }
+  };
+
+  const queryClient = useQueryClient();
+  const deleteStoreWhiskyApi = useMutation(deleteStoreWhisky, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('getStoreWhiskyList', getStoreWhiskyList(storeid));
+    },
+  });
+
+  const onDeleteButtonClickHandler = (e, id) => {
+    e.stopPropagation();
+    deleteStoreWhiskyApi.mutate(id);
   };
 
   return (
@@ -93,6 +107,9 @@ const DetailList = ({ type, list }) => {
                       <h2>{`${item.whisky_abv} vol`}</h2>
                     </WhiskyInfoDiv>
                   )}
+                  {url.includes('/ManagePage') && (
+                    <DeleteButton onClick={(e) => onDeleteButtonClickHandler(e, item.whisky_id)}>{'삭제'}</DeleteButton>
+                  )}
                 </TotalInfoDiv>
               )}
             </ListDiv>
@@ -140,6 +157,7 @@ const StoreInfoDiv = styled.div`
 `;
 
 const TotalInfoDiv = styled.div`
+  position: relative;
   margin-left: 15px;
   & h3 {
     font-size: 14px;
@@ -195,4 +213,18 @@ const WhiskyInfoDiv = styled.div`
     color: ${({ theme }) => theme.colors.darkGray};
     cursor: pointer;
   }
+`;
+
+const DeleteButton = styled.button`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-radius: 5px;
+  width: 40px;
+  background-color: ${({ theme }) => theme.colors.lightGray};
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  color: black;
+  font-weight: 400;
+  font-size: 14px;
+  cursor: pointer;
 `;

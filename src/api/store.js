@@ -29,3 +29,13 @@ export const setStoreWhisky = (whiskyId) => {
       throw error;
     });
 };
+
+// * 스토어 보유 위스키 삭제
+export const deleteStoreWhisky = (whiskyId) => {
+  return api
+    .delete(`/api/mypage/store/whisky/${whiskyId}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      throw error;
+    });
+};
