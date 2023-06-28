@@ -107,7 +107,7 @@ const StoreBottleManage = ({ id }) => {
         <Button onClick={modalToggleHandler}>{'주류 등록'}</Button>
       </ButtonWrapDiv>
       <ListWrapDiv>
-        {whiskyList && <DetailList list={whiskyList} />}
+        {whiskyList && <DetailList list={whiskyList} storeid={id} setwhiskylist={setWhiskyList} />}
         {!whiskyList && <NoneData>{'등록된 주류가 없어요'}</NoneData>}
       </ListWrapDiv>
 
