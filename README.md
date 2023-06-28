@@ -6,8 +6,6 @@
 
 ## **🥃 프로젝트 소개**
 
----
-
 > DA WHISKY는 위스키 체험을 위한 온라인 플랫폼입니다.
 
 <br/>
@@ -80,8 +78,6 @@
 
 ## **🥃 주요 기능**
 
----
-
 <table>
   <tr align="center">
     <td><strong>무한 스크롤</strong></td>
@@ -108,8 +104,6 @@
 <br /> <br />
 
 ## **🥃 기술적 의사결정**
-
----
 
 <table>
   <tr>
@@ -158,8 +152,6 @@
 
 ## **🥃 트러블슈팅**
 
----
-
 ### [👉 Route 인증/인가 오류]()
 
 ### [👉 위스키바 데이터 지도 출력 이슈]()
@@ -170,15 +162,11 @@
 
 ## **🥃 유저 테스트 피드백**
 
----
-
 ### [👉 유저 테스트 결과 및 피드백 반영]()
 
 <br /> <br />
 
 ## **🥃 팀원 소개**
-
----
 
 <table width="100%;">
   <tr align="center">
@@ -274,3 +262,7 @@
     <td align="center">@junkyo974</td>
   </tr>
 </table>
+
+<br /><br />
+
+<p align="center">🥃 Copyright ©2023 HangHae99 14th Final: Team Spirits all rights reserved.</p>
