@@ -11,7 +11,7 @@ import { getStoreWhiskyList, deleteStoreWhisky } from '../api/store';
 // * type : 보여주고 싶은 리스트가 위스키바 일 경우 type={'store'}로 설정, 위스키바 리스트 출력
 // *        props를 따로 내려주지 않으면 위스키 리스트를 출력함
 
-const DetailList = ({ type, list, storeid, setwhiskylist }) => {
+const DetailList = ({ type, list, storeid }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const url = location.pathname;
