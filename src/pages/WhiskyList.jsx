@@ -5,6 +5,8 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { FiArrowUp } from 'react-icons/fi';
 import { useInfiniteQuery } from 'react-query';
 import { useInView } from 'react-intersection-observer';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { setWhiskySelect, getWhiskySelect } from '../selectors/whiskySelectSelector';
 import { getWhiskyList } from '../api/whisky';
 import { Layout, Image, TabMenu, SearchInput, CategorySelect } from '../components';
 import { NoneData } from './statusPage';
@@ -40,7 +42,9 @@ const WhiskyList = () => {
   const regionList = ['전체', '스페이사이드', '하이랜드', '로우랜드', '캠벨타운', '아일라', '그 외'];
   const americantList = ['전체', '버번', '라이', '테네시', '그 외'];
 
-  const [tabChosen, setTabChosen] = useState(tabGroup[0].type);
+  const getWhiskyValue = useRecoilValue(getWhiskySelect);
+  const setWhiskyValue = useSetRecoilState(setWhiskySelect);
+  const [tabChosen, setTabChosen] = useState(tabGroup[getWhiskyValue].type);
   const [like, setLike] = useState(likeList[0]);
   const [region, setRegion] = useState(regionList[0]);
   const [blend, setBlend] = useState(typeList[0]);
@@ -78,6 +82,7 @@ const WhiskyList = () => {
       }));
     }
     setWhiskyList([]);
+    setWhiskyValue(tabGroup.findIndex((item) => item.type === type));
     setLike(likeList[0]);
     setRegion(regionList[0]);
     setBlend(typeList[0]);
