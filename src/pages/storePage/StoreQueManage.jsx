@@ -14,20 +14,46 @@ const StoreQueManage = ({ storeId }) => {
     transports: ['websocket'],
   });
 
+  const receiveSubmitQueue = (prev, response) => {
+    toast.info('새로운 줄서기 요청이 있습니다!');
+    return response;
+  };
+
+  const receiveDeleteQueue = (prev, response) => {
+    toast.info('줄서기 요청이 삭제되었습니다!');
+    return response;
+  };
+
+  const receiveEditQueue = (prev, response) => {
+    toast.info('줄서기 요청이 변경되었습니다!');
+    return response;
+  };
+
   useEffect(() => {
-    // 컴포넌트 마운트 시 소켓 연결 설정
-    // 이벤트 리스너 등록 등 필요한 작업 수행
-    socket.on('connect', () => {
-      socket.emit('enter', storeId);
-    });
+    if (storeId) {
+      // 컴포넌트 마운트 시 소켓 연결 설정
+      // 이벤트 리스너 등록 등 필요한 작업 수행
+      socket.on('connect', () => {
+        socket.emit('enter', storeId);
+      });
 
-    socket.on('getQueData', (response) => {
-      if (JSON.stringify(queueList) !== JSON.stringify(response)) {
-        setQueueList(response);
-      }
-    });
+      socket.on('getQueData', (response) => {
+        // if (JSON.stringify(queueList) !== JSON.stringify(response)) {
+        //   setQueueList(response);
+        // }
+        setQueueList((prev) =>
+          prev.length < response.length
+            ? receiveSubmitQueue(prev, response)
+            : prev.length > response.length
+            ? receiveDeleteQueue(prev, response)
+            : JSON.stringify(prev) !== JSON.stringify(response) && prev.length === response.length
+            ? receiveEditQueue(prev, response)
+            : prev,
+        );
+      });
 
-    // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리 작업
+      // 컴포넌트 언마운트 시 소켓 연결 해제 및 정리 작업
+    }
     return () => {
       socket.disconnect();
       // 필요한 정리 작업 수행

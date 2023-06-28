@@ -6,6 +6,7 @@ import { NoneData } from './statusPage';
 // * comment : 댓글 리스트 데이터
 
 const WhiskyComment = ({ comment }) => {
+  console.log(comment);
   return (
     <>
       {comment.length === 0 && <NoneData>{'등록된 코멘트가 없어요'}</NoneData>}
