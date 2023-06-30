@@ -70,8 +70,6 @@
 
 ## **🥃 서비스 아키텍처**
 
----
-
 <p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/9435d863-f6af-49f5-9219-0d28519e6487" alt="다위스키 아키텍처"></p>
 
 <br /> <br />
@@ -85,9 +83,9 @@
     <td><strong>줄서기 응답 알림</strong></td>
   </tr>
    <tr align="center">
-    <td><img src="" alt="" /></td>
-    <td><img src="" alt="" /></td>
-    <td><img src="" alt="" /></td>
+    <td><img src="./img/%EB%AC%B4%ED%95%9C%EC%8A%A4%ED%81%AC%EB%A1%A4.gif" alt="무한 스크롤 gif" /></td>
+    <td><img src="./img/%EC%A4%84%EC%84%9C%EA%B8%B0.gif" alt="실시간 줄서기 gif" /></td>
+    <td><img src="./img/%EC%8B%A4%EC%8B%9C%EA%B0%84%20%EC%95%8C%EB%A6%BC.gif" alt="줄서기 응답 알림 gif" /></td>
   </tr>
   <tr align="center">
     <td><strong>PWA 배포</strong></td>
@@ -95,9 +93,9 @@
     <td><strong>지도 위치 감지</strong></td>
   </tr>
    <tr align="center">
-    <td><img src="" alt="" /></td>
-    <td><img src="" alt="" /></td>
-    <td><img src="" alt="" /></td>
+    <td><img src="./img/PWA%20%EC%A0%81%EC%9A%A9.gif" alt="PWA 배포 gif" /></td>
+    <td><img src="./img/%EA%B2%80%EC%83%89%EC%96%B4.gif" alt="검색어 자동완성 gif" /></td>
+    <td><img src="./img/%EC%A7%80%EB%8F%84%20%EC%9C%84%EC%B9%98%20%EA%B0%90%EC%A7%80.gif" alt="지도 위치 감지 gif" /></td>
   </tr>
 </table>
 
@@ -152,17 +150,17 @@
 
 ## **🥃 트러블슈팅**
 
-### [👉 Route 인증/인가 오류]()
+### [👉 Route 인증/인가 오류](https://team-spirits.oopy.io/3139f4ce-0250-4e79-944f-a67b6a77d100)
 
-### [👉 위스키바 데이터 지도 출력 이슈]()
+### [👉 위스키바 데이터 지도 출력 이슈](https://team-spirits.oopy.io/ff252d22-6764-42fc-b8fb-791b91fe9b81)
 
-### [👉 PWA]()
+### [👉 PWA](https://team-spirits.oopy.io/361040d7-ff40-46bb-863f-36982cdff269)
 
 <br /> <br />
 
 ## **🥃 유저 테스트 피드백**
 
-### [👉 유저 테스트 결과 및 피드백 반영]()
+### [👉 유저 테스트 결과 및 피드백 반영](https://team-spirits.oopy.io/39a7d835-3887-4355-bf45-b391fa959a09)
 
 <br /> <br />
 
