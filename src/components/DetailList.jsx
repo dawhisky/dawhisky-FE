@@ -104,7 +104,7 @@ const DetailList = ({ type, list, storeid }) => {
                       <h2>{`${item.whisky_abv} vol`}</h2>
                     </WhiskyInfoDiv>
                   )}
-                  {url.includes('/ManagePage') && (
+                  {url.includes('/ManagePage/store') && (
                     <DeleteButton onClick={(e) => onDeleteButtonClickHandler(e, item.whisky_id)}>{'삭제'}</DeleteButton>
                   )}
                 </TotalInfoDiv>
