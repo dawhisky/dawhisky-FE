@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { AiOutlineCaretRight } from 'react-icons/ai';
-import throttle from '../hooks/throttle';
+import useThrottle from '../utils/useThrottle';
 
 // ! [props]
 // * tabgroup : tab의 name과 type을 명시  ex. tabgroup = [{ name: '전체', type: 'all' }]
@@ -60,7 +60,7 @@ const TabMenu = ({ tabgroup, tabchosen, ontabclickhandler }) => {
     }
   }, [scrollRef.current.scrollLeft]);
 
-  const onThrottleMoveHandler = throttle(onDragMoveHandler, 100);
+  const onThrottleMoveHandler = useThrottle(onDragMoveHandler, 100);
 
   return (
     <TabSection

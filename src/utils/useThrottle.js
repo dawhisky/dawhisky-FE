@@ -1,4 +1,4 @@
-const throttle = (func, ms) => {
+const useThrottle = (func, ms) => {
   let throttled = false;
   return (...args) => {
     if (!throttled) {
@@ -11,4 +11,4 @@ const throttle = (func, ms) => {
   };
 };
 
-export default throttle;
+export default useThrottle;
