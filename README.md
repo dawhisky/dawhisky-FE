@@ -150,9 +150,9 @@
 
 ## **🥃 트러블슈팅**
 
-### [👉 Route 인증/인가 오류](https://team-spirits.oopy.io/3139f4ce-0250-4e79-944f-a67b6a77d100)
+### [👉 Route 인증/인가 오류](https://oliviakim.tistory.com/123)
 
-### [👉 위스키바 데이터 지도 출력 이슈](https://team-spirits.oopy.io/ff252d22-6764-42fc-b8fb-791b91fe9b81)
+### [👉 Map marker 비동기 출력 이슈](https://oliviakim.tistory.com/124)
 
 ### [👉 PWA](https://team-spirits.oopy.io/361040d7-ff40-46bb-863f-36982cdff269)
 
