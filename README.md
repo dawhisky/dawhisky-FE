@@ -21,7 +21,7 @@
     <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/e7224472-3ca0-4a45-88d1-f13075911d23" alt="다위스키 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"></td>
     <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://www.dawhisky.com">DA WHISKY 바로가기</a></td>
     <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/ad8ad10c-7bce-4157-bf21-238d672086c9" alt="노션 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"></td>
-<td><a target="_blank" rel="noopener noreferrer nofollow" href="https://team-spirits.oopy.io">팀 노션 바로가기</a></td>
+<td><a target="_blank" rel="noopener noreferrer nofollow" href="https://team-spirits.notion.site/DA-WHISKY-8cd5298ee7fe4921983d820d87681467?pvs=4">팀 노션 바로가기</a></td>
   </tr>
   <tr align="center">
     <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/54e001c4-5d51-4cba-b988-f3802b16df50" alt="리액트 아이콘" style="width: 25px; height: 20px; padding-top: 10px;"></td>
@@ -154,13 +154,13 @@
 
 ### [👉 Map marker 비동기 출력 이슈](https://oliviakim.tistory.com/124)
 
-### [👉 PWA](https://team-spirits.oopy.io/361040d7-ff40-46bb-863f-36982cdff269)
+### [👉 PWA](https://team-spirits.notion.site/PWA-361040d7ff4046bb863f36982cdff269?pvs=4)
 
 <br /> <br />
 
 ## **🥃 유저 테스트 피드백**
 
-### [👉 유저 테스트 결과 및 피드백 반영](https://team-spirits.oopy.io/39a7d835-3887-4355-bf45-b391fa959a09)
+### [👉 유저 테스트 결과 및 피드백 반영](https://team-spirits.notion.site/39a7d83538874355bf45b391fa959a09?pvs=4)
 
 <br /> <br />
 
@@ -257,7 +257,7 @@
       - 위스키 및 점주 DB 스크랩핑 작업
     </td>
     <td align="center"><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/junkyo974">@junkyo974</a></td>
-    <td align="center">@junkyo974</td>
+    <td align="center">junkyo974@naver.com</td>
   </tr>
 </table>
 
