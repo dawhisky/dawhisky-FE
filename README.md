@@ -19,7 +19,7 @@
   </tr>
   <tr align="center">
     <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/e7224472-3ca0-4a45-88d1-f13075911d23" alt="다위스키 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"></td>
-    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://www.dawhisky.com">DA WHISKY 바로가기</a></td>
+    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://dawhisky.vercel.app">DA WHISKY 바로가기</a></td>
     <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/ad8ad10c-7bce-4157-bf21-238d672086c9" alt="노션 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"></td>
 <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://team-spirits.notion.site/DA-WHISKY-8cd5298ee7fe4921983d820d87681467?pvs=4">팀 노션 바로가기</a></td>
   </tr>
