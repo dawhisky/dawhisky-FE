@@ -1,6 +1,8 @@
 # **DA WHISKY - FrontEnd**
 
-<p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/89e7f164-798e-43ec-8442-7fba16c5fe9d" alt="다위스키 리드미 메인"></p>
+[![유튜브 소개 영상](https://img.youtube.com/vi/WFIsjYjPs0E/0.jpg)](https://www.youtube.com/watch?v=WFIsjYjPs0E)
+
+_(👆 클릭 시 소개 영상 페이지로 이동합니다.)_
 
 <br />
 
@@ -15,13 +17,13 @@ DA WHISKY(다위스키)는 "위스키를 더 쉽게, 깊이 알아갈 수 있는
 
 DA WHISKY는 다음과 같은 기능을 제공합니다.
 
-- 카테고리별 위스키 조회, 해당 위스키에 대한 맛 평가 기록
+- **카테고리별 위스키 조회, 해당 위스키에 대한 맛 평가 기록**
 
-- 내 주변 또는 설정한 위치를 중심으로 한 위스키바 조회
+- **내 주변 또는 설정한 위치를 중심으로 한 위스키바 조회**
 
-- 조회한 위스키바가 보유 중인 위스키 조회 및 실시간 줄서기, 입장 알림
+- **조회한 위스키바가 보유 중인 위스키 조회 및 실시간 줄서기, 입장 알림**
 
-- 전직 바텐더의 입문용 위스키 큐레이션, 위스키 검색
+- **전직 바텐더의 입문용 위스키 큐레이션, 위스키 검색**
 
 <br />
 
@@ -79,9 +81,9 @@ DA WHISKY는 다음과 같은 기능을 제공합니다.
     <td><strong>줄서기 응답 알림</strong></td>
   </tr>
    <tr align="center">
-    <td><img src="./img/%EB%AC%B4%ED%95%9C%EC%8A%A4%ED%81%AC%EB%A1%A4.gif" alt="무한 스크롤 gif" /></td>
-    <td><img src="./img/%EC%A4%84%EC%84%9C%EA%B8%B0.gif" alt="실시간 줄서기 gif" /></td>
-    <td><img src="./img/%EC%8B%A4%EC%8B%9C%EA%B0%84%20%EC%95%8C%EB%A6%BC.gif" alt="줄서기 응답 알림 gif" /></td>
+    <td><img src="./img/무한스크롤.webp" alt="무한 스크롤 gif" /></td>
+    <td><img src="./img/실시간줄서기.webp" alt="실시간 줄서기 gif" /></td>
+    <td><img src="./img/줄서기응답알림.webp" alt="줄서기 응답 알림 gif" /></td>
   </tr>
   <tr align="center">
     <td><strong>PWA 배포</strong></td>
@@ -89,9 +91,9 @@ DA WHISKY는 다음과 같은 기능을 제공합니다.
     <td><strong>지도 위치 감지</strong></td>
   </tr>
    <tr align="center">
-    <td><img src="./img/PWA%20%EC%A0%81%EC%9A%A9.gif" alt="PWA 배포 gif" /></td>
-    <td><img src="./img/%EA%B2%80%EC%83%89%EC%96%B4.gif" alt="검색어 자동완성 gif" /></td>
-    <td><img src="./img/%EC%A7%80%EB%8F%84%20%EC%9C%84%EC%B9%98%20%EA%B0%90%EC%A7%80.gif" alt="지도 위치 감지 gif" /></td>
+    <td><img src="./img/pwa배포.webp" alt="PWA 배포 gif" /></td>
+    <td><img src="./img/검색어자동완성.webp" alt="검색어 자동완성 gif" /></td>
+    <td><img src="./img/지도위치감지.webp" alt="지도 위치 감지 gif" /></td>
   </tr>
 </table>
 
