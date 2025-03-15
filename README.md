@@ -6,65 +6,61 @@
 
 ## **🥃 프로젝트 소개**
 
-> DA WHISKY는 위스키 체험을 위한 온라인 플랫폼입니다.
+### 🍹 다위스키?
 
-<br/>
-
-<table width="80%;">
-  <tr align="center">
-    <td><strong>구분</strong></td>
-    <td><strong>바로가기</strong></td>
-    <td><strong>구분</strong></td>
-    <td><strong>바로가기</strong></td>
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/e7224472-3ca0-4a45-88d1-f13075911d23" alt="다위스키 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"></td>
-    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://dawhisky.vercel.app">DA WHISKY 바로가기</a></td>
-    <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/ad8ad10c-7bce-4157-bf21-238d672086c9" alt="노션 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"></td>
-<td><a target="_blank" rel="noopener noreferrer nofollow" href="https://team-spirits.notion.site/DA-WHISKY-8cd5298ee7fe4921983d820d87681467?pvs=4">팀 노션 바로가기</a></td>
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/54e001c4-5d51-4cba-b988-f3802b16df50" alt="리액트 아이콘" style="width: 25px; height: 20px; padding-top: 10px;"></td>
-    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/dawhisky/dawhisky-FE">FE 깃허브 바로가기</a></td>
-        <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/0963648e-73ec-470e-924f-1c7b392a1bcc" alt="노션 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"></td>
-    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://www.figma.com/file/et8Ad4QCJByHaQ5DT1YYjV/%EB%8B%A4%EC%9C%84%EC%8A%A4%ED%82%A4?type=design&node-id=0-1&mode=design&t=xMs2bzxX6qb0359Y-0">피그마 바로가기</a></td>
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/b8326c42-4cea-4e84-96ab-b87c260de006" alt="노드js 아이콘" style="width: 25px; height: 25px; padding-top: 10px;"></td>
-    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/dawhisky/dawhisky-BE">BE 깃허브 바로가기</a></td>
-    <td><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/ca124b96-2abe-498d-b75b-d1b6c7383486" alt="스웨거 아이콘" style="width: 23px; height: 23px; padding-top: 10px;"></td>
-    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://jjmdev.site/api/swag">스웨거 바로가기</a></td>
-  </tr>
-</table>
+DA WHISKY(다위스키)는 "위스키를 더 쉽게, 깊이 알아갈 수 있는 곳이 없을까?" 라는 물음에서 시작되었습니다. <br />
+**위스키 검색, 기록, 위스키바 탐색 및 줄서기 기능** 까지 - **위스키 경험을 더욱 풍부하게 만들어 주는 온라인 플랫폼** 입니다. <br />
 
 <br />
 
+DA WHISKY는 다음과 같은 기능을 제공합니다.
+
+- 카테고리별 위스키 조회, 해당 위스키에 대한 맛 평가 기록
+
+- 내 주변 또는 설정한 위치를 중심으로 한 위스키바 조회
+
+- 조회한 위스키바가 보유 중인 위스키 조회 및 실시간 줄서기, 입장 알림
+
+- 전직 바텐더의 입문용 위스키 큐레이션, 위스키 검색
+
+<br />
+
+### 🖼️ 브로슈어
+
 <details>
-<summary>프로젝트 진행 일정</summary>
-<div markdown="1">
+  <summary>좌측의 화살표 아이콘(▶︎) 클릭 시 토글을 열어 확인할 수 있습니다.</summary>
+  <div markdown="1">
 
-- 23/05/19 ~ 23/05/21&nbsp;&nbsp;&nbsp;프로젝트 주제 선정<br />
-- 23/05/22 ~ 23/05/28&nbsp;&nbsp;&nbsp;UI 디자인 및 와이어프레임 구현<br />
-- 23/05/29 ~ 23/06/04&nbsp;&nbsp;&nbsp;디자인 적용 및 MVP 1차 스코프 구현<br />
-- 23/06/05 ~ 23/06/18&nbsp;&nbsp;&nbsp;MVP 2차 스코프 구현<br />
-- 23/06/19 ~ 23/06/25&nbsp;&nbsp;&nbsp;유저 배포 후 유저 테스트 피드백 반영<br />
-- 23/06/25 ~ 23/06/30&nbsp;&nbsp;&nbsp;발표 자료 준비 및 최종 발표 진행<br />
+  <p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/e649a1f4-3c32-48c5-93c0-b2677cd67c58" alt="다위스키 브로슈어_1"></p>
+  <p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/6123c079-0f70-45e1-8e03-67d6a8585af6" alt="다위스키 브로슈어_2"></p>
+  <p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/0eb3a5fa-d699-4883-bf48-f8e0cb880d97" alt="다위스키 브로슈어_3"></p>
+  <p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/ef38df02-ec10-455a-8459-a61880a1a0c2" alt="다위스키 브로슈어_4"></p>
+  <p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/7f5b4667-e7db-4591-a07d-22d41b3da1c4" alt="다위스키 브로슈어_5"></p>
 
-</div>
+  </div>
 </details>
 
-<details>
-<summary>브로슈어 확인하기</summary>
-<div markdown="1">
+<br />
 
-<p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/e649a1f4-3c32-48c5-93c0-b2677cd67c58" alt="다위스키 브로슈어_1"></p>
-<p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/6123c079-0f70-45e1-8e03-67d6a8585af6" alt="다위스키 브로슈어_2"></p>
-<p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/0eb3a5fa-d699-4883-bf48-f8e0cb880d97" alt="다위스키 브로슈어_3"></p>
-<p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/ef38df02-ec10-455a-8459-a61880a1a0c2" alt="다위스키 브로슈어_4"></p>
-<p align="center"><img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/7f5b4667-e7db-4591-a07d-22d41b3da1c4" alt="다위스키 브로슈어_5"></p>
+### ⏰ 개발 일정
 
-</div>
-</details>
+| 기간 | 일정 |
+| --- | --- |
+| 23/05/19 ~ 23/05/21 | 프로젝트 주제 및 일정 수립 |
+| 23/05/22 ~ 23/05/28 | UI 디자인 및 와이어프레임 구현 |
+| 23/05/29 ~ 23/06/04 | 화면 구현 및 MVP 1차 스코프 기능 구현 |
+| 23/06/05 ~ 23/06/18 | 1차 기능 피드백 수정 및 MVP 2차 스코프 기능 구현 |
+| 23/06/19 ~ 23/06/25 | 유저 배포 및 유저 테스트 피드백 반영 |
+
+<br />
+
+### 관련 링크
+
+| 구분 | 링크 바로가기 |
+| --- | --- |
+| <img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/e7224472-3ca0-4a45-88d1-f13075911d23" alt="다위스키 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"> | [서비스](https://dawhisky.vercel.app) _(운영 종료로 일부 UI만 확인 가능합니다.)_ |
+| <img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/0963648e-73ec-470e-924f-1c7b392a1bcc" alt="피그마 아이콘" style="width: 25px; height: 20px; padding-top: 10px;"> | [피그마](https://www.figma.com/file/et8Ad4QCJByHaQ5DT1YYjV/%EB%8B%A4%EC%9C%84%EC%8A%A4%ED%82%A4?type=design&node-id=0-1&mode=design&t=xMs2bzxX6qb0359Y-0) |
+| <img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/ad8ad10c-7bce-4157-bf21-238d672086c9" alt="노션 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"> | [개발 팀 노션](https://team-spirits.notion.site/DA-WHISKY-8cd5298ee7fe4921983d820d87681467?pvs=4) |
 
 <br /> <br />
 
