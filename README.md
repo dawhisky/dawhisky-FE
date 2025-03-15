@@ -59,8 +59,8 @@ DA WHISKY는 다음과 같은 기능을 제공합니다.
 | 구분 | 링크 바로가기 |
 | --- | --- |
 | <img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/e7224472-3ca0-4a45-88d1-f13075911d23" alt="다위스키 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"> | [서비스](https://dawhisky.vercel.app) _(운영 종료로 일부 UI만 확인 가능합니다.)_ |
-| <img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/0963648e-73ec-470e-924f-1c7b392a1bcc" alt="피그마 아이콘" style="width: 25px; height: 20px; padding-top: 10px;"> | [피그마](https://www.figma.com/file/et8Ad4QCJByHaQ5DT1YYjV/%EB%8B%A4%EC%9C%84%EC%8A%A4%ED%82%A4?type=design&node-id=0-1&mode=design&t=xMs2bzxX6qb0359Y-0) |
 | <img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/ad8ad10c-7bce-4157-bf21-238d672086c9" alt="노션 아이콘" style="width: 20px; height: 20px; padding-top: 10px;"> | [개발 팀 노션](https://team-spirits.notion.site/DA-WHISKY-8cd5298ee7fe4921983d820d87681467?pvs=4) |
+| <img src="https://github.com/dawhisky/dawhisky-FE/assets/84097192/0963648e-73ec-470e-924f-1c7b392a1bcc" alt="피그마 아이콘" style="width: 25px; height: 20px; padding-top: 10px;"> | [피그마](https://www.figma.com/file/et8Ad4QCJByHaQ5DT1YYjV/%EB%8B%A4%EC%9C%84%EC%8A%A4%ED%82%A4?type=design&node-id=0-1&mode=design&t=xMs2bzxX6qb0359Y-0) |
 
 <br /> <br />
 
@@ -162,101 +162,28 @@ DA WHISKY는 다음과 같은 기능을 제공합니다.
 
 ## **🥃 팀원 소개**
 
-<table width="100%;">
-  <tr align="center">
-    <td width="10%;"><strong>이름</strong></td>
-    <td width="10%;"><strong>역할</strong></td>
-    <td><strong>담당 기능</strong></td>
-    <td width="10%;"><strong>깃허브</strong></td>
-    <td width="10%;"><strong>이메일</strong></td>
-  </tr>
-  <tr>
-    <td align="center">김영은</td>
-    <td align="center">DE</td>
-    <td style="padding: 15px 10px;">
-      - UI/UX 디자인<br />
-      - 로고 및 브로슈어 디자인
-    </td>
-    <td align="center"></td>
-    <td align="center">zerosilveree@gmail.com</td>
-  </tr>
-  <tr>
-    <td align="center">김한솔</td>
-    <td align="center">FE / L</td>
-    <td style="padding: 15px 10px;">
-      - 공통 컴포넌트 제작<br />
-      - axios interceptor<br />
-      - route 인증/인가<br />
-      - 카카오맵<br />
-      - PWA<br />
-      - 위스키 리스트, 디테일 페이지<br />
-      - 위스키바 리스트, 디테일 페이지<br />
-      - 좋아요, 코멘트 CRUD<br />
-      - 유저 마이페이지<br />
-      - 스토어 주류관리<br />
-      - 검색 페이지
-    </td>
-    <td align="center"><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/hansololiviakim">@hansololiviakim</a></td>
-    <td align="center">dev.hansolkim@gmail.com</td>
-  </tr>
-  <tr>
-    <td align="center">최재홍</td>
-    <td align="center">FE</td>
-    <td style="padding: 15px 10px;">
-      - 점주 로컬 회원가입/로그인<br />
-      - 유저 카카오 회원가입/로그인<br />
-      - PWA<br />
-      - socket.io를 통한 실시간 줄서기<br />
-      - FCM 줄서기 알림 기능<br />
-      - 스토어 마이페이지<br />
-    </td>
-    <td align="center"><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/allongsio">@allongsio</a></td>
-    <td align="center">choisio2301@gmail.com</td>
-  </tr>
-  <tr>
-    <td align="center">주지민</td>
-    <td align="center">BE / VL</td>
-    <td style="padding: 15px 10px;">
-      - 서버 배포/관리<br />
-      - HTTPS<br />
-      - CI/CD<br />
-      - Socket(줄서기)<br />
-      - DB Polling(자리 현황)<br />
-      - ERD/아키택쳐/스트럭쳐 설계<br />
-      - 북마크/좋아요 기능<br />
-      - Swagger<br />
-      - Sentry
-    </td>
-    <td align="center"><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/jujigithub">@jujigithub</a></td>
-    <td align="center">jujimin500@gmail.com</td>
-  </tr>
-  <tr>
-    <td align="center">박지현</td>
-    <td align="center">BE</td>
-    <td style="padding: 15px 10px;">
-      - 점주 마이페이지<br />
-      - 줄서기/리뷰 CRUD<br />
-      - 유저 마이페이지<br />
-      - 위스키 조회/필터링/검색
-    </td>
-    <td align="center"><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/jihyunpark81">@jihyunpark81</a></td>
-    <td align="center">jenny9681@naver.com</td>
-  </tr>
-  <tr>
-    <td align="center">이준교</td>
-    <td align="center">BE</td>
-    <td style="padding: 15px 10px;">
-      - 소셜로그인(카카오)<br />
-      - 회원가입(점주/유저)<br />
-      - 줄서기 관련 FCM<br />
-      - 리프레쉬토큰/디바이스토큰<br />
-      - 위스키 및 점주 DB 스크랩핑 작업
-    </td>
-    <td align="center"><a target="_blank" rel="noopener noreferrer nofollow" href="https://github.com/junkyo974">@junkyo974</a></td>
-    <td align="center">junkyo974@naver.com</td>
-  </tr>
-</table>
+### 🎨 디자이너
+
+| 이름 | 담당 기능 | 이메일 |
+| --- | --- | --- |
+| 김영은 | - UI/UX 전체 디자인 <br /> - 로고 및 브로슈어 디자인 | zerosilveree@gmail.com |
+
+### 🍷 프론트엔드
+
+| 이름 | 담당 기능 | 깃허브 |
+| --- | --- | --- |
+| 김한솔<br />(리더, 프론트엔드 총괄) | - UI 공통 컴포넌트 및 API 공통 함수 제작 <br /> - route 인증/인가 <br /> - 카카오맵 커스텀 <br /> - 디바운싱을 이용한 검색어 추천 및 검색기능 <br /> - 좋아요, 코멘트 CRUD <br /> - 위스키 및 위스키바 리스트, 디테일 페이지 <br /> - 유저 마이페이지, 스토어 주류관리 페이지 | [@hansololiviakim](https://github.com/hansololiviakim) |
+| 최재홍 | - 점주 로컬 회원가입/로그인 <br /> - 유저 카카오 회원가입/로그인 <br /> - PWA <br /> - socket.io를 통한 실시간 줄서기 <br /> - FCM 줄서기 알림 기능 <br /> - 스토어 마이페이지 <br /> | [@allongsio](https://github.com/allongsio) |
+
+
+### 🍻 백엔드
+
+| 이름 | 담당 기능 | 깃허브 |
+| --- | --- | --- |
+| 주지민<br />(부리더, 백엔드 총괄) | - 서버 배포/관리 <br /> - HTTPS <br /> - CI/CD <br /> - Socket(줄서기) <br /> - DB Polling(자리 현황) <br /> - ERD/아키택쳐/스트럭쳐 설계 <br /> - 북마크/좋아요 기능 <br /> - Swagger <br /> - Sentry | [@jujigithub](https://github.com/jujigithub) |
+| 박지현 | - 점주 마이페이지 <br /> - 줄서기/리뷰 CRUD <br />  - 유저 마이페이지 <br /> - 위스키 조회/필터링/검색 | [@jihyunpark81](https://github.com/jihyunpark81) |
+| 이준교 | - 소셜로그인(카카오) <br /> - 회원가입(점주/유저) <br /> - 줄서기 관련 FCM <br /> - 리프레쉬/디바이스 토큰 <br /> - 위스키 및 점주 DB 스크랩핑 작업 | [@junkyo974](https://github.com/junkyo974) |
 
 <br /><br />
 
-<p align="center">🥃 Copyright ©2023 HangHae99 14th Final: Team Spirits all rights reserved.</p>
+<p align="center">🥃 Copyright ©2023 Team Spirits all rights reserved.</p>
